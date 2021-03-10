@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // home: MyFirstWidget(),
-      home: MyFullWidget(),
+      title: 'Заголовок',
+      home: MyFirstWidget(),
     );
   }
 }
@@ -22,6 +18,13 @@ class MyApp extends StatelessWidget {
 class MyFirstWidget extends StatelessWidget {
   static int staticCounter = 0;
   int inWidgetCounter = 0;
+
+  /* ОШИБКА: undefined name 'context'
+  Type contextType() {
+    return context.runtimeType;
+  }
+  */
+
   @override
   Widget build(BuildContext context) {
     staticCounter++;
@@ -41,12 +44,23 @@ class MyFullWidget extends StatefulWidget {
   static int staticCounter = 0;
   int inWidgetCounter = 0;
 
+  /* ОШИБКА: undefined name 'context'
+  Type contextType() {
+    return context.runtimeType;
+  }
+  */
+
   @override
   _MyFullWidgetState createState() => _MyFullWidgetState();
 }
 
 class _MyFullWidgetState extends State<MyFullWidget> {
   int inStateCounter = 0;
+
+  Type contextType() {
+    // Ok
+    return context.runtimeType;
+  }
 
   @override
   Widget build(BuildContext context) {
