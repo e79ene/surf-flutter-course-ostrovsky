@@ -14,12 +14,24 @@ class _SightListScreenState extends State<SightListScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         toolbarHeight: 100,
-        title: Text(
-          'Список\nинтересных мест',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-          ),
+        title: RichText(
+          text: TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 32,
+              ),
+              children: [
+                TextSpan(
+                  text: 'С',
+                  style: TextStyle(color: Colors.green),
+                ),
+                TextSpan(text: 'писок\n'),
+                TextSpan(
+                  text: 'и',
+                  style: TextStyle(color: Colors.yellow),
+                ),
+                TextSpan(text: 'нтересных мест'),
+              ]),
         ),
       ),
       body: Text('body'),
