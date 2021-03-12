@@ -8,7 +8,6 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
-    print(Theme.of(context).dialogBackgroundColor);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -23,20 +22,6 @@ class _SightListScreenState extends State<SightListScreen> {
         ),
       ),
       body: Text('body'),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.ac_unit_outlined),
-        onPressed: () {},
-      ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-          label: 'One',
-          icon: Icon(Icons.access_alarms),
-        ),
-        BottomNavigationBarItem(
-          label: 'Two',
-          icon: Icon(Icons.access_time),
-        ),
-      ]),
     );
   }
 }
