@@ -12,15 +12,9 @@ class _SightListScreenState extends State<SightListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
         toolbarHeight: 100,
         title: Text(
           'Список\nинтересных мест',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-          ),
         ),
       ),
       body: SingleChildScrollView(

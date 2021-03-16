@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/global_theme.dart';
 
 class SightDetailsScreen extends StatelessWidget {
   final Sight _sight;
@@ -19,11 +20,11 @@ class SightDetailsScreen extends StatelessWidget {
                   aspectRatio: 1,
                   child: Container(
                     width: double.infinity,
-                    color: Colors.lightBlue[900],
+                    color: imageStubColor,
                     padding: EdgeInsets.all(9),
                     child: Text(
                       _sight.url,
-                      style: TextStyle(color: Colors.grey),
+                      style: imageStubUrlStyle,
                     ),
                   ),
                 ),
@@ -35,7 +36,7 @@ class SightDetailsScreen extends StatelessWidget {
                       Icons.arrow_back_ios,
                     ),
                     onPressed: () {},
-                    color: Colors.white,
+                    color: onImageElementColor,
                   ),
                 ),
               ],
@@ -47,10 +48,7 @@ class SightDetailsScreen extends StatelessWidget {
                 children: [
                   Text(
                     _sight.name,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: sightScreenNameStyle,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 20),
@@ -58,16 +56,12 @@ class SightDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           _sight.type,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: sightScreenTypeStyle,
                         ),
                         SizedBox(width: 20),
                         Text(
                           'Закрыто до 09:00',
-                          style: TextStyle(
-                            color: Colors.grey[700],
-                          ),
+                          style: sightClosedStyle,
                         ),
                       ],
                     ),
@@ -78,7 +72,7 @@ class SightDetailsScreen extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.green,
+                      color: routeButtonBackground,
                     ),
                     alignment: Alignment.center,
                     child: Row(
@@ -86,14 +80,11 @@ class SightDetailsScreen extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.add_road,
-                          color: Colors.white,
+                          color: routeButtonForeground,
                         ),
                         Text(
                           ' ПОСТРОИТЬ МАРШРУТ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: routeButtonStyle,
                         ),
                       ],
                     ),
@@ -106,13 +97,11 @@ class SightDetailsScreen extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.calendar_today,
-                              color: Colors.grey,
+                              color: disabledButtonForeground,
                             ),
                             Text(
                               ' Запланировать',
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
+                              style: disabledButtonStyle,
                             ),
                           ],
                         ),
