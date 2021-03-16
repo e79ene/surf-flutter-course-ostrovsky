@@ -45,6 +45,7 @@ class SightCard extends StatelessWidget {
             ),
           ),
         ]),
+        SizedBox(height: 16),
         UnconstrainedBox(
           child: ConstrainedBox(
             constraints: BoxConstraints(
