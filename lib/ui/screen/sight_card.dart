@@ -45,17 +45,21 @@ class SightCard extends StatelessWidget {
             ),
           ),
         ]),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                _sight.name,
-                style: sightNameStyle,
-              ),
-              Text(_sight.details),
-            ],
+        UnconstrainedBox(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * .78,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  _sight.name,
+                  style: sightNameStyle,
+                ),
+                Text(_sight.details),
+              ],
+            ),
           ),
         ),
       ],
