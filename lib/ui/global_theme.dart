@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+const barHeight = 136.0;
+const barStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 32,
+);
 final imageStubColor = Colors.lightBlue[900];
 const imageStubUrlStyle = TextStyle(color: Colors.grey);
 const onImageElementColor = Colors.white;
@@ -31,27 +36,3 @@ const disabledButtonForeground = Colors.grey;
 const disabledButtonStyle = TextStyle(
   color: disabledButtonForeground,
 );
-
-class GlobalTheme {
-  static ThemeData theme() {
-    final base = ThemeData.light();
-    return base.copyWith(
-      appBarTheme: base.appBarTheme.copyWith(
-        backgroundColor: base.scaffoldBackgroundColor,
-        elevation: 0,
-        textTheme: base.textTheme.copyWith(
-          headline6: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-          ),
-        ),
-        /* Somehow doesn't work !!!
-        titleTextStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 32,
-        ),
-        */
-      ),
-    );
-  }
-}
