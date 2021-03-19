@@ -25,15 +25,23 @@ class SightCard extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 100,
-                    decoration: BoxDecoration(
+                    child: ClipRRect(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(9)),
-                      color: imageStubColor,
-                    ),
-                    padding: EdgeInsets.all(9),
-                    child: Text(
-                      _sight.url,
-                      style: imageStubUrlStyle,
+                      child: Image.network(
+                        _sight.url,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext ctx, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Positioned(
