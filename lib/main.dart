@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Заголовок',
-      home: (1 < 0) ? SightDetailsScreen(mocks[0]) : SightListScreen(),
+      home: (1 > 0) ? SightDetailsScreen(mocks[0]) : SightListScreen(),
     );
   }
 }

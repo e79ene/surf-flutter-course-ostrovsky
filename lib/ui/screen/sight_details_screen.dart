@@ -18,14 +18,19 @@ class SightDetailsScreen extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 1,
-                  child: Container(
-                    width: double.infinity,
-                    color: imageStubColor,
-                    padding: EdgeInsets.all(9),
-                    child: Text(
-                      _sight.url,
-                      style: imageStubUrlStyle,
-                    ),
+                  child: Image.network(
+                    _sight.url,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext ctx, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                 ),
                 Positioned(
