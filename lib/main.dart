@@ -1,8 +1,10 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
+import 'package:places/ui/screen/visiting_screen.dart';
 
 void main() {
   runApp(App());
@@ -11,9 +13,16 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screens = {
+      'list': SightListScreen(),
+      'details': SightDetailsScreen(mocks[0]),
+      'visiting': VisitingScreen(),
+    };
+
     return MaterialApp(
       title: 'Заголовок',
-      home: (1 > 0) ? SightDetailsScreen(mocks[0]) : SightListScreen(),
+      theme: GlobalTheme.theme(),
+      home: screens['visiting'],
     );
   }
 }
