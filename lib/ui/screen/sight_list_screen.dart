@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -39,6 +40,7 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationView(),
     );
   }
 }

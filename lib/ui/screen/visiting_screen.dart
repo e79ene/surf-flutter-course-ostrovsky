@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/global_theme.dart';
+import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class VisitingScreen extends StatelessWidget {
@@ -93,6 +94,7 @@ class VisitingScreen extends StatelessWidget {
             ),
           ),
         ]),
+        bottomNavigationBar: BottomNavigationView(),
       ),
     );
   }
