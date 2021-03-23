@@ -42,7 +42,7 @@ class _Bar extends StatelessWidget implements PreferredSizeWidget {
         alignment: Alignment.bottomLeft,
         child: Text(
           title,
-          style: TextStyle(fontSize: 32),
+          style: barStyle,
         ),
       ),
     );
