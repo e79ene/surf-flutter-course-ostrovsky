@@ -5,9 +5,15 @@ import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/image_loading_progress.dart';
 
 class SightCard extends StatelessWidget {
-  final Sight _sight;
+  final Sight sight;
+  final List<Widget> actions;
+  final Widget afterTitle;
 
-  SightCard(this._sight);
+  SightCard(
+    this.sight, {
+    required this.actions,
+    required this.afterTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class SightCard extends StatelessWidget {
             children: [
               Stack(children: [
                 Image.network(
-                  _sight.url,
+                  sight.url,
                   height: 96,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -33,22 +39,14 @@ class SightCard extends StatelessWidget {
                   top: 16,
                   left: 16,
                   child: Text(
-                    _sight.type,
+                    sight.type,
                     style: sightTypeStyle,
                   ),
                 ),
                 Positioned(
                   top: 5,
                   right: 8,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.favorite_border),
-                        onPressed: () {},
-                        color: onImageElementColor,
-                      ),
-                    ],
-                  ),
+                  child: Row(children: actions),
                 ),
               ]),
               Padding(
@@ -57,10 +55,10 @@ class SightCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      _sight.name,
+                      sight.name,
                       style: sightNameStyle,
                     ),
-                    Text(_sight.details),
+                    afterTitle,
                   ],
                 ),
               ),

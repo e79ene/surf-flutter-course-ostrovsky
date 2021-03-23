@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class VisitingScreen extends StatelessWidget {
@@ -20,7 +21,37 @@ class VisitingScreen extends StatelessWidget {
                 .entries
                 .where((e) => e.key % 2 == 1)
                 .map((e) => e.value),
-            makeSightView: (sight) => SightCard(sight),
+            makeSightView: (sight) => SightCard(
+              sight,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () {},
+                  color: onImageElementColor,
+                ),
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {},
+                  color: onImageElementColor,
+                ),
+              ],
+              afterTitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      'Запланировано на 12 окт. 2020',
+                      style: plannedForStyle,
+                    ),
+                  ),
+                  Text(
+                    'закрыто до 09:00',
+                    style: closedTillStyle,
+                  ),
+                ],
+              ),
+            ),
           ),
           _VisitingList(
             sights: mocks
@@ -28,7 +59,37 @@ class VisitingScreen extends StatelessWidget {
                 .entries
                 .where((e) => e.key % 2 == 0)
                 .map((e) => e.value),
-            makeSightView: (sight) => SightCard(sight),
+            makeSightView: (sight) => SightCard(
+              sight,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {},
+                  color: onImageElementColor,
+                ),
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {},
+                  color: onImageElementColor,
+                ),
+              ],
+              afterTitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      'Цель достигнута 12 окт. 2020',
+                      style: goalAchievedStyle,
+                    ),
+                  ),
+                  Text(
+                    'закрыто до 09:00',
+                    style: closedTillStyle,
+                  ),
+                ],
+              ),
+            ),
           ),
         ]),
       ),

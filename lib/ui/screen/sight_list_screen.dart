@@ -23,7 +23,17 @@ class _SightListScreenState extends State<SightListScreen> {
               for (var sight in mocks)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: SightCard(sight),
+                  child: SightCard(
+                    sight,
+                    actions: [
+                      IconButton(
+                        icon: Icon(Icons.favorite_border),
+                        onPressed: () {},
+                        color: onImageElementColor,
+                      ),
+                    ],
+                    afterTitle: Text(sight.details),
+                  ),
                 )
             ],
           ),

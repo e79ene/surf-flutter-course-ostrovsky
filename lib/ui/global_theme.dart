@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 const barHeight = 136.0;
@@ -36,6 +38,10 @@ const disabledButtonForeground = Colors.grey;
 const disabledButtonStyle = TextStyle(
   color: disabledButtonForeground,
 );
+const plannedForStyle = TextStyle(color: Color(0xFF4CAF50));
+const goalAchievedStyle = TextStyle(color: Color(0xFF7C7E92));
+const closedTillStyle = TextStyle(color: Color(0xFF7C7E92));
+
 class GlobalTheme {
   static ThemeData theme() {
     final base = ThemeData.light();
