@@ -51,7 +51,13 @@ class _VisitingList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
-          children: [for (var sight in sights) makeSightView(sight)],
+          children: [
+            for (var sight in sights)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: makeSightView(sight),
+              )
+          ],
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/global_theme.dart';
+import 'package:places/ui/image_loading_progress.dart';
 
 class SightDetailsScreen extends StatelessWidget {
   final Sight _sight;
@@ -21,21 +22,7 @@ class SightDetailsScreen extends StatelessWidget {
                   child: Image.network(
                     _sight.url,
                     fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext ctx, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      }
-                    },
+                    loadingBuilder: imageLoadingProgress,
                   ),
                 ),
                 Positioned(

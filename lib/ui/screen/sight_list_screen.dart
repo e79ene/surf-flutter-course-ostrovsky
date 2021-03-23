@@ -19,7 +19,13 @@ class _SightListScreenState extends State<SightListScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Column(
-            children: [for (var sight in mocks) SightCard(sight)],
+            children: [
+              for (var sight in mocks)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: SightCard(sight),
+                )
+            ],
           ),
         ),
       ),
