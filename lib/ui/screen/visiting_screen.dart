@@ -13,6 +13,7 @@ class VisitingScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Избранное'),
+          bottom: _TabBar(labels: ['Хочу посетить', 'Посетил']),
         ),
         body: TabBarView(children: [
           _VisitingList(
@@ -92,6 +93,64 @@ class VisitingScreen extends StatelessWidget {
             ),
           ),
         ]),
+      ),
+    );
+  }
+}
+
+class _TabBar extends StatefulWidget implements PreferredSizeWidget {
+  final List<String> labels;
+
+  const _TabBar({Key? key, required this.labels}) : super(key: key);
+
+  @override
+  Size get preferredSize => Size.fromHeight(40);
+
+  @override
+  _TabBarState createState() => _TabBarState();
+}
+
+class _TabBarState extends State<_TabBar> {
+  TabController? _controller;
+
+  TabController get controller {
+    if (_controller == null) {
+      _controller = DefaultTabController.of(context);
+      assert(_controller != null, 'Must have DefaultTabController ancestor');
+
+      _controller!.addListener(() => setState(() {}));
+    }
+
+    return _controller!;
+  }
+
+  bool isSelected(int i) => controller.index == i;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          for (int i = 0; i < widget.labels.length; i++)
+            Expanded(
+              child: Container(
+                height: 40,
+                decoration: isSelected(i)
+                    ? tabBarSelectedDecoration
+                    : tabBarUnelectedDecoration,
+                child: Center(
+                  child: Text(
+                    widget.labels[i],
+                    style: isSelected(i)
+                        ? tabBarSelectedStyle
+                        : tabBarUnelectedStyle,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
