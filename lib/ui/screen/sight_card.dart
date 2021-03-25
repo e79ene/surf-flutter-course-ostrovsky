@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/image_loading_progress.dart';
 
 class SightCard extends StatelessWidget {
@@ -17,6 +16,8 @@ class SightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       height: 198,
       child: ClipRRect(
@@ -40,7 +41,7 @@ class SightCard extends StatelessWidget {
                   left: 16,
                   child: Text(
                     sight.type,
-                    style: sightTypeStyle,
+                    style: theme.accentTextTheme.headline6,
                   ),
                 ),
                 Positioned(
@@ -49,14 +50,15 @@ class SightCard extends StatelessWidget {
                   child: Row(children: actions),
                 ),
               ]),
-              Padding(
+              Container(
+                color: Theme.of(context).cardColor,
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       sight.name,
-                      style: sightNameStyle,
+                      style: theme.textTheme.headline6,
                     ),
                     afterTitle,
                   ],

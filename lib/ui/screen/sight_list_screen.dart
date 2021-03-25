@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
-import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class SightListScreen extends StatefulWidget {
@@ -12,6 +11,8 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: _Bar(
         title: 'Список\nинтересных мест',
@@ -30,7 +31,7 @@ class _SightListScreenState extends State<SightListScreen> {
                       IconButton(
                         icon: Icon(Icons.favorite_border),
                         onPressed: () {},
-                        color: onImageElementColor,
+                        color: theme.accentIconTheme.color,
                       ),
                     ],
                     afterTitle: Text(sight.details),
@@ -46,7 +47,7 @@ class _SightListScreenState extends State<SightListScreen> {
 }
 
 class _Bar extends StatelessWidget implements PreferredSizeWidget {
-  static const double height = barHeight;
+  static const height = 136.0;
   final String title;
 
   _Bar({required this.title});
@@ -60,7 +61,9 @@ class _Bar extends StatelessWidget implements PreferredSizeWidget {
         alignment: Alignment.bottomLeft,
         child: Text(
           title,
-          style: barStyle,
+          style: TextStyle(
+            fontSize: 32,
+          ),
         ),
       ),
     );

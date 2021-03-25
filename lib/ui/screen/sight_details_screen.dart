@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/image_loading_progress.dart';
 
 class SightDetailsScreen extends StatelessWidget {
@@ -10,6 +9,8 @@ class SightDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -33,7 +34,7 @@ class SightDetailsScreen extends StatelessWidget {
                       Icons.arrow_back_ios,
                     ),
                     onPressed: () {},
-                    color: onImageElementColor,
+                    color: theme.accentIconTheme.color,
                   ),
                 ),
               ],
@@ -45,7 +46,7 @@ class SightDetailsScreen extends StatelessWidget {
                 children: [
                   Text(
                     _sight.name,
-                    style: sightScreenNameStyle,
+                    style: theme.textTheme.headline2,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 20),
@@ -53,12 +54,14 @@ class SightDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           _sight.type,
-                          style: sightScreenTypeStyle,
+                          style: theme.textTheme.headline1,
                         ),
                         SizedBox(width: 20),
                         Text(
                           'Закрыто до 09:00',
-                          style: sightClosedStyle,
+                          style: TextStyle(
+                              color: theme
+                                  .tabBarTheme.unselectedLabelStyle!.color),
                         ),
                       ],
                     ),
@@ -69,19 +72,19 @@ class SightDetailsScreen extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: routeButtonBackground,
+                      color: theme.accentColor,
                     ),
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.add_road,
-                          color: routeButtonForeground,
+                        IconTheme(
+                          data: theme.accentIconTheme,
+                          child: Icon(Icons.add_road),
                         ),
                         Text(
                           ' ПОСТРОИТЬ МАРШРУТ',
-                          style: routeButtonStyle,
+                          style: theme.accentTextTheme.headline6,
                         ),
                       ],
                     ),
@@ -94,11 +97,11 @@ class SightDetailsScreen extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.calendar_today,
-                              color: disabledButtonForeground,
+                              color: theme.accentTextTheme.headline5!.color,
                             ),
                             Text(
                               ' Запланировать',
-                              style: disabledButtonStyle,
+                              style: theme.accentTextTheme.headline5,
                             ),
                           ],
                         ),

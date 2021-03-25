@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/global_theme.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
 class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -29,12 +30,12 @@ class VisitingScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.calendar_today),
                   onPressed: () {},
-                  color: onImageElementColor,
+                  color: theme.accentIconTheme.color,
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {},
-                  color: onImageElementColor,
+                  color: theme.accentIconTheme.color,
                 ),
               ],
               afterTitle: Column(
@@ -44,12 +45,12 @@ class VisitingScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(
                       'Запланировано на 12 окт. 2020',
-                      style: plannedForStyle,
+                      style: TextStyle(color: theme.accentColor),
                     ),
                   ),
                   Text(
                     'закрыто до 09:00',
-                    style: closedTillStyle,
+                    style: TextStyle(color: theme.disabledColor),
                   ),
                 ],
               ),
@@ -67,12 +68,12 @@ class VisitingScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.share),
                   onPressed: () {},
-                  color: onImageElementColor,
+                  color: theme.accentIconTheme.color,
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {},
-                  color: onImageElementColor,
+                  color: theme.accentIconTheme.color,
                 ),
               ],
               afterTitle: Column(
@@ -82,12 +83,12 @@ class VisitingScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(
                       'Цель достигнута 12 окт. 2020',
-                      style: goalAchievedStyle,
+                      style: TextStyle(color: theme.disabledColor),
                     ),
                   ),
                   Text(
                     'закрыто до 09:00',
-                    style: closedTillStyle,
+                    style: TextStyle(color: theme.disabledColor),
                   ),
                 ],
               ),
@@ -130,6 +131,8 @@ class _TabBarState extends State<_TabBar> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).tabBarTheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: Row(
@@ -139,15 +142,18 @@ class _TabBarState extends State<_TabBar> {
             Expanded(
               child: Container(
                 height: 40,
-                decoration: isSelected(i)
-                    ? tabBarSelectedDecoration
-                    : tabBarUnelectedDecoration,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: isSelected(i)
+                      ? theme.labelColor
+                      : theme.unselectedLabelColor,
+                ),
                 child: Center(
                   child: Text(
                     widget.labels[i],
                     style: isSelected(i)
-                        ? tabBarSelectedStyle
-                        : tabBarUnelectedStyle,
+                        ? theme.labelStyle
+                        : theme.unselectedLabelStyle,
                   ),
                 ),
               ),

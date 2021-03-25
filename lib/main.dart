@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/global_theme.dart';
+import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
@@ -13,16 +13,28 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final screens = {
-      'list': SightListScreen(),
-      'details': SightDetailsScreen(mocks[0]),
-      'visiting': VisitingScreen(),
-    };
+    final list = SightListScreen(),
+        details = SightDetailsScreen(mocks[0]),
+        visiting = VisitingScreen();
+
+    final screensRow = Row(children: [
+      for (final s in [list, visiting, details]) Expanded(child: s),
+    ]);
 
     return MaterialApp(
       title: 'Заголовок',
-      theme: GlobalTheme.theme(),
-      home: screens['visiting'],
+      theme: lightTheme,
+      // home: list,
+      home: Column(
+        children: [
+          Expanded(
+            child: Theme(data: lightTheme, child: screensRow),
+          ),
+          Expanded(
+            child: Theme(data: darkTheme, child: screensRow),
+          ),
+        ],
+      ),
     );
   }
 }
