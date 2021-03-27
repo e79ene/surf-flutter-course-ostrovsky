@@ -37,10 +37,6 @@ final lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _lWhiteColor,
     ),
-    headline5: TextStyle(
-      inherit: false,
-      color: _lInactiveBlackColor,
-    ),
   ),
   accentIconTheme: IconThemeData(
     color: _lWhiteColor,
@@ -66,6 +62,23 @@ final lightTheme = ThemeData(
       color: _lSecondaryColor,
     ),
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: _lGreenColor,
+      onPrimary: _lWhiteColor,
+      minimumSize: Size.fromHeight(48),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      primary: _lSecondaryColor,
+      onSurface: _lInactiveBlackColor,
+    ),
+  ),
   appBarTheme: AppBarTheme(
     backgroundColor: _lWhiteColor,
     elevation: 0,
@@ -79,6 +92,8 @@ final lightTheme = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
     selectedItemColor: _lMainColor,
   ),
   tabBarTheme: TabBarTheme(
@@ -107,10 +122,6 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _dWhiteColor,
     ),
-    headline5: TextStyle(
-      inherit: false,
-      color: _dInactiveBlackColor,
-    ),
   ),
   accentIconTheme: IconThemeData(
     color: _dWhiteColor,
@@ -136,6 +147,23 @@ final darkTheme = ThemeData(
       color: _dWhiteColor,
     ),
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: _dGreenColor,
+      onPrimary: _dWhiteColor,
+      minimumSize: Size.fromHeight(48),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      primary: _dWhiteColor,
+      onSurface: _dInactiveBlackColor,
+    ),
+  ),
   appBarTheme: AppBarTheme(
     backgroundColor: _dMainColor,
     elevation: 0,
@@ -149,6 +177,8 @@ final darkTheme = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
     selectedItemColor: _dWhiteColor,
   ),
   tabBarTheme: TabBarTheme(

@@ -30,12 +30,10 @@ class VisitingScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.calendar_today),
                   onPressed: () {},
-                  color: theme.accentIconTheme.color,
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {},
-                  color: theme.accentIconTheme.color,
                 ),
               ],
               afterTitle: Column(
@@ -68,12 +66,10 @@ class VisitingScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.share),
                   onPressed: () {},
-                  color: theme.accentIconTheme.color,
                 ),
                 IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {},
-                  color: theme.accentIconTheme.color,
                 ),
               ],
               afterTitle: Column(
@@ -140,22 +136,23 @@ class _TabBarState extends State<_TabBar> {
         children: [
           for (int i = 0; i < widget.labels.length; i++)
             Expanded(
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: isSelected(i)
+              child: ElevatedButton(
+                child: Text(widget.labels[i]),
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: isSelected(i)
                       ? theme.labelColor
                       : theme.unselectedLabelColor,
-                ),
-                child: Center(
-                  child: Text(
-                    widget.labels[i],
-                    style: isSelected(i)
-                        ? theme.labelStyle
-                        : theme.unselectedLabelStyle,
+                  onPrimary: isSelected(i)
+                      ? theme.labelStyle!.color
+                      : theme.unselectedLabelStyle!.color,
+                  minimumSize: Size.fromHeight(40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
+                  textStyle: TextStyle(),
                 ),
+                onPressed: () => controller.index = i,
               ),
             ),
         ],

@@ -11,8 +11,6 @@ class SightListScreen extends StatefulWidget {
 class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: _Bar(
         title: 'Список\nинтересных мест',
@@ -31,7 +29,6 @@ class _SightListScreenState extends State<SightListScreen> {
                       IconButton(
                         icon: Icon(Icons.favorite_border),
                         onPressed: () {},
-                        color: theme.accentIconTheme.color,
                       ),
                     ],
                     afterTitle: Text(sight.details),

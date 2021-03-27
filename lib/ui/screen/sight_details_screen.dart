@@ -29,12 +29,14 @@ class SightDetailsScreen extends StatelessWidget {
                 Positioned(
                   top: 25,
                   left: 10,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
+                  child: IconTheme(
+                    data: theme.accentIconTheme,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
-                    color: theme.accentIconTheme.color,
                   ),
                 ),
               ],
@@ -67,54 +69,31 @@ class SightDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(_sight.details),
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 25),
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: theme.accentColor,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: ElevatedButton.icon(
+                      icon: Icon(Icons.add_road),
+                      label: Text('ПОСТРОИТЬ МАРШРУТ'),
+                      onPressed: () => print('ПОСТРОИТЬ МАРШРУТ'),
                     ),
-                    alignment: Alignment.center,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconTheme(
-                          data: theme.accentIconTheme,
-                          child: Icon(Icons.add_road),
+                        TextButton.icon(
+                          icon: Icon(Icons.calendar_today),
+                          label: Text('Запланировать'),
+                          onPressed: null,
                         ),
-                        Text(
-                          ' ПОСТРОИТЬ МАРШРУТ',
-                          style: theme.accentTextTheme.headline6,
+                        TextButton.icon(
+                          icon: Icon(Icons.favorite_border),
+                          label: Text('В избранное'),
+                          onPressed: () => print('В избранное'),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              color: theme.accentTextTheme.headline5!.color,
-                            ),
-                            Text(
-                              ' Запланировать',
-                              style: theme.accentTextTheme.headline5,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Icon(Icons.favorite_border),
-                            Text(' В избранное'),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

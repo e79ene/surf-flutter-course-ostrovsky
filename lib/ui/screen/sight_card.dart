@@ -47,7 +47,10 @@ class SightCard extends StatelessWidget {
                 Positioned(
                   top: 5,
                   right: 8,
-                  child: Row(children: actions),
+                  child: IconTheme(
+                    data: theme.accentIconTheme,
+                    child: Row(children: actions),
+                  ),
                 ),
               ]),
               Container(
