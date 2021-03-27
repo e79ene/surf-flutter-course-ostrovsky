@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/svg_icon.dart';
 
 class SightListScreen extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _SightListScreenState extends State<SightListScreen> {
                     sight,
                     actions: [
                       IconButton(
-                        icon: Icon(Icons.favorite_border),
+                        icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
                         onPressed: () {},
                       ),
                     ],

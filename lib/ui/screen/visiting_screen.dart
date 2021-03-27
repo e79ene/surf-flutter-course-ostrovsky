@@ -4,6 +4,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/svg_icon.dart';
 
 class VisitingScreen extends StatelessWidget {
   @override
@@ -28,11 +29,11 @@ class VisitingScreen extends StatelessWidget {
               sight,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.calendar_today),
+                  icon: SvgIcon('res/figma/Icons/Icon/Calendar.svg'),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
                   onPressed: () {},
                 ),
               ],
@@ -64,11 +65,11 @@ class VisitingScreen extends StatelessWidget {
               sight,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.share),
+                  icon: SvgIcon('res/figma/Icons/Icon/Share.svg'),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
                   onPressed: () {},
                 ),
               ],

@@ -17,6 +17,7 @@ class App extends StatelessWidget {
         details = SightDetailsScreen(mocks[0]),
         visiting = VisitingScreen();
 
+    // ignore: unused_local_variable
     final screensRow = Row(children: [
       for (final s in [list, visiting, details]) Expanded(child: s),
     ]);
@@ -25,6 +26,7 @@ class App extends StatelessWidget {
       title: 'Заголовок',
       theme: lightTheme,
       // home: list,
+      //*
       home: Column(
         children: [
           Expanded(
@@ -35,6 +37,7 @@ class App extends StatelessWidget {
           ),
         ],
       ),
+      // */
     );
   }
 }

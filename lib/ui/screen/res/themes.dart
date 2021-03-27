@@ -66,7 +66,7 @@ final lightTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       primary: _lGreenColor,
       onPrimary: _lWhiteColor,
-      minimumSize: Size.fromHeight(48),
+      minimumSize: Size(0, 48),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,

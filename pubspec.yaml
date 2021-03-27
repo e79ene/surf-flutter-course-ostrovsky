@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  flutter_svg: ^0.19.3
+  flutter_svg: ^0.21.0-nullsafety.0
   lorem_cutesum: ^1.0.0
 
 dev_dependencies:
@@ -22,6 +22,11 @@ dev_dependencies:
 
 flutter:
   assets:
-    - res/
+    - res/figma/Icons/
+    - res/figma/Icons/Catalog/
+    - res/figma/Icons/Catalog/Black/
+    - res/figma/Icons/Catalog/White/
+    - res/figma/Icons/Icon/
+    - res/figma/Icons/tougle/
 
   uses-material-design: true
