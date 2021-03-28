@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/mocks.dart';
+import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/svg_icon.dart';
@@ -11,6 +11,12 @@ class SightListScreen extends StatefulWidget {
 
 class _SightListScreenState extends State<SightListScreen> {
   @override
+  void initState() {
+    sightsFinder.addListener(() => setState(() {}));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _Bar(
@@ -21,7 +27,7 @@ class _SightListScreenState extends State<SightListScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Column(
             children: [
-              for (var sight in mocks)
+              for (var sight in sightsFinder.result)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: SightCard(

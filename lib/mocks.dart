@@ -1,3 +1,4 @@
+import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'dart:math';
 // ignore: import_of_legacy_library_into_null_safe
@@ -19,11 +20,11 @@ String randomWords([int from = 1, int to = 0]) {
 
 List<Sight> generateMocks() {
   return [
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 50; i++)
       Sight(
         randomWords(1, 4),
-        lat: (rand.nextDouble() - .5) * 180,
-        lon: (rand.nextDouble() - .5) * 360,
+        geo: GeoPosition(
+            (rand.nextDouble() - .5) * 180, (rand.nextDouble() - .5) * 360),
         url: Cutesum.randomImageUrl(),
         details: randomWords(10, 50),
         type: randomWords(),

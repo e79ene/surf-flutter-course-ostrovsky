@@ -1,15 +1,15 @@
-class Sight {
-  String name;
-  double lat;
-  double lon;
-  String url;
-  String details;
-  String type;
+import 'package:places/domain/geo_position.dart';
 
-  Sight(
+class Sight {
+  final String name;
+  final GeoPosition geo;
+  final String url;
+  final String details;
+  final String type;
+
+  const Sight(
     this.name, {
-    required this.lat,
-    required this.lon,
+    required this.geo,
     required this.url,
     required this.details,
     required this.type,
@@ -17,6 +17,6 @@ class Sight {
 
   @override
   String toString() {
-    return 'Sight($name [$lat,$lon] $type)';
+    return 'Sight($name $geo $type)';
   }
 }
