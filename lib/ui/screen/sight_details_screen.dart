@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
+import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsScreen extends StatelessWidget {
@@ -30,24 +31,7 @@ class SightDetailsScreen extends StatelessWidget {
                 Positioned(
                   top: 36,
                   left: 16,
-                  child: ElevatedButtonTheme(
-                    data: ElevatedButtonThemeData(
-                      style: ElevatedButton.styleFrom(
-                        primary: theme.canvasColor,
-                        onPrimary:
-                            theme.bottomNavigationBarTheme.selectedItemColor,
-                        fixedSize: Size.square(32),
-                        minimumSize: Size.square(32),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      child: SvgIcon('res/figma/Icons/Icon/Arrow.svg'),
-                      onPressed: () {},
-                    ),
-                  ),
+                  child: MyBackButton(),
                 ),
               ],
             ),

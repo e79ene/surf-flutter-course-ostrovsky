@@ -106,6 +106,13 @@ final lightTheme = ThemeData(
       color: _lInactiveBlackColor,
     ),
   ),
+  sliderTheme: SliderThemeData(
+    activeTrackColor: _lGreenColor,
+    inactiveTrackColor: _lSecondary2Color,
+    trackHeight: 1,
+    thumbColor: _lWhiteColor,
+    overlayColor: _lGreenColor.withAlpha(0x1f),
+  ),
 );
 
 final darkTheme = ThemeData(
@@ -190,5 +197,12 @@ final darkTheme = ThemeData(
     unselectedLabelStyle: TextStyle(
       color: _dSecondary2Color,
     ),
+  ),
+  sliderTheme: SliderThemeData(
+    activeTrackColor: _dGreenColor,
+    inactiveTrackColor: _dSecondary2Color,
+    trackHeight: 1,
+    thumbColor: _dWhiteColor,
+    overlayColor: _dGreenColor.withAlpha(0x1f),
   ),
 );

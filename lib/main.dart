@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
@@ -14,12 +15,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final list = SightListScreen(),
+        filters = FiltersScreen(),
         details = SightDetailsScreen(mocks[0]),
         visiting = VisitingScreen();
 
     // ignore: unused_local_variable
+    final screens = [list, filters, details, visiting];
+
+    // ignore: unused_local_variable
     final screensRow = Row(children: [
-      for (final s in [list, visiting, details]) Expanded(child: s),
+      for (final s in [filters, list, details]) Expanded(child: s),
     ]);
 
     return MaterialApp(
