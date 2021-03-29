@@ -1,3 +1,4 @@
+import 'package:places/domain/category.dart';
 import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'dart:math';
@@ -27,7 +28,7 @@ List<Sight> generateMocks() {
             (rand.nextDouble() - .5) * 180, (rand.nextDouble() - .5) * 360),
         url: Cutesum.randomImageUrl(),
         details: randomWords(10, 50),
-        type: randomWords(),
+        type: categories.keys.toList()[rand.nextInt(categories.length)],
       )
   ];
 }

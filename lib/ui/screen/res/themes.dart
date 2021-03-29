@@ -55,6 +55,16 @@ final lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _lSecondaryColor,
     ),
+    headline4: TextStyle(
+      inherit: false,
+      fontSize: 12,
+      color: _lSecondaryColor,
+    ),
+    headline5: TextStyle(
+      inherit: false,
+      fontSize: 12,
+      color: _lInactiveBlackColor,
+    ),
     headline6: TextStyle(
       inherit: false,
       fontSize: 16,
@@ -146,6 +156,16 @@ final darkTheme = ThemeData(
       fontSize: 24,
       fontWeight: FontWeight.bold,
       color: _dWhiteColor,
+    ),
+    headline4: TextStyle(
+      inherit: false,
+      fontSize: 12,
+      color: _dWhiteColor,
+    ),
+    headline5: TextStyle(
+      inherit: false,
+      fontSize: 12,
+      color: _dInactiveBlackColor,
     ),
     headline6: TextStyle(
       inherit: false,
