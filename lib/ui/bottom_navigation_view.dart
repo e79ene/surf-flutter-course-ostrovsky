@@ -14,6 +14,10 @@ class BottomNavigationView extends BottomNavigationBar {
               icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
               label: 'Хочу посетить / Посещенные места',
             ),
+            BottomNavigationBarItem(
+              icon: SvgIcon('res/figma/Icons/Icon/Settings.svg'),
+              label: 'Настройки',
+            ),
           ],
         );
 }

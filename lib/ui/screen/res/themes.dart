@@ -55,6 +55,11 @@ final lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _lSecondaryColor,
     ),
+    headline3: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      color: _lMainColor,
+    ),
     headline4: TextStyle(
       inherit: false,
       fontSize: 12,
@@ -157,6 +162,11 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _dWhiteColor,
     ),
+    headline3: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      color: _dWhiteColor,
+    ),
     headline4: TextStyle(
       inherit: false,
       fontSize: 12,
@@ -226,3 +236,5 @@ final darkTheme = ThemeData(
     overlayColor: _dGreenColor.withAlpha(0x1f),
   ),
 );
+
+final isDarkTheme = ValueNotifier(false);

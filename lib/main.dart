@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/filters_screen.dart';
+import 'package:places/ui/screen/res/settings_screen.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
@@ -11,16 +12,28 @@ void main() {
   runApp(App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    isDarkTheme.addListener(() => setState(() {}));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final list = SightListScreen(),
         filters = FiltersScreen(),
         details = SightDetailsScreen(mocks[0]),
+        settings = SettingsScreen(),
         visiting = VisitingScreen();
 
     // ignore: unused_local_variable
-    final screens = [list, filters, details, visiting];
+    final screens = [list, filters, details, settings, visiting];
 
     // ignore: unused_local_variable
     final screensRow = Row(children: [
@@ -28,24 +41,21 @@ class App extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      title: 'Заголовок',
-      theme: lightTheme,
-      // home: list,
-      //*
+      title: 'Интересные места',
+      theme: isDarkTheme.value ? darkTheme : lightTheme,
       home: Row(
         children: [
+          Expanded(
+            child: settings,
+          ),
           Expanded(
             child: filters,
           ),
           Expanded(
             child: list,
           ),
-          Expanded(
-            child: Theme(data: darkTheme, child: filters),
-          ),
         ],
       ),
-      // */
     );
   }
 }
