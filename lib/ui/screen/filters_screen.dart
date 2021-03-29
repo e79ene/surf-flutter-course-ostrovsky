@@ -71,10 +71,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 for (final e in categoryRow)
-                                  _Category(
-                                    name: e.key,
-                                    assetName: e.value,
-                                    checked: true,
+                                  InkWell(
+                                    onTap: () =>
+                                        sightsFinder.toggleCategory(e.key),
+                                    child: _Category(
+                                      name: e.key,
+                                      assetName: e.value,
+                                      checked: sightsFinder.hasCategory(e.key),
+                                    ),
                                   ),
                               ],
                             ),

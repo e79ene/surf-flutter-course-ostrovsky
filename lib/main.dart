@@ -32,13 +32,16 @@ class App extends StatelessWidget {
       theme: lightTheme,
       // home: list,
       //*
-      home: Column(
+      home: Row(
         children: [
           Expanded(
-            child: Theme(data: lightTheme, child: screensRow),
+            child: filters,
           ),
           Expanded(
-            child: Theme(data: darkTheme, child: screensRow),
+            child: list,
+          ),
+          Expanded(
+            child: Theme(data: darkTheme, child: filters),
           ),
         ],
       ),

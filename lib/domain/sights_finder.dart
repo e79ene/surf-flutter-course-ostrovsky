@@ -6,12 +6,16 @@ import 'package:places/mocks.dart';
 
 class SightsFinder extends ChangeNotifier {
   final paramatersNotifier = ChangeNotifier();
+  void _notifyParametersListeners() {
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    paramatersNotifier.notifyListeners();
+  }
 
   SightsFinder() {
     paramatersNotifier.addListener(() => _search());
   }
 
-  GeoPosition myLocation = GeoPositions.moscow;
+  static const GeoPosition myLocation = GeoPositions.moscow;
 
   static const minDistance = 100.0;
   static const maxDistance = 20000000.0;
@@ -22,8 +26,18 @@ class SightsFinder extends ChangeNotifier {
     if (d == _distance) return;
 
     _distance = d;
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-    paramatersNotifier.notifyListeners();
+    _notifyParametersListeners();
+  }
+
+  final Set<String> _categories = {};
+
+  bool hasCategory(String category) => _categories.contains(category);
+
+  void toggleCategory(String category) {
+    _categories.contains(category)
+        ? _categories.remove(category)
+        : _categories.add(category);
+    _notifyParametersListeners();
   }
 
   List<Sight> _result = [];
@@ -31,14 +45,20 @@ class SightsFinder extends ChangeNotifier {
 
   void _search() {
     final eq = const ListEquality<Sight>().equals;
-    final r = mocks
-        .where((sight) => myLocation.distanceTo(sight.geo) <= _distance)
-        .toList();
+    final r = mocks.where(_criteria).toList();
 
     if (eq(r, _result)) return;
 
     _result = r;
     notifyListeners();
+  }
+
+  bool _criteria(Sight sight) {
+    final inRange = myLocation.distanceTo(sight.geo) <= _distance;
+    final inCategory =
+        _categories.isEmpty ? true : _categories.contains(sight.type);
+
+    return inRange && inCategory;
   }
 }
 
