@@ -13,13 +13,14 @@ class SightsFinder extends ChangeNotifier {
 
   SightsFinder() {
     paramatersNotifier.addListener(() => _search());
+    _search();
   }
 
   static const GeoPosition myLocation = GeoPositions.moscow;
 
   static const minDistance = 100.0;
   static const maxDistance = 20000000.0;
-  double _distance = minDistance;
+  double _distance = maxDistance;
 
   double get distance => _distance;
   set distance(double d) {

@@ -1,46 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/ui/image_loading_progress.dart';
+import 'package:places/ui/image_loader.dart';
 
-class SightCard extends StatelessWidget {
+class SightCard extends StatefulWidget {
   final Sight sight;
   final List<Widget> actions;
   final Widget afterTitle;
+  final VoidCallback? onTap;
 
   SightCard(
     this.sight, {
     required this.actions,
     required this.afterTitle,
+    this.onTap,
   });
+
+  @override
+  _SightCardState createState() => _SightCardState();
+}
+
+class _SightCardState extends State<SightCard> {
+  late final ImageLoader loader;
+
+  @override
+  void initState() {
+    loader = ImageLoader(widget.sight.url, onProgress: () => setState(() {}));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      height: 198,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: OverflowBox(
-          maxHeight: double.infinity,
-          alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Stack(children: [
-                Image.network(
-                  sight.url,
-                  height: 96,
-                  width: double.infinity,
+    return InkWell(
+      onTap: widget.onTap,
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Ink(
+              height: 96,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                image: DecorationImage(
+                  image: loader.provider,
                   fit: BoxFit.cover,
-                  loadingBuilder: imageLoadingProgress,
                 ),
+              ),
+              child: Stack(children: [
+                if (!loader.loaded)
+                  Center(
+                      child: CircularProgressIndicator(value: loader.progress)),
                 Positioned(
                   top: 16,
                   left: 16,
                   child: Text(
-                    sight.type,
+                    widget.sight.type,
                     style: theme.accentTextTheme.headline6,
                   ),
                 ),
@@ -49,26 +65,30 @@ class SightCard extends StatelessWidget {
                   right: 8,
                   child: IconTheme(
                     data: theme.accentIconTheme,
-                    child: Row(children: actions),
+                    child: Row(children: widget.actions),
                   ),
                 ),
               ]),
-              Container(
+            ),
+            Ink(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(16)),
                 color: Theme.of(context).cardColor,
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      sight.name,
-                      style: theme.textTheme.headline6,
-                    ),
-                    afterTitle,
-                  ],
-                ),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    widget.sight.name,
+                    style: theme.textTheme.headline6,
+                  ),
+                  widget.afterTitle,
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

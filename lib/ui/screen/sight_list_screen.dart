@@ -35,10 +35,11 @@ class _SightListScreenState extends State<SightListScreen> {
                     actions: [
                       IconButton(
                         icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
-                        onPressed: () {},
+                        onPressed: () => print('Heart'),
                       ),
                     ],
-                    afterTitle: Text(sight.details),
+                    afterTitle: Text(sight.shortDescription),
+                    onTap: () => print('Card in SightListScreen'),
                   ),
                 )
             ],

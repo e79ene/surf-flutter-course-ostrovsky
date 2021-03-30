@@ -37,25 +37,14 @@ class _AppState extends State<App> {
 
     // ignore: unused_local_variable
     final screensRow = Row(children: [
-      for (final s in [filters, list, details]) Expanded(child: s),
+      for (final s in [list, visiting, visiting]) Expanded(child: s),
     ]);
 
     return MaterialApp(
       title: 'Интересные места',
       theme: isDarkTheme.value ? darkTheme : lightTheme,
-      home: Row(
-        children: [
-          Expanded(
-            child: settings,
-          ),
-          Expanded(
-            child: filters,
-          ),
-          Expanded(
-            child: list,
-          ),
-        ],
-      ),
+      home: screensRow,
+      // home: filters,
     );
   }
 }

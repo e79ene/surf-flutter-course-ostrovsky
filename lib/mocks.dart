@@ -5,7 +5,7 @@ import 'dart:math';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';
 
-final mocks = generateMocks(1000);
+final mocks = generateMocks(10);
 
 Random rand = new Random();
 

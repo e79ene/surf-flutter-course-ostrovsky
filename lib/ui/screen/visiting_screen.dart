@@ -53,6 +53,7 @@ class VisitingScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              onTap: () => print('Card planned'),
             ),
           ),
           _VisitingList(
@@ -89,6 +90,7 @@ class VisitingScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              onTap: () => print('Card visited'),
             ),
           ),
         ]),
