@@ -98,6 +98,7 @@ final lightTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       primary: _lGreenColor,
       onPrimary: _lWhiteColor,
+      elevation: 0,
       minimumSize: Size(0, 48),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: TextStyle(
@@ -239,6 +240,7 @@ final darkTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       primary: _dGreenColor,
       onPrimary: _dWhiteColor,
+      elevation: 0,
       minimumSize: Size.fromHeight(48),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: TextStyle(

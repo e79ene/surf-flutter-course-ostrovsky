@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/geo_position.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class AddSightScreen extends StatefulWidget {
@@ -10,41 +13,50 @@ class _AddSightScreenState extends State<AddSightScreen> {
   _AddSightScreenState() {
     details = _Field(
       title: 'описание',
+      onValidChange: () => setState(() {}),
       minLines: 3,
       next: null,
     );
 
     lon = _Field(
       title: 'долгота',
-      keyboardType: TextInputType.number,
+      onValidChange: () => setState(() {}),
+      validator: _rangeValidator(-180, 360),
       next: details,
     );
 
     lat = _Field(
       title: 'широта',
-      keyboardType: TextInputType.number,
+      onValidChange: () => setState(() {}),
+      validator: _rangeValidator(-90, 90),
       next: lon,
     );
 
     name = _Field(
       title: 'название',
+      onValidChange: () => setState(() {}),
       autofocus: true,
       next: lat,
     );
+
+    _fields = [name, lat, lon, details];
   }
 
   late final _Field name;
   late final _Field lat;
   late final _Field lon;
   late final _Field details;
+  late final List<_Field> _fields;
   final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    for (final field in [name, lat, lon, details]) field.focus.dispose();
+    for (final field in _fields) field.dispose();
 
     super.dispose();
   }
+
+  bool get isValid => _fields.every((field) => field.isValid);
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +117,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         onPressed: () => throw UnimplementedError(),
                       ),
                       name.build(),
-                      Row(children: [
-                        Expanded(child: lat.build()),
-                        SizedBox(width: 16),
-                        Expanded(child: lon.build()),
-                      ]),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: lat.build()),
+                          SizedBox(width: 16),
+                          Expanded(child: lon.build()),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Align(
@@ -133,6 +148,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: ElevatedButton(
                 child: Text('СОЗДАТЬ'),
+                style: isValid
+                    ? null
+                    : ElevatedButton.styleFrom(
+                        primary: theme.cardColor,
+                        onPrimary: theme.textTheme.headline5!.color,
+                      ),
                 onPressed: () {
                   if (formKey.currentState!.validate()) saveSight();
                 },
@@ -145,7 +166,16 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   void saveSight() {
-    throw UnimplementedError();
+    sightRepo.saveSight(Sight(
+      name.controller.text,
+      geo: GeoPosition(
+        double.parse(lat.controller.text),
+        double.parse(lon.controller.text),
+      ),
+      url: sightRepo.absentUrl,
+      details: details.controller.text,
+      type: '<N/A>',
+    ));
   }
 }
 
@@ -154,32 +184,50 @@ class _Field {
   _Field({
     required this.title,
     this.autofocus = false,
-    this.keyboardType,
     this.minLines,
+    this.validator,
     required this.next,
-  });
+    required VoidCallback onValidChange,
+  }) : _effectiveValidator = validator ?? nonEmptyValidator {
+    _validNotifier = ValueNotifier(isValid);
+    _validNotifier.addListener(onValidChange);
+    controller.addListener(() => _validNotifier.value = isValid);
+  }
 
+  final controller = TextEditingController();
   final focus = FocusNode();
   final String title;
   final bool autofocus;
-  final TextInputType? keyboardType;
   final int? minLines;
+  final FormFieldValidator<String>? validator;
+  final FormFieldValidator<String> _effectiveValidator;
   final _Field? next;
+  late final ValueNotifier<bool> _validNotifier;
+
+  void dispose() {
+    focus.dispose();
+    controller.dispose();
+  }
+
+  bool get isValid => _effectiveValidator(controller.text) == null;
 
   Widget build() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _FieldTitle(title),
-        TextField(
+        TextFormField(
           autofocus: autofocus,
+          controller: controller,
           focusNode: focus,
-          keyboardType: keyboardType,
           onEditingComplete: next != null
               ? () => next!.focus.requestFocus()
               : () => focus.unfocus(),
           textInputAction:
               next != null ? TextInputAction.next : TextInputAction.done,
+          validator: _effectiveValidator,
+          keyboardType:
+              validator != null ? TextInputType.number : TextInputType.text,
           minLines: minLines,
           maxLines: minLines == null ? 1 : null,
           decoration: InputDecoration(
@@ -189,7 +237,26 @@ class _Field {
       ],
     );
   }
+
+  static String? nonEmptyValidator(String? s) =>
+      (s == null || s.isEmpty) ? 'Введите значение' : null;
 }
+
+String? Function(String?) _rangeValidator(double min, double max) =>
+    (String? s) {
+      late final double d;
+
+      try {
+        d = double.parse(s!);
+      } catch (e) {
+        return 'Нужно число';
+      }
+
+      if (d < min) return 'Не меньше $min';
+      if (d > max) return 'Не бельше $max';
+
+      return null;
+    };
 
 class _FieldTitle extends StatelessWidget {
   const _FieldTitle(

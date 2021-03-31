@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
+import 'package:places/domain/sight_repo.dart';
 
 class SightsFinder extends ChangeNotifier {
   final paramatersNotifier = ChangeNotifier();
@@ -13,6 +13,7 @@ class SightsFinder extends ChangeNotifier {
 
   SightsFinder() {
     paramatersNotifier.addListener(() => _search());
+    sightRepo.addListener(() => _search());
     _search();
   }
 
@@ -46,7 +47,7 @@ class SightsFinder extends ChangeNotifier {
 
   void _search() {
     final eq = const ListEquality<Sight>().equals;
-    final r = mocks.where(_criteria).toList();
+    final r = sightRepo.all.where(_criteria).toList();
 
     if (eq(r, _result)) return;
 

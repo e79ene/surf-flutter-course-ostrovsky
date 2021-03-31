@@ -5,14 +5,12 @@ import 'dart:math';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';
 
-final mocks = generateMocks(10);
+Random _rand = new Random();
 
-Random rand = new Random();
-
-String randomWords([int from = 1, int to = 0]) {
+String _randomWords([int from = 1, int to = 0]) {
   var num = from;
   if (from < to) {
-    num = from + rand.nextInt(to - from + 1);
+    num = from + _rand.nextInt(to - from + 1);
   }
 
   final sentence = Cutesum.loremCutesum(words: num);
@@ -23,12 +21,12 @@ List<Sight> generateMocks(int count) {
   return [
     for (var i = 0; i < count; i++)
       Sight(
-        randomWords(1, 4),
+        _randomWords(1, 4),
         geo: GeoPosition(
-            (rand.nextDouble() - .5) * 180, (rand.nextDouble() - .5) * 360),
+            (_rand.nextDouble() - .5) * 180, (_rand.nextDouble() - .5) * 360),
         url: Cutesum.randomImageUrl(),
-        details: randomWords(10, 50),
-        type: categories.keys.toList()[rand.nextInt(categories.length)],
+        details: _randomWords(10, 50),
+        type: categories.keys.toList()[_rand.nextInt(categories.length)],
       )
   ];
 }

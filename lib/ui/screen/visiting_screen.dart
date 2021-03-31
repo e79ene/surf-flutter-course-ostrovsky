@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
+import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/svg_icon.dart';
@@ -20,11 +20,7 @@ class VisitingScreen extends StatelessWidget {
         ),
         body: TabBarView(children: [
           _VisitingList(
-            sights: mocks
-                .asMap()
-                .entries
-                .where((e) => e.key % 2 == 1)
-                .map((e) => e.value),
+            sights: sightRepo.planned,
             makeSightView: (sight) => SightCard(
               sight,
               actions: [
@@ -57,11 +53,7 @@ class VisitingScreen extends StatelessWidget {
             ),
           ),
           _VisitingList(
-            sights: mocks
-                .asMap()
-                .entries
-                .where((e) => e.key % 2 == 0)
-                .map((e) => e.value),
+            sights: sightRepo.visited,
             makeSightView: (sight) => SightCard(
               sight,
               actions: [

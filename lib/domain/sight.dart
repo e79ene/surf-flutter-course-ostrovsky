@@ -1,4 +1,5 @@
 import 'package:places/domain/geo_position.dart';
+import 'package:places/domain/string_utils.dart';
 
 class Sight {
   const Sight(
@@ -15,7 +16,7 @@ class Sight {
   final String details;
   final String type;
 
-  String get shortDescription => details.substring(0, 20);
+  String get shortDescription => details.left(20);
 
   @override
   String toString() {

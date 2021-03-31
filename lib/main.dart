@@ -1,6 +1,6 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:places/mocks.dart';
+import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/res/settings_screen.dart';
@@ -29,7 +29,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final list = SightListScreen(),
         filters = FiltersScreen(),
-        details = SightDetailsScreen(mocks[0]),
+        details = SightDetailsScreen(sightRepo.all.first),
         settings = SettingsScreen(),
         add = AddSightScreen(),
         visiting = VisitingScreen();
@@ -39,19 +39,13 @@ class _AppState extends State<App> {
 
     // ignore: unused_local_variable
     final screensRow = Row(children: [
-      for (final s in [list, visiting, visiting]) Expanded(child: s),
+      for (final s in [add, list]) Expanded(child: s),
     ]);
 
     return MaterialApp(
       title: 'Интересные места',
       theme: isDarkTheme.value ? darkTheme : lightTheme,
-      // home: screensRow,
-      home: Row(
-        children: [
-          Expanded(child: add),
-          Expanded(child: Theme(data: darkTheme, child: add)),
-        ],
-      ),
+      home: screensRow,
     );
   }
 }
