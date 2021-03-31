@@ -18,6 +18,8 @@ class _SightListScreenState extends State<SightListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: _Bar(
         title: 'Список\nинтересных мест',
@@ -44,6 +46,25 @@ class _SightListScreenState extends State<SightListScreen> {
                 )
             ],
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(),
+          gradient: LinearGradient(colors: [
+            theme.primaryColorLight,
+            theme.primaryColor,
+          ]),
+        ),
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.transparent,
+          icon: SvgIcon('res/figma/Icons/Icon/Plus.svg'),
+          label: Text(
+            'НОВОЕ МЕСТО',
+            style: theme.elevatedButtonTheme.style!.textStyle!.resolve({}),
+          ),
+          onPressed: () => UnimplementedError(),
         ),
       ),
       bottomNavigationBar: BottomNavigationView(),

@@ -9,7 +9,6 @@ const _lRedColor = Color(0xFFEF4343);
 const _lSecondary2Color = Color(0xFF7C7E92);
 const _lSecondaryColor = Color(0xFF3B3E5B);
 const _lWhiteColor = Color(0xFFFFFFFF);
-// ignore: unused_element
 const _lYellowColor = Color(0xFFFCDD3D);
 
 const _dDarkColor = Color(0xFF1A1A20);
@@ -20,11 +19,12 @@ const _dRedColor = Color(0xFFCF2A2A);
 const _dSecondary2Color = Color(0xFF7C7E92);
 const _dSecondaryColor = Color(0xFF3B3E5B);
 const _dWhiteColor = Color(0xFFFFFFFF);
-// ignore: unused_element
 const _dYellowColor = Color(0xFFFFE769);
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
+  primaryColor: _lGreenColor,
+  primaryColorLight: _lYellowColor,
   canvasColor: _lWhiteColor,
   scaffoldBackgroundColor: _lWhiteColor,
   cardColor: _lBackgroundColor,
@@ -32,6 +32,12 @@ final lightTheme = ThemeData(
   errorColor: _lRedColor,
   accentColor: _lGreenColor,
   accentTextTheme: TextTheme(
+    button: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: _lGreenColor,
+    ),
     headline6: TextStyle(
       inherit: false,
       fontWeight: FontWeight.bold,
@@ -76,6 +82,17 @@ final lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _lSecondaryColor,
     ),
+    bodyText1: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: _lSecondary2Color,
+    ),
+    bodyText2: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      color: _lSecondary2Color,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -85,6 +102,7 @@ final lightTheme = ThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,
+        fontSize: 14,
       ),
     ),
   ),
@@ -128,10 +146,26 @@ final lightTheme = ThemeData(
     thumbColor: _lWhiteColor,
     overlayColor: _lGreenColor.withAlpha(0x1f),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    isDense: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: new BorderSide(color: _lGreenColor.withOpacity(0.5)),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: _lWhiteColor,
+  ),
 );
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
+  primaryColor: _dGreenColor,
+  primaryColorLight: _dYellowColor,
   scaffoldBackgroundColor: _dMainColor,
   canvasColor: _dMainColor,
   cardColor: _dDarkColor,
@@ -139,6 +173,12 @@ final darkTheme = ThemeData(
   errorColor: _dRedColor,
   accentColor: _dGreenColor,
   accentTextTheme: TextTheme(
+    button: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: _dGreenColor,
+    ),
     headline6: TextStyle(
       inherit: false,
       fontWeight: FontWeight.bold,
@@ -183,6 +223,17 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: _dWhiteColor,
     ),
+    bodyText1: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: _dSecondary2Color,
+    ),
+    bodyText2: TextStyle(
+      inherit: false,
+      fontSize: 16,
+      color: _dSecondary2Color,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -192,6 +243,7 @@ final darkTheme = ThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,
+        fontSize: 14,
       ),
     ),
   ),
@@ -234,6 +286,20 @@ final darkTheme = ThemeData(
     trackHeight: 1,
     thumbColor: _dWhiteColor,
     overlayColor: _dGreenColor.withAlpha(0x1f),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    isDense: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: new BorderSide(color: _dGreenColor.withOpacity(0.5)),
+    ),
+    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: _dWhiteColor,
   ),
 );
 
