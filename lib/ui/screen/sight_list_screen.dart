@@ -4,6 +4,7 @@ import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightListScreen extends StatefulWidget {
@@ -23,8 +24,16 @@ class _SightListScreenState extends State<SightListScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: _Bar(
-        title: 'Список\nинтересных мест',
+      appBar: MyAppBar(
+        titleWidget: PreferredSize(
+          preferredSize: Size.fromHeight(136),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 16),
+            alignment: Alignment.bottomLeft,
+            child:
+                Text('Список\nинтересных мест', style: theme.text.largeTitle),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -88,31 +97,4 @@ class _AddSightButton extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Bar extends StatelessWidget implements PreferredSizeWidget {
-  static const height = 136.0;
-  final String title;
-
-  _Bar({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      padding: EdgeInsets.all(16),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 32,
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Настройки')),
+      appBar: MyAppBar(title: 'Настройки'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(

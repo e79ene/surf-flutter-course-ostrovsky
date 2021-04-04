@@ -4,6 +4,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class AddSightScreen extends StatefulWidget {
@@ -65,102 +66,72 @@ class _AddSightScreenState extends State<AddSightScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: MyAppBar(
+        backLabel: 'Отмена',
+        title: 'Новое место',
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        TextButton(
-                          child: Text(
-                            'Отмена',
-                            style: theme.text.text,
-                          ),
-                          onPressed: () => throw UnimplementedError(),
-                        ),
-                        Expanded(child: Container()),
-                      ],
-                    ),
-                  ),
-                  Text(
-                    'Новое место',
-                    style: theme.appBarTheme.titleTextStyle,
-                  ),
-                  Expanded(child: Container()),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _FieldTitle('категория'),
+                TextButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _FieldTitle('категория'),
-                      TextButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Не выбрано',
+                      Text(
+                        'Не выбрано',
                               style: theme.text.text
                                   .withColor(theme.color.secondary2),
-                            ),
-                            SvgIcon('res/figma/Icons/Icon/View.svg'),
-                          ],
-                        ),
-                        onPressed: () => throw UnimplementedError(),
                       ),
-                      name.build(),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: lat.build()),
-                          SizedBox(width: 16),
-                          Expanded(child: lon.build()),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: TextButton(
-                            child: Text('Указать на карте'),
-                            style: theme.textButtonGreen,
-                            onPressed: () => throw UnimplementedError(),
-                          ),
-                        ),
-                      ),
-                      details.build(),
+                      SvgIcon('res/figma/Icons/Icon/View.svg'),
                     ],
                   ),
+                  onPressed: () => throw UnimplementedError(),
                 ),
-              ),
+                name.build(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: lat.build()),
+                    SizedBox(width: 16),
+                    Expanded(child: lon.build()),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      child: Text('Указать на карте'),
+                      style: theme.textButtonGreen,
+                      onPressed: () => throw UnimplementedError(),
+                    ),
+                  ),
+                ),
+                details.build(),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: ElevatedButton(
-                child: Text('СОЗДАТЬ'),
-                style: isValid
-                    ? null
-                    : ElevatedButton.styleFrom(
-                        primary: theme.color.card,
-                        onPrimary: theme.color.inactiveBlack,
-                      ),
-                onPressed: () {
-                  if (formKey.currentState!.validate()) saveSight();
-                },
-              ),
-            ),
-          ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ElevatedButton(
+          child: Text('СОЗДАТЬ'),
+          style: isValid
+              ? null
+              : ElevatedButton.styleFrom(
+                  primary: theme.color.card,
+                  onPrimary: theme.color.inactiveBlack,
+                ),
+          onPressed: () {
+            if (formKey.currentState!.validate()) saveSight();
+          },
         ),
       ),
     );

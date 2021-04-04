@@ -10,16 +10,18 @@ class MyBackButton extends StatelessWidget {
     return ElevatedButton(
       child: SvgIcon('res/figma/Icons/Icon/Arrow.svg'),
       style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
         primary: theme.color.background,
-        onPrimary: theme.bottomNavigationBarTheme.selectedItemColor,
-        elevation: 0,
+        onPrimary: theme.color.title,
         fixedSize: Size.square(32),
         minimumSize: Size.square(32),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+      ).copyWith(
+        elevation: MaterialStateProperty.all(0),
       ),
-      onPressed: () {},
+      onPressed: () => Navigator.maybePop(context),
     );
   }
 }

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/category.dart';
 import 'package:places/domain/sights_finder.dart';
-import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/screen/widget/my_app_bar.dart';
 
 class FiltersScreen extends StatefulWidget {
   @override
@@ -28,94 +28,81 @@ class _FiltersScreenState extends State<FiltersScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Material(
-      child: Padding(
+    return Scaffold(
+      appBar: MyAppBar(
+        title: '',
+        trailing: TextButton(
+          child: Text('Очистить'),
+          style: TextButton.styleFrom(
+            primary: theme.color.green,
+          ),
+          onPressed: () => throw UnimplementedError(),
+        ),
+      ),
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyBackButton(),
-                  TextButton(
-                    child: Text('Очистить'),
-                    style: theme.textButtonGreen,
-                    onPressed: () => throw UnimplementedError(),
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Text(
+                  'Категории',
+                  style: theme.text.superSmallInactive,
+                ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+              Column(
+                children: [
+                  for (final categoryRow
+                      in _splitList(categories.entries.toList(), 3))
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                        'Категории',
-                        style: theme.text.superSmallInactive,
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        for (final categoryRow
-                            in _splitList(categories.entries.toList(), 3))
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                for (final e in categoryRow)
-                                  InkWell(
-                                    onTap: () =>
-                                        sightsFinder.toggleCategory(e.key),
-                                    child: _Category(
-                                      name: e.key,
-                                      assetName: e.value,
-                                      checked: sightsFinder.hasCategory(e.key),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.only(bottom: 40),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text('Расстояние'),
-                          Text(
-                            'от XXX до $km км',
-                            style: TextStyle(color: theme.color.secondary2),
-                          ),
+                          for (final e in categoryRow)
+                            InkWell(
+                              onTap: () => sightsFinder.toggleCategory(e.key),
+                              child: _Category(
+                                name: e.key,
+                                assetName: e.value,
+                                checked: sightsFinder.hasCategory(e.key),
+                              ),
+                            ),
                         ],
                       ),
                     ),
-                    Slider(
-                      value: distanceToSlider(sightsFinder.distance),
-                      min: distanceToSlider(SightsFinder.minDistance),
-                      max: distanceToSlider(SightsFinder.maxDistance),
-                      onChanged: (s) =>
-                          sightsFinder.distance = sliderToDistance(s),
-                    )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Расстояние'),
+                    Text(
+                      'от XXX до $km км',
+                      style: TextStyle(color: theme.color.secondary2),
+                    ),
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: ElevatedButton(
-                child: Text('ПОКАЗАТЬ (${sightsFinder.result.length})'),
-                onPressed: () {},
-              ),
-            ),
-          ],
+              Slider(
+                value: distanceToSlider(sightsFinder.distance),
+                min: distanceToSlider(SightsFinder.minDistance),
+                max: distanceToSlider(SightsFinder.maxDistance),
+                onChanged: (s) => sightsFinder.distance = sliderToDistance(s),
+              )
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ElevatedButton(
+          child: Text('ПОКАЗАТЬ (${sightsFinder.result.length})'),
+          onPressed: () => UnimplementedError(),
         ),
       ),
     );

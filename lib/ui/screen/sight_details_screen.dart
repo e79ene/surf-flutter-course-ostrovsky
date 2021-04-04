@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
-import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsScreen extends StatelessWidget {
@@ -16,26 +16,19 @@ class SightDetailsScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: MyAppBar(title: '', transparent: true),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.network(
-                    _sight.url,
-                    fit: BoxFit.cover,
-                    loadingBuilder: imageLoadingProgress,
-                  ),
-                ),
-                Positioned(
-                  top: 36,
-                  left: 16,
-                  child: MyBackButton(),
-                ),
-              ],
+            AspectRatio(
+              aspectRatio: 1,
+              child: Image.network(
+                _sight.url,
+                fit: BoxFit.cover,
+                loadingBuilder: imageLoadingProgress,
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(20),
