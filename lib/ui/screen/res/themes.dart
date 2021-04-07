@@ -21,288 +21,315 @@ const _dSecondaryColor = Color(0xFF3B3E5B);
 const _dWhiteColor = Color(0xFFFFFFFF);
 const _dYellowColor = Color(0xFFFFE769);
 
-final lightTheme = ThemeData(
-  brightness: Brightness.light,
-  primaryColor: _lGreenColor,
-  primaryColorLight: _lYellowColor,
-  canvasColor: _lWhiteColor,
-  scaffoldBackgroundColor: _lWhiteColor,
-  cardColor: _lBackgroundColor,
-  disabledColor: _lSecondary2Color,
-  errorColor: _lRedColor,
-  accentColor: _lGreenColor,
-  accentTextTheme: TextTheme(
-    button: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: _lGreenColor,
-    ),
-    headline6: TextStyle(
-      inherit: false,
-      fontWeight: FontWeight.bold,
-      color: _lWhiteColor,
-    ),
-  ),
-  accentIconTheme: IconThemeData(
-    color: _lWhiteColor,
-  ),
-  textTheme: TextTheme(
-    // SightDetailsScreen/_sight.type
-    headline1: TextStyle(
-      inherit: false,
-      fontWeight: FontWeight.bold,
-      color: _lSecondaryColor,
-    ),
-    // SightDetailsScreen/_sight.name
-    headline2: TextStyle(
-      inherit: false,
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color: _lSecondaryColor,
-    ),
-    headline3: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      color: _lMainColor,
-    ),
-    headline4: TextStyle(
-      inherit: false,
-      fontSize: 12,
-      color: _lSecondaryColor,
-    ),
-    headline5: TextStyle(
-      inherit: false,
-      fontSize: 12,
-      color: _lInactiveBlackColor,
-    ),
-    headline6: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.bold,
-      color: _lSecondaryColor,
-    ),
-    bodyText1: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: _lSecondary2Color,
-    ),
-    bodyText2: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      color: _lSecondary2Color,
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      primary: _lGreenColor,
-      onPrimary: _lWhiteColor,
-      elevation: 0,
-      minimumSize: Size(0, 48),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      textStyle: TextStyle(
+class Themes {
+  static final light = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: _lGreenColor,
+    primaryColorLight: _lYellowColor,
+    canvasColor: _lWhiteColor,
+    scaffoldBackgroundColor: _lWhiteColor,
+    cardColor: _lBackgroundColor,
+    disabledColor: _lSecondary2Color,
+    errorColor: _lRedColor,
+    accentColor: _lGreenColor,
+    accentTextTheme: TextTheme(
+      button: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: _lGreenColor,
+      ),
+      headline6: TextStyle(
+        inherit: false,
         fontWeight: FontWeight.bold,
-        fontSize: 14,
+        color: _lWhiteColor,
       ),
     ),
-  ),
-  textButtonTheme: TextButtonThemeData(
-    style: TextButton.styleFrom(
-      primary: _lSecondaryColor,
-      onSurface: _lInactiveBlackColor,
+    accentIconTheme: IconThemeData(
+      color: _lWhiteColor,
     ),
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: _lWhiteColor,
-    elevation: 0,
-    centerTitle: true,
     textTheme: TextTheme(
-      headline6: TextStyle(
+      // SightDetailsScreen/_sight.type
+      headline1: TextStyle(
+        inherit: false,
+        fontWeight: FontWeight.bold,
+        color: _lSecondaryColor,
+      ),
+      // SightDetailsScreen/_sight.name
+      headline2: TextStyle(
+        inherit: false,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: _lSecondaryColor,
+      ),
+      headline3: TextStyle(
+        inherit: false,
+        fontSize: 16,
         color: _lMainColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
       ),
-    ),
-  ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    showSelectedLabels: false,
-    showUnselectedLabels: false,
-    selectedItemColor: _lMainColor,
-  ),
-  tabBarTheme: TabBarTheme(
-    labelColor: _lSecondaryColor,
-    labelStyle: TextStyle(
-      color: _lWhiteColor,
-    ),
-    unselectedLabelColor: _lBackgroundColor,
-    unselectedLabelStyle: TextStyle(
-      color: _lInactiveBlackColor,
-    ),
-  ),
-  sliderTheme: SliderThemeData(
-    activeTrackColor: _lGreenColor,
-    inactiveTrackColor: _lSecondary2Color,
-    trackHeight: 1,
-    thumbColor: _lWhiteColor,
-    overlayColor: _lGreenColor.withAlpha(0x1f),
-  ),
-  inputDecorationTheme: InputDecorationTheme(
-    isDense: true,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: new BorderSide(color: _lGreenColor.withOpacity(0.5)),
-    ),
-    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-  ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    foregroundColor: _lWhiteColor,
-  ),
-);
-
-final darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  primaryColor: _dGreenColor,
-  primaryColorLight: _dYellowColor,
-  scaffoldBackgroundColor: _dMainColor,
-  canvasColor: _dMainColor,
-  cardColor: _dDarkColor,
-  disabledColor: _dSecondary2Color,
-  errorColor: _dRedColor,
-  accentColor: _dGreenColor,
-  accentTextTheme: TextTheme(
-    button: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: _dGreenColor,
-    ),
-    headline6: TextStyle(
-      inherit: false,
-      fontWeight: FontWeight.bold,
-      color: _dWhiteColor,
-    ),
-  ),
-  accentIconTheme: IconThemeData(
-    color: _dWhiteColor,
-  ),
-  textTheme: TextTheme(
-    // SightDetailsScreen/_sight.type
-    headline1: TextStyle(
-      inherit: false,
-      fontWeight: FontWeight.bold,
-      color: _dSecondary2Color,
-    ),
-    // SightDetailsScreen/_sight.name
-    headline2: TextStyle(
-      inherit: false,
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color: _dWhiteColor,
-    ),
-    headline3: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      color: _dWhiteColor,
-    ),
-    headline4: TextStyle(
-      inherit: false,
-      fontSize: 12,
-      color: _dWhiteColor,
-    ),
-    headline5: TextStyle(
-      inherit: false,
-      fontSize: 12,
-      color: _dInactiveBlackColor,
-    ),
-    headline6: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.bold,
-      color: _dWhiteColor,
-    ),
-    bodyText1: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: _dSecondary2Color,
-    ),
-    bodyText2: TextStyle(
-      inherit: false,
-      fontSize: 16,
-      color: _dSecondary2Color,
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      primary: _dGreenColor,
-      onPrimary: _dWhiteColor,
-      elevation: 0,
-      minimumSize: Size.fromHeight(48),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      textStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
+      headline4: TextStyle(
+        inherit: false,
+        fontSize: 12,
+        color: _lSecondaryColor,
       ),
-    ),
-  ),
-  textButtonTheme: TextButtonThemeData(
-    style: TextButton.styleFrom(
-      primary: _dWhiteColor,
-      onSurface: _dInactiveBlackColor,
-    ),
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: _dMainColor,
-    elevation: 0,
-    centerTitle: true,
-    textTheme: TextTheme(
+      headline5: TextStyle(
+        inherit: false,
+        fontSize: 12,
+        color: _lInactiveBlackColor,
+      ),
       headline6: TextStyle(
-        color: _dWhiteColor,
-        fontSize: 18,
+        inherit: false,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: _lSecondaryColor,
+      ),
+      bodyText1: TextStyle(
+        inherit: false,
+        fontSize: 16,
         fontWeight: FontWeight.w500,
+        color: _lSecondary2Color,
+      ),
+      bodyText2: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        color: _lSecondary2Color,
+      ),
+      caption: TextStyle(
+        inherit: false,
+        fontSize: 32,
+        height: 36 / 32,
+        fontWeight: FontWeight.bold,
+        color: _lMainColor,
       ),
     ),
-  ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    showSelectedLabels: false,
-    showUnselectedLabels: false,
-    selectedItemColor: _dWhiteColor,
-  ),
-  tabBarTheme: TabBarTheme(
-    labelColor: _dWhiteColor,
-    labelStyle: TextStyle(
-      color: _dSecondaryColor,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: _lGreenColor,
+        onPrimary: _lWhiteColor,
+        elevation: 0,
+        minimumSize: Size(0, 48),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
     ),
-    unselectedLabelColor: _dDarkColor,
-    unselectedLabelStyle: TextStyle(
-      color: _dSecondary2Color,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        primary: _lSecondaryColor,
+        onSurface: _lInactiveBlackColor,
+      ),
     ),
-  ),
-  sliderTheme: SliderThemeData(
-    activeTrackColor: _dGreenColor,
-    inactiveTrackColor: _dSecondary2Color,
-    trackHeight: 1,
-    thumbColor: _dWhiteColor,
-    overlayColor: _dGreenColor.withAlpha(0x1f),
-  ),
-  inputDecorationTheme: InputDecorationTheme(
-    isDense: true,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
+    appBarTheme: AppBarTheme(
+      backgroundColor: _lWhiteColor,
+      elevation: 0,
+      centerTitle: true,
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          color: _lMainColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: new BorderSide(color: _dGreenColor.withOpacity(0.5)),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor: _lMainColor,
     ),
-    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-  ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    foregroundColor: _dWhiteColor,
-  ),
-);
+    tabBarTheme: TabBarTheme(
+      labelColor: _lSecondaryColor,
+      labelStyle: TextStyle(
+        color: _lWhiteColor,
+      ),
+      unselectedLabelColor: _lBackgroundColor,
+      unselectedLabelStyle: TextStyle(
+        color: _lInactiveBlackColor,
+      ),
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: _lGreenColor,
+      inactiveTrackColor: _lSecondary2Color,
+      trackHeight: 1,
+      thumbColor: _lWhiteColor,
+      overlayColor: _lGreenColor.withAlpha(0x1f),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: _lGreenColor.withOpacity(0.5)),
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: _lWhiteColor,
+    ),
+  );
 
-final isDarkTheme = ValueNotifier(false);
+  static final dark = ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: _dGreenColor,
+    primaryColorLight: _dYellowColor,
+    scaffoldBackgroundColor: _dMainColor,
+    canvasColor: _dMainColor,
+    cardColor: _dDarkColor,
+    disabledColor: _dSecondary2Color,
+    errorColor: _dRedColor,
+    accentColor: _dGreenColor,
+    accentTextTheme: TextTheme(
+      button: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: _dGreenColor,
+      ),
+      headline6: TextStyle(
+        inherit: false,
+        fontWeight: FontWeight.bold,
+        color: _dWhiteColor,
+      ),
+    ),
+    accentIconTheme: IconThemeData(
+      color: _dWhiteColor,
+    ),
+    textTheme: TextTheme(
+      // SightDetailsScreen/_sight.type
+      headline1: TextStyle(
+        inherit: false,
+        fontWeight: FontWeight.bold,
+        color: _dSecondary2Color,
+      ),
+      // SightDetailsScreen/_sight.name
+      headline2: TextStyle(
+        inherit: false,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: _dWhiteColor,
+      ),
+      headline3: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        color: _dWhiteColor,
+      ),
+      headline4: TextStyle(
+        inherit: false,
+        fontSize: 12,
+        color: _dWhiteColor,
+      ),
+      headline5: TextStyle(
+        inherit: false,
+        fontSize: 12,
+        color: _dInactiveBlackColor,
+      ),
+      headline6: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: _dWhiteColor,
+      ),
+      bodyText1: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: _dSecondary2Color,
+      ),
+      bodyText2: TextStyle(
+        inherit: false,
+        fontSize: 16,
+        color: _dSecondary2Color,
+      ),
+      caption: TextStyle(
+        inherit: false,
+        fontSize: 32,
+        height: 36 / 32,
+        fontWeight: FontWeight.bold,
+        color: _dWhiteColor,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: _dGreenColor,
+        onPrimary: _dWhiteColor,
+        elevation: 0,
+        minimumSize: Size.fromHeight(48),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        primary: _dWhiteColor,
+        onSurface: _dInactiveBlackColor,
+      ),
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: _dMainColor,
+      elevation: 0,
+      centerTitle: true,
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          color: _dWhiteColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor: _dWhiteColor,
+    ),
+    tabBarTheme: TabBarTheme(
+      labelColor: _dWhiteColor,
+      labelStyle: TextStyle(
+        color: _dSecondaryColor,
+      ),
+      unselectedLabelColor: _dDarkColor,
+      unselectedLabelStyle: TextStyle(
+        color: _dSecondary2Color,
+      ),
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: _dGreenColor,
+      inactiveTrackColor: _dSecondary2Color,
+      trackHeight: 1,
+      thumbColor: _dWhiteColor,
+      overlayColor: _dGreenColor.withAlpha(0x1f),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: _dGreenColor.withOpacity(0.5)),
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: _dWhiteColor,
+    ),
+  );
+}
+
+class ThemeSwitcher {
+  void addListener(VoidCallback onSwitch) => _isDark.addListener(onSwitch);
+
+  final _isDark = ValueNotifier(false);
+
+  bool get isDark => _isDark.value;
+  set isDark(bool v) => _isDark.value = v;
+
+  ThemeData get theme => isDark ? Themes.dark : Themes.light;
+}
+
+final themeSwitcher = ThemeSwitcher();

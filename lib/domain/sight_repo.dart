@@ -5,7 +5,7 @@ import 'package:places/mocks.dart';
 final sightRepo = SightRepo();
 
 class SightRepo extends ChangeNotifier {
-  final _mocks = generateMocks(1);
+  final _mocks = generateMocks(10);
   final absentUrl =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png';
 

@@ -12,7 +12,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
-    isDarkTheme.addListener(() => setState(() {}));
+    themeSwitcher.addListener(() => setState(() {}));
     super.initState();
   }
 
@@ -34,10 +34,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: theme.textTheme.headline3,
                 ),
                 CupertinoSwitch(
-                  value: isDarkTheme.value,
+                  value: themeSwitcher.isDark,
                   trackColor: theme.textTheme.headline5!.color,
                   activeColor: theme.accentColor,
-                  onChanged: (v) => isDarkTheme.value = v,
+                  onChanged: (v) => themeSwitcher.isDark = v,
                 ),
               ],
             ),
