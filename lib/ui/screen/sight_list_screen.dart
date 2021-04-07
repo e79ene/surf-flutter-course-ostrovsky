@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
+import 'package:places/ui/screen/theme/text_kit.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -40,8 +42,10 @@ class _SightListScreenState extends State<SightListScreen> {
                         onPressed: () => print('Heart'),
                       ),
                     ],
-                    afterTitle: Text(sight.shortDescription),
-                    onTap: () => print('Card in SightListScreen'),
+                    afterTitle: Text(
+                      sight.shortDescription,
+                      style: theme.text.small.withColor(theme.color.secondary2),
+                    ),
                   ),
                 )
             ],
@@ -49,25 +53,39 @@ class _SightListScreenState extends State<SightListScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        decoration: ShapeDecoration(
-          shape: StadiumBorder(),
-          gradient: LinearGradient(colors: [
-            theme.primaryColorLight,
-            theme.primaryColor,
-          ]),
-        ),
-        child: FloatingActionButton.extended(
-          backgroundColor: Colors.transparent,
-          icon: SvgIcon('res/figma/Icons/Icon/Plus.svg'),
-          label: Text(
-            'НОВОЕ МЕСТО',
-            style: theme.elevatedButtonTheme.style!.textStyle!.resolve({}),
-          ),
-          onPressed: () => UnimplementedError(),
-        ),
-      ),
+      floatingActionButton: _AddSightButton(),
       bottomNavigationBar: BottomNavigationView(),
+    );
+  }
+}
+
+class _AddSightButton extends StatelessWidget {
+  const _AddSightButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      decoration: ShapeDecoration(
+        shape: StadiumBorder(),
+        gradient: LinearGradient(colors: [
+          theme.color.yellow,
+          theme.color.green,
+        ]),
+      ),
+      child: FloatingActionButton.extended(
+        backgroundColor: Colors.transparent,
+        icon: SvgIcon(
+          'res/figma/Icons/Icon/Plus.svg',
+          color: theme.color.white,
+        ),
+        label: Text(
+          'НОВОЕ МЕСТО',
+          style: theme.elevatedButtonTheme.style!.textStyle!.resolve({}),
+        ),
+        onPressed: () => UnimplementedError(),
+      ),
     );
   }
 }

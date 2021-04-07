@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -40,12 +40,12 @@ class VisitingScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(
                       'Запланировано на 12 окт. 2020',
-                      style: TextStyle(color: theme.accentColor),
+                      style: TextStyle(color: theme.color.green),
                     ),
                   ),
                   Text(
                     'закрыто до 09:00',
-                    style: TextStyle(color: theme.disabledColor),
+                    style: TextStyle(color: theme.color.secondary2),
                   ),
                 ],
               ),
@@ -73,12 +73,12 @@ class VisitingScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Text(
                       'Цель достигнута 12 окт. 2020',
-                      style: TextStyle(color: theme.disabledColor),
+                      style: TextStyle(color: theme.color.secondary2),
                     ),
                   ),
                   Text(
                     'закрыто до 09:00',
-                    style: TextStyle(color: theme.disabledColor),
+                    style: TextStyle(color: theme.color.secondary2),
                   ),
                 ],
               ),
@@ -122,7 +122,7 @@ class _TabBarState extends State<_TabBar> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).tabBarTheme;
+    final theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -134,13 +134,11 @@ class _TabBarState extends State<_TabBar> {
               child: ElevatedButton(
                 child: Text(widget.labels[i]),
                 style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: isSelected(i)
-                      ? theme.labelColor
-                      : theme.unselectedLabelColor,
+                  primary:
+                      isSelected(i) ? theme.color.foreground : theme.color.card,
                   onPrimary: isSelected(i)
-                      ? theme.labelStyle!.color
-                      : theme.unselectedLabelStyle!.color,
+                      ? theme.color.background
+                      : theme.color.secondary2,
                   minimumSize: Size.fromHeight(40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

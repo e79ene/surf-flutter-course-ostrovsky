@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/category.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/my_back_button.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 
 class FiltersScreen extends StatefulWidget {
   @override
@@ -41,10 +42,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   MyBackButton(),
                   TextButton(
                     child: Text('Очистить'),
-                    style: TextButton.styleFrom(
-                      primary: theme.accentColor,
-                    ),
-                    onPressed: () {},
+                    style: theme.textButtonGreen,
+                    onPressed: () => throw UnimplementedError(),
                   ),
                 ],
               ),
@@ -58,7 +57,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Text(
                         'Категории',
-                        style: theme.textTheme.headline5,
+                        style: theme.text.superSmallInactive,
                       ),
                     ),
                     Column(
@@ -93,7 +92,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           Text('Расстояние'),
                           Text(
                             'от XXX до $km км',
-                            style: TextStyle(color: theme.disabledColor),
+                            style: TextStyle(color: theme.color.secondary2),
                           ),
                         ],
                       ),
@@ -161,10 +160,7 @@ class _Category extends StatelessWidget {
                 ),
             ],
           ),
-          Text(
-            name,
-            style: theme.textTheme.headline4,
-          ),
+          Text(name, style: theme.text.superSmall),
         ],
       ),
     );

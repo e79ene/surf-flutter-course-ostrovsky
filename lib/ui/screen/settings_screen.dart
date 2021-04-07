@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
-import 'package:places/ui/screen/res/themes.dart';
+import 'package:places/ui/screen/theme/text_kit.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -31,12 +32,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Тёмная тема',
-                  style: theme.textTheme.headline3,
+                  style: theme.text.text.withColor(theme.color.title),
                 ),
                 CupertinoSwitch(
                   value: themeSwitcher.isDark,
-                  trackColor: theme.textTheme.headline5!.color,
-                  activeColor: theme.accentColor,
+                  trackColor: theme.color.inactiveBlack,
+                  activeColor: theme.color.green,
                   onChanged: (v) => themeSwitcher.isDark = v,
                 ),
               ],
@@ -47,14 +48,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Смотреть туториал',
-                  style: theme.textTheme.headline3,
+                  style: theme.text.text.withColor(theme.color.title),
                 ),
                 TextButton(
                   child: SvgIcon('res/figma/Icons/Icon/info.svg'),
-                  style: TextButton.styleFrom(
-                    primary: theme.accentColor,
-                  ),
-                  onPressed: () {},
+                  style: theme.textButtonGreen,
+                  onPressed: () => throw UnimplementedError(),
                 ),
               ],
             ),

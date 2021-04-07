@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loader.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -57,14 +57,16 @@ class _SightCardState extends State<SightCard> {
                   left: 16,
                   child: Text(
                     widget.sight.type,
-                    style: theme.accentTextTheme.headline6,
+                    style: theme.text.smallBold,
                   ),
                 ),
                 Positioned(
                   top: 5,
                   right: 8,
                   child: IconTheme(
-                    data: theme.accentIconTheme,
+                    data: IconThemeData(
+                      color: theme.color.white,
+                    ),
                     child: Row(children: widget.actions),
                   ),
                 ),
@@ -75,14 +77,14 @@ class _SightCardState extends State<SightCard> {
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(16)),
-                color: Theme.of(context).cardColor,
+                color: theme.color.card,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     widget.sight.name,
-                    style: theme.textTheme.headline6,
+                    style: theme.text.text,
                   ),
                   widget.afterTitle,
                 ],

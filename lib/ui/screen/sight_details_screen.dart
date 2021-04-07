@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
 import 'package:places/ui/my_back_button.dart';
+import 'package:places/ui/screen/theme/text_kit.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsScreen extends StatelessWidget {
@@ -42,7 +44,7 @@ class SightDetailsScreen extends StatelessWidget {
                 children: [
                   Text(
                     _sight.name,
-                    style: theme.textTheme.headline2,
+                    style: theme.text.title,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 20),
@@ -50,19 +52,19 @@ class SightDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           _sight.type,
-                          style: theme.textTheme.headline1,
+                          style: theme.text.smallBold
+                              .withColor(theme.color.secondary),
                         ),
                         SizedBox(width: 20),
                         Text(
                           'Закрыто до 09:00',
-                          style: TextStyle(
-                              color: theme
-                                  .tabBarTheme.unselectedLabelStyle!.color),
+                          style: TextStyle(color: theme.color.inactiveBlack),
                         ),
                       ],
                     ),
                   ),
-                  Text(_sight.details),
+                  Text(_sight.details,
+                      style: TextStyle(color: theme.color.foreground)),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: ElevatedButton.icon(
@@ -84,7 +86,7 @@ class SightDetailsScreen extends StatelessWidget {
                         TextButton.icon(
                           icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
                           label: Text('В избранное'),
-                          onPressed: () => print('В избранное'),
+                          onPressed: () => throw UnimplementedError(),
                         ),
                       ],
                     ),

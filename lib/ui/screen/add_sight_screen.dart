@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
+import 'package:places/ui/screen/theme/text_kit.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class AddSightScreen extends StatefulWidget {
@@ -79,7 +81,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         TextButton(
                           child: Text(
                             'Отмена',
-                            style: theme.textTheme.bodyText1,
+                            style: theme.text.text,
                           ),
                           onPressed: () => throw UnimplementedError(),
                         ),
@@ -89,7 +91,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   ),
                   Text(
                     'Новое место',
-                    style: theme.appBarTheme.textTheme!.headline6,
+                    style: theme.appBarTheme.titleTextStyle,
                   ),
                   Expanded(child: Container()),
                 ],
@@ -109,7 +111,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           children: [
                             Text(
                               'Не выбрано',
-                              style: theme.textTheme.bodyText1,
+                              style: theme.text.text
+                                  .withColor(theme.color.secondary2),
                             ),
                             SvgIcon('res/figma/Icons/Icon/View.svg'),
                           ],
@@ -130,10 +133,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton(
-                            child: Text(
-                              'Указать на карте',
-                              style: theme.accentTextTheme.button,
-                            ),
+                            child: Text('Указать на карте'),
+                            style: theme.textButtonGreen,
                             onPressed: () => throw UnimplementedError(),
                           ),
                         ),
@@ -151,8 +152,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 style: isValid
                     ? null
                     : ElevatedButton.styleFrom(
-                        primary: theme.cardColor,
-                        onPrimary: theme.textTheme.headline5!.color,
+                        primary: theme.color.card,
+                        onPrimary: theme.color.inactiveBlack,
                       ),
                 onPressed: () {
                   if (formKey.currentState!.validate()) saveSight();
@@ -226,6 +227,7 @@ class _Field {
           textInputAction:
               next != null ? TextInputAction.next : TextInputAction.done,
           validator: _effectiveValidator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType:
               validator != null ? TextInputType.number : TextInputType.text,
           minLines: minLines,
@@ -274,7 +276,7 @@ class _FieldTitle extends StatelessWidget {
       padding: const EdgeInsets.only(top: 24, bottom: 12),
       child: Text(
         label.toUpperCase(),
-        style: theme.textTheme.headline5,
+        style: theme.text.superSmallInactive,
       ),
     );
   }

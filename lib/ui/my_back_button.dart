@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class MyBackButton extends StatelessWidget {
@@ -9,7 +10,7 @@ class MyBackButton extends StatelessWidget {
     return ElevatedButton(
       child: SvgIcon('res/figma/Icons/Icon/Arrow.svg'),
       style: ElevatedButton.styleFrom(
-        primary: theme.canvasColor,
+        primary: theme.color.background,
         onPrimary: theme.bottomNavigationBarTheme.selectedItemColor,
         elevation: 0,
         fixedSize: Size.square(32),
