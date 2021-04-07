@@ -3,7 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/theme/themes.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -50,7 +50,6 @@ class VisitingScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              onTap: () => print('Card planned'),
             ),
           ),
           _VisitingList(
@@ -83,7 +82,6 @@ class VisitingScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              onTap: () => print('Card visited'),
             ),
           ),
         ]),

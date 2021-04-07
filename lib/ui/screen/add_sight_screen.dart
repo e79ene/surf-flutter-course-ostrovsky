@@ -85,8 +85,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     children: [
                       Text(
                         'Не выбрано',
-                              style: theme.text.text
-                                  .withColor(theme.color.secondary2),
+                        style:
+                            theme.text.text.withColor(theme.color.secondary2),
                       ),
                       SvgIcon('res/figma/Icons/Icon/View.svg'),
                     ],

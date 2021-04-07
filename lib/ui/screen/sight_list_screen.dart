@@ -3,8 +3,9 @@ import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
+import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightListScreen extends StatefulWidget {
@@ -34,13 +35,14 @@ class _SightListScreenState extends State<SightListScreen> {
                 Text('Список\nинтересных мест', style: theme.text.largeTitle),
           ),
         ),
+        bottom: SearchBar(),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Column(
             children: [
-              for (var sight in sightsFinder.result)
+              for (var sight in sightsFinder.filtered)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: SightCard(

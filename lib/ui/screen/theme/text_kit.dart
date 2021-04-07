@@ -49,7 +49,7 @@ class TextKit {
         ),
         small = TextStyle(
           fontSize: 14,
-          color: color.error,
+          color: color.inactiveBlack,
           fontWeight: FontWeight.normal,
           height: 18 / 14,
         ),

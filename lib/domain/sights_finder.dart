@@ -12,9 +12,9 @@ class SightsFinder extends ChangeNotifier {
   }
 
   SightsFinder() {
-    paramatersNotifier.addListener(() => _search());
-    sightRepo.addListener(() => _search());
-    _search();
+    paramatersNotifier.addListener(() => _filter());
+    sightRepo.addListener(() => _filter());
+    _filter();
   }
 
   static const GeoPosition myLocation = GeoPositions.moscow;
@@ -42,16 +42,16 @@ class SightsFinder extends ChangeNotifier {
     _notifyParametersListeners();
   }
 
-  List<Sight> _result = [];
-  Iterable<Sight> get result => _result;
+  List<Sight> _filtered = [];
+  Iterable<Sight> get filtered => _filtered;
 
-  void _search() {
+  void _filter() {
     final eq = const ListEquality<Sight>().equals;
     final r = sightRepo.all.where(_criteria).toList();
 
-    if (eq(r, _result)) return;
+    if (eq(r, _filtered)) return;
 
-    _result = r;
+    _filtered = r;
     notifyListeners();
   }
 
@@ -62,6 +62,37 @@ class SightsFinder extends ChangeNotifier {
 
     return inRange && inCategory;
   }
+
+  Future<Iterable<Sight>> search(String searchString) async {
+    searchHistory._save(searchString);
+
+    return await Future.delayed(
+      Duration(seconds: 2),
+      () => _matched(searchString),
+    );
+  }
+
+  Iterable<Sight> _matched(String text) {
+    return _filtered.where((sight) =>
+        '${sight.type} ${sight.name} ${sight.details}'.contains(text));
+  }
+
+  final searchHistory = SearchHistory();
+}
+
+class SearchHistory {
+  Iterable<String> get strings => _strings;
+
+  void clear() => _strings.clear();
+
+  void _save(String searchString) {
+    remove(searchString);
+    _strings.insert(0, searchString);
+  }
+
+  final _strings = <String>[];
+
+  void remove(String searchString) => _strings.remove(searchString);
 }
 
 final sightsFinder = SightsFinder();

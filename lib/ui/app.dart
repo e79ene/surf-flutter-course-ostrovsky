@@ -3,6 +3,7 @@ import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/settings_screen.dart';
+import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
@@ -26,8 +27,7 @@ class _AppState extends State<App> {
       title: 'Интересные места',
       theme: themeSwitcher.theme,
       home: col([
-        row([settings, add, filters]),
-        row([list, visiting, details]),
+        row([search, list]),
       ]),
     );
   }
@@ -39,6 +39,7 @@ class _AppState extends State<App> {
       Column(children: [for (final c in children) Expanded(child: c)]);
 
   final list = SightListScreen(),
+      search = SightSearchScreen(),
       filters = FiltersScreen(),
       details = SightDetailsScreen(sightRepo.all.first),
       settings = SettingsScreen(),

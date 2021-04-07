@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loader.dart';
+import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/theme/themes.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
   final List<Widget> actions;
   final Widget afterTitle;
-  final VoidCallback? onTap;
 
   SightCard(
     this.sight, {
     required this.actions,
     required this.afterTitle,
-    this.onTap,
   });
 
   @override
@@ -34,7 +33,10 @@ class _SightCardState extends State<SightCard> {
     final theme = Theme.of(context);
 
     return InkWell(
-      onTap: widget.onTap,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => SightDetailsScreen(widget.sight)),
+      ),
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
