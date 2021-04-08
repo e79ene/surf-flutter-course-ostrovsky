@@ -11,9 +11,10 @@ class SightCard extends StatefulWidget {
 
   SightCard(
     this.sight, {
+    Key? key,
     required this.actions,
     required this.afterTitle,
-  });
+  }) : super(key: key);
 
   @override
   _SightCardState createState() => _SightCardState();

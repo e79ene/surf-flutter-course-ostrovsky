@@ -6,16 +6,28 @@ final sightRepo = SightRepo();
 
 class SightRepo extends ChangeNotifier {
   final _mocks = generateMocks(10);
+  late final List<Sight> planned;
+  late final List<Sight> visited;
   final absentUrl =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png';
 
+  SightRepo() : super() {
+    planned = _mocks
+        .asMap()
+        .entries
+        .where((e) => e.key.isOdd)
+        .map((e) => e.value)
+        .toList();
+
+    visited = _mocks
+        .asMap()
+        .entries
+        .where((e) => e.key.isEven)
+        .map((e) => e.value)
+        .toList();
+  }
+
   Iterable<Sight> get all => _mocks;
-
-  Iterable<Sight> get planned =>
-      _mocks.asMap().entries.where((e) => e.key % 2 == 1).map((e) => e.value);
-
-  Iterable<Sight> get visited =>
-      _mocks.asMap().entries.where((e) => e.key % 2 == 0).map((e) => e.value);
 
   void saveSight(Sight sight) {
     _mocks.add(sight);

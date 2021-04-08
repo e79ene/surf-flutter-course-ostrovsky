@@ -7,7 +7,12 @@ import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
-class VisitingScreen extends StatelessWidget {
+class VisitingScreen extends StatefulWidget {
+  @override
+  _VisitingScreenState createState() => _VisitingScreenState();
+}
+
+class _VisitingScreenState extends State<VisitingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -24,6 +29,7 @@ class VisitingScreen extends StatelessWidget {
             sights: sightRepo.planned,
             makeSightView: (sight) => SightCard(
               sight,
+              key: ObjectKey(sight),
               actions: [
                 IconButton(
                   icon: SvgIcon('res/figma/Icons/Icon/Calendar.svg'),
@@ -31,7 +37,8 @@ class VisitingScreen extends StatelessWidget {
                 ),
                 IconButton(
                   icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
-                  onPressed: () {},
+                  onPressed: () =>
+                      setState(() => sightRepo.planned.remove(sight)),
                 ),
               ],
               afterTitle: Column(
@@ -56,6 +63,7 @@ class VisitingScreen extends StatelessWidget {
             sights: sightRepo.visited,
             makeSightView: (sight) => SightCard(
               sight,
+              key: ObjectKey(sight),
               actions: [
                 IconButton(
                   icon: SvgIcon('res/figma/Icons/Icon/Share.svg'),
@@ -63,7 +71,8 @@ class VisitingScreen extends StatelessWidget {
                 ),
                 IconButton(
                   icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
-                  onPressed: () {},
+                  onPressed: () =>
+                      setState(() => sightRepo.visited.remove(sight)),
                 ),
               ],
               afterTitle: Column(
