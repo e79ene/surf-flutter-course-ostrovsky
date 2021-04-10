@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:lorem_cutesum/lorem_cutesum.dart';
 import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
+import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/screen/theme/text_kit.dart';
 import 'package:places/ui/screen/theme/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -13,6 +16,11 @@ class AddSightScreen extends StatefulWidget {
 }
 
 class _AddSightScreenState extends State<AddSightScreen> {
+  late final _Field name, lat, lon, details;
+  late final List<_Field> _fields;
+  final formKey = GlobalKey<FormState>();
+  final photoUrls = <String>[];
+
   _AddSightScreenState() {
     details = _Field(
       title: 'описание',
@@ -45,13 +53,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
     _fields = [name, lat, lon, details];
   }
 
-  late final _Field name;
-  late final _Field lat;
-  late final _Field lon;
-  late final _Field details;
-  late final List<_Field> _fields;
-  final formKey = GlobalKey<FormState>();
-
   @override
   void dispose() {
     for (final field in _fields) field.dispose();
@@ -78,6 +79,36 @@ class _AddSightScreenState extends State<AddSightScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SizedBox(height: 24),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => addPhoto(),
+                        child: Container(
+                          width: 72,
+                          height: 72,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: theme.color.green),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            size: 50,
+                            color: theme.color.green,
+                          ),
+                        ),
+                      ),
+                      for (final url in photoUrls)
+                        _Photo(
+                          url,
+                          onDeleteRequest: () =>
+                              setState(() => photoUrls.remove(url)),
+                        ),
+                    ],
+                  ),
+                ),
                 _FieldTitle('категория'),
                 TextButton(
                   child: Row(
@@ -148,6 +179,61 @@ class _AddSightScreenState extends State<AddSightScreen> {
       details: details.controller.text,
       type: '<N/A>',
     ));
+  }
+
+  addPhoto() => setState(() => photoUrls.insert(0, Cutesum.randomImageUrl()));
+}
+
+class _Photo extends StatefulWidget {
+  _Photo(this.url, {required this.onDeleteRequest}) : super(key: ValueKey(url));
+
+  final String url;
+  final VoidCallback onDeleteRequest;
+
+  @override
+  _PhotoState createState() => _PhotoState();
+}
+
+class _PhotoState extends State<_Photo> {
+  late final ImageLoader loader;
+
+  @override
+  void initState() {
+    loader = ImageLoader(widget.url, onProgress: () => setState(() {}));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dismissible(
+      onDismissed: (direction) => widget.onDeleteRequest(),
+      direction: DismissDirection.up,
+      key: ValueKey(widget.url),
+      child: Container(
+        margin: const EdgeInsets.only(left: 16),
+        width: 72,
+        height: 72,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          image: DecorationImage(
+            image: loader.provider,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: loader.loaded
+            ? Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  onPressed: () => widget.onDeleteRequest(),
+                  icon: SvgIcon(
+                    'res/figma/Icons/Icon/clear.svg',
+                    color: Theme.of(context).color.white,
+                  ),
+                ),
+              )
+            : Center(child: CircularProgressIndicator(value: loader.progress)),
+      ),
+    );
   }
 }
 
