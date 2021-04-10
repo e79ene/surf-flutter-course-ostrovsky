@@ -163,8 +163,8 @@ class _TabBarState extends State<_TabBar> {
   }
 }
 
-class _VisitingList extends StatelessWidget {
-  final Iterable<Sight> sights;
+class _VisitingList extends StatefulWidget {
+  final List<Sight> sights;
   final Widget Function(Sight) makeSightView;
 
   _VisitingList({
@@ -173,18 +173,41 @@ class _VisitingList extends StatelessWidget {
   });
 
   @override
+  _VisitingListState createState() => _VisitingListState();
+}
+
+class _VisitingListState extends State<_VisitingList> {
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
-          children: [
-            for (var sight in sights)
-              Padding(
+          children: widget.sights.map((sight) {
+            final card = widget.makeSightView(sight);
+            return DragTarget<Sight>(
+              onAccept: (draggedSight) => setState(() {
+                widget.sights
+                  ..remove(draggedSight)
+                  ..insert(widget.sights.indexOf(sight), draggedSight);
+              }),
+              builder: (context, candidateData, rejectedData) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: makeSightView(sight),
-              )
-          ],
+                child: LongPressDraggable<Sight>(
+                  axis: Axis.vertical,
+                  data: sight,
+                  child: card,
+                  childWhenDragging: Container(),
+                  feedback: Material(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width - 32,
+                      child: card,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
