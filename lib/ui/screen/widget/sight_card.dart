@@ -33,67 +33,69 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return InkWell(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => SightDetailsScreen(widget.sight)),
-      ),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Ink(
-              height: 96,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                image: DecorationImage(
+    return Material(
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) => SightDetailsScreen(widget.sight)),
+        ),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Ink(
+                height: 96,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                  image: DecorationImage(
                   image: loader.provider,
-                  fit: BoxFit.cover,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              child: Stack(children: [
+                child: Stack(children: [
                 if (!loader.loaded)
                   Center(
                       child: CircularProgressIndicator(value: loader.progress)),
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: Text(
-                    widget.sight.type,
-                    style: theme.text.smallBold,
-                  ),
-                ),
-                Positioned(
-                  top: 5,
-                  right: 8,
-                  child: IconTheme(
-                    data: IconThemeData(
-                      color: theme.color.white,
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    child: Text(
+                      widget.sight.type,
+                      style: theme.text.smallBold,
                     ),
-                    child: Row(children: widget.actions),
                   ),
+                  Positioned(
+                    top: 5,
+                    right: 8,
+                    child: IconTheme(
+                      data: IconThemeData(
+                        color: theme.color.white,
+                      ),
+                      child: Row(children: widget.actions),
+                    ),
+                  ),
+                ]),
+              ),
+              Ink(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(16)),
+                  color: theme.color.card,
                 ),
-              ]),
-            ),
-            Ink(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(16)),
-                color: theme.color.card,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      widget.sight.name,
+                      style: theme.text.text,
+                    ),
+                    widget.afterTitle,
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    widget.sight.name,
-                    style: theme.text.text,
-                  ),
-                  widget.afterTitle,
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

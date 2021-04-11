@@ -179,6 +179,8 @@ class _VisitingList extends StatefulWidget {
 class _VisitingListState extends State<_VisitingList> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -187,6 +189,8 @@ class _VisitingListState extends State<_VisitingList> {
             final card = widget.makeSightView(sight);
             return DragTarget<Sight>(
               onAccept: (draggedSight) => setState(() {
+                if (sight == draggedSight) return;
+
                 widget.sights
                   ..remove(draggedSight)
                   ..insert(widget.sights.indexOf(sight), draggedSight);
@@ -196,7 +200,14 @@ class _VisitingListState extends State<_VisitingList> {
                 child: LongPressDraggable<Sight>(
                   axis: Axis.vertical,
                   data: sight,
-                  child: card,
+                  child: Dismissible(
+                    key: ValueKey(sight),
+                    child: card,
+                    direction: DismissDirection.endToStart,
+                    background: buildDismissBackground(theme),
+                    onDismissed: (direction) =>
+                        setState(() => widget.sights.remove(sight)),
+                  ),
                   childWhenDragging: const SizedBox.shrink(),
                   feedback: Material(
                     child: SizedBox(
@@ -208,6 +219,35 @@ class _VisitingListState extends State<_VisitingList> {
               ),
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+
+  Container buildDismissBackground(ThemeData theme) {
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.color.red,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        alignment: Alignment.centerRight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgIcon(
+              'res/figma/Icons/Icon/Bucket.svg',
+              color: theme.color.white,
+            ),
+            Text(
+              'Удалить',
+              style: theme.text.superSmall.copyWith(
+                fontWeight: FontWeight.w500,
+                color: theme.color.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -26,7 +26,7 @@ extension MyTheme on ThemeData {
       brightness: brightness,
       scaffoldBackgroundColor: color.background,
       canvasColor: color.background,
-      errorColor: color.error,
+      errorColor: color.red,
       textSelectionTheme: TextSelectionThemeData(cursorColor: color.foreground),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
