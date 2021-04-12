@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/theme/color_kit.dart';
-import 'package:places/ui/screen/theme/text_kit.dart';
+import 'package:places/ui/res/color_kit.dart';
+import 'package:places/ui/res/text_kit.dart';
 
 class Themes {
   static ThemeData get light => MyTheme.fromKits(

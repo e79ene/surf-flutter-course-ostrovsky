@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/theme/color_kit.dart';
+import 'package:places/ui/res/color_kit.dart';
 
 extension MyTextStyle on TextStyle {
   TextStyle withColor(Color color) => copyWith(color: color);

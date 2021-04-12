@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
-import 'package:places/ui/screen/theme/text_kit.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/text_kit.dart';
+import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SearchBar extends StatelessWidget implements PreferredSizeWidget {

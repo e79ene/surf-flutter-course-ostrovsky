@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
-import 'package:places/ui/screen/theme/text_kit.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/text_kit.dart';
+import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 

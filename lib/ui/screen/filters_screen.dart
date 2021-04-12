@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/category.dart';
 import 'package:places/domain/sights_finder.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 
 class FiltersScreen extends StatefulWidget {

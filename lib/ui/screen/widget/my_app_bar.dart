@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/my_back_button.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/themes.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? backLabel;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class MyBackButton extends StatelessWidget {

@@ -5,8 +5,8 @@ import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/image_loader.dart';
-import 'package:places/ui/screen/theme/text_kit.dart';
-import 'package:places/ui/screen/theme/themes.dart';
+import 'package:places/ui/res/text_kit.dart';
+import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
