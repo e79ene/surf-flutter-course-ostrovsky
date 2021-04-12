@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/res/text_kit.dart';
@@ -48,7 +49,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
           width: 50,
           child: Center(
             child: SvgIcon(
-              'res/figma/Icons/Icon/Search.svg',
+              MyIcons.Search,
               color: theme.color.inactiveBlack,
             ),
           ),
@@ -90,7 +91,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
   IconButton buildFiltersButton(BuildContext context, ThemeData theme) {
     return IconButton(
       icon: SvgIcon(
-        'res/figma/Icons/Icon/Filter.svg',
+        MyIcons.Filter,
         color: theme.color.green,
       ),
       onPressed: () => Navigator.of(context).push(
@@ -101,7 +102,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
 
   IconButton buildClearButton(ThemeData theme) => IconButton(
         icon: SvgIcon(
-          'res/figma/Icons/Icon/clear.svg',
+          MyIcons.clear,
           color: theme.textButtonTheme.style!.foregroundColor!.resolve({}),
         ),
         onPressed: () => controller?.clear(),

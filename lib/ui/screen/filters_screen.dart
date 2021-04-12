@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/category.dart';
 import 'package:places/domain/sights_finder.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 
@@ -127,8 +128,6 @@ class _Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final assetMode = (theme.brightness == Brightness.dark) ? 'Black' : 'White';
-    final assetDir = 'res/figma/Icons/Catalog/$assetMode';
 
     return SizedBox(
       width: 96,
@@ -138,12 +137,16 @@ class _Category extends StatelessWidget {
         children: [
           Stack(
             children: [
-              SvgPicture.asset('$assetDir/$assetName.svg'),
+              SvgPicture.asset(
+                MyIcons.forCategory(theme.brightness, assetName),
+              ),
               if (checked)
                 Positioned(
                   bottom: -4,
                   right: -4,
-                  child: SvgPicture.asset('$assetDir/tick_choice.svg'),
+                  child: SvgPicture.asset(
+                    MyIcons.forCategory(theme.brightness, 'tick_choice'),
+                  ),
                 ),
             ],
           ),

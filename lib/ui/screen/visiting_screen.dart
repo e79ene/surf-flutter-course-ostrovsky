@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -32,11 +33,11 @@ class _VisitingScreenState extends State<VisitingScreen> {
               key: ObjectKey(sight),
               actions: [
                 IconButton(
-                  icon: SvgIcon('res/figma/Icons/Icon/Calendar.svg'),
+                  icon: SvgIcon(MyIcons.Calendar),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
+                  icon: SvgIcon(MyIcons.Close),
                   onPressed: () =>
                       setState(() => sightRepo.planned.remove(sight)),
                 ),
@@ -66,11 +67,11 @@ class _VisitingScreenState extends State<VisitingScreen> {
               key: ObjectKey(sight),
               actions: [
                 IconButton(
-                  icon: SvgIcon('res/figma/Icons/Icon/Share.svg'),
+                  icon: SvgIcon(MyIcons.Share),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: SvgIcon('res/figma/Icons/Icon/Close.svg'),
+                  icon: SvgIcon(MyIcons.Close),
                   onPressed: () =>
                       setState(() => sightRepo.visited.remove(sight)),
                 ),

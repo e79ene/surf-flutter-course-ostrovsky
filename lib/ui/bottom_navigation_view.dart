@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class BottomNavigationView extends BottomNavigationBar {
@@ -7,15 +8,15 @@ class BottomNavigationView extends BottomNavigationBar {
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              icon: SvgIcon('res/figma/Icons/Icon/List.svg'),
+              icon: SvgIcon(MyIcons.List),
               label: 'Список интересных мест',
             ),
             BottomNavigationBarItem(
-              icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
+              icon: SvgIcon(MyIcons.Heart),
               label: 'Хочу посетить / Посещенные места',
             ),
             BottomNavigationBarItem(
-              icon: SvgIcon('res/figma/Icons/Icon/Settings.svg'),
+              icon: SvgIcon(MyIcons.Settings),
               label: 'Настройки',
             ),
           ],

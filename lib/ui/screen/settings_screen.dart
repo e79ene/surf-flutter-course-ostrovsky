@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -52,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: theme.text.text.withColor(theme.color.title),
                 ),
                 TextButton(
-                  child: SvgIcon('res/figma/Icons/Icon/info.svg'),
+                  child: SvgIcon(MyIcons.info),
                   style: theme.textButtonGreen,
                   onPressed: () => throw UnimplementedError(),
                 ),

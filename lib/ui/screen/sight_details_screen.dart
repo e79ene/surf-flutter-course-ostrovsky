@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -61,7 +62,7 @@ class SightDetailsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: ElevatedButton.icon(
-                      icon: SvgIcon('res/figma/Icons/Icon/GO.svg'),
+                      icon: SvgIcon(MyIcons.GO),
                       label: Text('ПОСТРОИТЬ МАРШРУТ'),
                       onPressed: () => print('ПОСТРОИТЬ МАРШРУТ'),
                     ),
@@ -72,12 +73,12 @@ class SightDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         TextButton.icon(
-                          icon: SvgIcon('res/figma/Icons/Icon/Calendar.svg'),
+                          icon: SvgIcon(MyIcons.Calendar),
                           label: Text('Запланировать'),
                           onPressed: null,
                         ),
                         TextButton.icon(
-                          icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
+                          icon: SvgIcon(MyIcons.Heart),
                           label: Text('В избранное'),
                           onPressed: () => throw UnimplementedError(),
                         ),

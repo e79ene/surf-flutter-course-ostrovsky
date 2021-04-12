@@ -5,6 +5,7 @@ import 'package:places/domain/geo_position.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/image_loader.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -119,7 +120,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         style:
                             theme.text.text.withColor(theme.color.secondary2),
                       ),
-                      SvgIcon('res/figma/Icons/Icon/View.svg'),
+                      SvgIcon(MyIcons.View),
                     ],
                   ),
                   onPressed: () => throw UnimplementedError(),
@@ -226,7 +227,7 @@ class _PhotoState extends State<_Photo> {
                 child: IconButton(
                   onPressed: () => widget.onDeleteRequest(),
                   icon: SvgIcon(
-                    'res/figma/Icons/Icon/clear.svg',
+                    MyIcons.clear,
                     color: Theme.of(context).color.white,
                   ),
                 ),

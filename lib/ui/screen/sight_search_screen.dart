@@ -3,6 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
@@ -176,7 +177,7 @@ class _NotFound extends StatelessWidget {
             height: 48,
             width: 48,
             child: SvgIcon(
-              'res/figma/Icons/Icon/Search.svg',
+              MyIcons.Search,
               color: theme.color.inactiveBlack,
             ),
           ),
@@ -248,7 +249,7 @@ class _HistoryState extends State<_History> {
                 ),
                 IconButton(
                   icon: SvgIcon(
-                    'res/figma/Icons/Icon/Delete.svg',
+                    MyIcons.Delete,
                     color: theme.color.secondary2,
                   ),
                   onPressed: () => setState(() => history.remove(s)),

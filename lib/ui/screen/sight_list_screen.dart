@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
@@ -49,7 +50,7 @@ class _SightListScreenState extends State<SightListScreen> {
                     sight,
                     actions: [
                       IconButton(
-                        icon: SvgIcon('res/figma/Icons/Icon/Heart.svg'),
+                        icon: SvgIcon(MyIcons.Heart),
                         onPressed: () => print('Heart'),
                       ),
                     ],
@@ -88,7 +89,7 @@ class _AddSightButton extends StatelessWidget {
       child: FloatingActionButton.extended(
         backgroundColor: Colors.transparent,
         icon: SvgIcon(
-          'res/figma/Icons/Icon/Plus.svg',
+          MyIcons.Plus,
           color: theme.color.white,
         ),
         label: Text(

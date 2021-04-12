@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -8,7 +9,7 @@ class MyBackButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     return ElevatedButton(
-      child: SvgIcon('res/figma/Icons/Icon/Arrow.svg'),
+      child: SvgIcon(MyIcons.Arrow),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
         primary: theme.color.background,
