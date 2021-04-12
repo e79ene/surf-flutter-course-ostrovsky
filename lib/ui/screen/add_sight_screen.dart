@@ -96,7 +96,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           ),
                           child: Icon(
                             Icons.add,
-                            size: 50,
+                            size: 43,
                             color: theme.color.green,
                           ),
                         ),
