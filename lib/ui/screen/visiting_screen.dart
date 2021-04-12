@@ -197,7 +197,7 @@ class _VisitingListState extends State<_VisitingList> {
                   axis: Axis.vertical,
                   data: sight,
                   child: card,
-                  childWhenDragging: Container(),
+                  childWhenDragging: const SizedBox.shrink(),
                   feedback: Material(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width - 32,

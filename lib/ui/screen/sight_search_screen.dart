@@ -224,7 +224,7 @@ class _HistoryState extends State<_History> {
   Widget build(BuildContext context) {
     final history = sightsFinder.searchHistory;
 
-    if (history.strings.isEmpty) return Container();
+    if (history.strings.isEmpty) return const SizedBox.shrink();
 
     final theme = Theme.of(context);
 
