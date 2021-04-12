@@ -226,29 +226,27 @@ class _VisitingListState extends State<_VisitingList> {
 
   Container buildDismissBackground(ThemeData theme) {
     return Container(
+      padding: EdgeInsets.all(16),
+      alignment: Alignment.centerRight,
       decoration: BoxDecoration(
         color: theme.color.red,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        alignment: Alignment.centerRight,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgIcon(
-              'res/figma/Icons/Icon/Bucket.svg',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgIcon(
+            'res/figma/Icons/Icon/Bucket.svg',
+            color: theme.color.white,
+          ),
+          Text(
+            'Удалить',
+            style: theme.text.superSmall.copyWith(
+              fontWeight: FontWeight.w500,
               color: theme.color.white,
             ),
-            Text(
-              'Удалить',
-              style: theme.text.superSmall.copyWith(
-                fontWeight: FontWeight.w500,
-                color: theme.color.white,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
