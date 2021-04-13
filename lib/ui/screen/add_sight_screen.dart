@@ -185,7 +185,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         double.parse(lat.controller.text),
         double.parse(lon.controller.text),
       ),
-      url: sightRepo.absentUrl,
+      photoUrls: [sightRepo.absentUrl],
       details: details.controller.text,
       type: '<N/A>',
     ));

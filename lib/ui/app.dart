@@ -27,7 +27,7 @@ class _AppState extends State<App> {
       title: 'Интересные места',
       theme: themeSwitcher.theme,
       home: col([
-        row([list, visiting, add, filters]),
+        row([details]),
       ]),
     );
   }

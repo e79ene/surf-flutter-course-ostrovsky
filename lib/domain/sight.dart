@@ -5,14 +5,15 @@ class Sight {
   const Sight(
     this.name, {
     required this.geo,
-    required this.url,
+    required this.photoUrls,
     required this.details,
     required this.type,
   });
 
   final String name;
   final GeoPosition geo;
-  final String url;
+  final List<String> photoUrls;
+  String get url => photoUrls[0];
   final String details;
   final String type;
 

@@ -7,15 +7,17 @@ import 'package:lorem_cutesum/lorem_cutesum.dart';
 
 Random _rand = new Random();
 
-String _randomWords([int from = 1, int to = 0]) {
-  var num = from;
-  if (from < to) {
-    num = from + _rand.nextInt(to - from + 1);
-  }
+int _randomInt(int from, int to) =>
+    (from >= to) ? from : from + _rand.nextInt(to - from + 1);
 
-  final sentence = Cutesum.loremCutesum(words: num);
+String _randomWords([int from = 1, int to = 0]) {
+  final sentence = Cutesum.loremCutesum(words: _randomInt(from, to));
   return sentence.substring(0, sentence.length - 1);
 }
+
+List<String> _randomUrls(int count) => [
+    for (var i = 0; i < count; i++)  Cutesum.randomImageUrl(),
+  ];
 
 List<Sight> generateMocks(int count) {
   return [
@@ -24,7 +26,7 @@ List<Sight> generateMocks(int count) {
         _randomWords(1, 4),
         geo: GeoPosition(
             (_rand.nextDouble() - .5) * 180, (_rand.nextDouble() - .5) * 360),
-        url: Cutesum.randomImageUrl(),
+        photoUrls: _randomUrls(_randomInt(1, 4)),
         details: _randomWords(10, 50),
         type: categories.keys.toList()[_rand.nextInt(categories.length)],
       )
