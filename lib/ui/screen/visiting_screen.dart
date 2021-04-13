@@ -190,13 +190,7 @@ class _VisitingListState extends State<_VisitingList> {
           final card = widget.makeSightView(sight);
 
           return DragTarget<Sight>(
-            onAccept: (draggedSight) => setState(() {
-              if (sight == draggedSight) return;
-
-              widget.sights
-                ..remove(draggedSight)
-                ..insert(widget.sights.indexOf(sight), draggedSight);
-            }),
+            onAccept: _acceptDrag(sight),
             builder: (context, candidateData, rejectedData) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: LongPressDraggable<Sight>(
@@ -251,4 +245,12 @@ class _VisitingListState extends State<_VisitingList> {
       ),
     );
   }
+
+  _acceptDrag(Sight sight) => (draggedSight) => setState(() {
+        if (sight == draggedSight) return;
+
+        widget.sights
+          ..remove(draggedSight)
+          ..insert(widget.sights.indexOf(sight), draggedSight);
+      });
 }
