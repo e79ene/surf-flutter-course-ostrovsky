@@ -181,45 +181,46 @@ class _VisitingListState extends State<_VisitingList> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: widget.sights.map((sight) {
-            final card = widget.makeSightView(sight);
-            return DragTarget<Sight>(
-              onAccept: (draggedSight) => setState(() {
-                if (sight == draggedSight) return;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ListView.builder(
+        itemCount: widget.sights.length,
+        itemBuilder: (context, index) {
+          final sight = widget.sights[index];
+          final card = widget.makeSightView(sight);
 
-                widget.sights
-                  ..remove(draggedSight)
-                  ..insert(widget.sights.indexOf(sight), draggedSight);
-              }),
-              builder: (context, candidateData, rejectedData) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: LongPressDraggable<Sight>(
-                  axis: Axis.vertical,
-                  data: sight,
-                  child: Dismissible(
-                    key: ValueKey(sight),
+          return DragTarget<Sight>(
+            onAccept: (draggedSight) => setState(() {
+              if (sight == draggedSight) return;
+
+              widget.sights
+                ..remove(draggedSight)
+                ..insert(widget.sights.indexOf(sight), draggedSight);
+            }),
+            builder: (context, candidateData, rejectedData) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: LongPressDraggable<Sight>(
+                axis: Axis.vertical,
+                data: sight,
+                child: Dismissible(
+                  key: ValueKey(sight),
+                  child: card,
+                  direction: DismissDirection.endToStart,
+                  background: buildDismissBackground(theme),
+                  onDismissed: (direction) =>
+                      setState(() => widget.sights.remove(sight)),
+                ),
+                childWhenDragging: const SizedBox.shrink(),
+                feedback: Material(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width - 32,
                     child: card,
-                    direction: DismissDirection.endToStart,
-                    background: buildDismissBackground(theme),
-                    onDismissed: (direction) =>
-                        setState(() => widget.sights.remove(sight)),
-                  ),
-                  childWhenDragging: const SizedBox.shrink(),
-                  feedback: Material(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width - 32,
-                      child: card,
-                    ),
                   ),
                 ),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

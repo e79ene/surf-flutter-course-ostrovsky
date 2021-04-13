@@ -80,34 +80,21 @@ class _AddSightScreenState extends State<AddSightScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 24),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => addPhoto(),
-                        child: Container(
-                          width: 72,
-                          height: 72,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: theme.color.green),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.add,
-                            size: 43,
-                            color: theme.color.green,
-                          ),
-                        ),
-                      ),
-                      for (final url in photoUrls)
-                        _Photo(
-                          url,
-                          onDeleteRequest: () =>
-                              setState(() => photoUrls.remove(url)),
-                        ),
-                    ],
+                SizedBox(
+                  height: 96,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: photoUrls.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) return buildAddPhotoButton(theme);
+
+                      final url = photoUrls[index - 1];
+                      return _Photo(
+                        url,
+                        onDeleteRequest: () =>
+                            setState(() => photoUrls.remove(url)),
+                      );
+                    },
                   ),
                 ),
                 _FieldTitle('категория'),
@@ -169,6 +156,28 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
+  Widget buildAddPhotoButton(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: GestureDetector(
+        onTap: () => addPhoto(),
+        child: Container(
+          width: 72,
+          height: 72,
+          decoration: BoxDecoration(
+            border: Border.all(color: theme.color.green),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            Icons.add,
+            size: 43,
+            color: theme.color.green,
+          ),
+        ),
+      ),
+    );
+  }
+
   void saveSight() {
     sightRepo.saveSight(Sight(
       name.controller.text,
@@ -206,33 +215,37 @@ class _PhotoState extends State<_Photo> {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      onDismissed: (direction) => widget.onDeleteRequest(),
-      direction: DismissDirection.up,
-      key: ValueKey(widget.url),
-      child: Container(
-        margin: const EdgeInsets.only(left: 16),
-        width: 72,
-        height: 72,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-            image: loader.provider,
-            fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.only(top: 24),
+      child: Dismissible(
+        onDismissed: (direction) => widget.onDeleteRequest(),
+        direction: DismissDirection.up,
+        key: ValueKey(widget.url),
+        child: Container(
+          margin: const EdgeInsets.only(left: 16),
+          width: 72,
+          height: 72,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            image: DecorationImage(
+              image: loader.provider,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: loader.loaded
-            ? Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () => widget.onDeleteRequest(),
-                  icon: SvgIcon(
-                    MyIcons.clear,
-                    color: Theme.of(context).color.white,
+          child: loader.loaded
+              ? Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () => widget.onDeleteRequest(),
+                    icon: SvgIcon(
+                      MyIcons.clear,
+                      color: Theme.of(context).color.white,
+                    ),
                   ),
-                ),
-              )
-            : Center(child: CircularProgressIndicator(value: loader.progress)),
+                )
+              : Center(
+                  child: CircularProgressIndicator(value: loader.progress)),
+        ),
       ),
     );
   }

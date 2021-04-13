@@ -38,29 +38,25 @@ class _SightListScreenState extends State<SightListScreen> {
         ),
         bottom: SearchBar(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: Column(
-            children: [
-              for (var sight in sightsFinder.filtered)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: SightCard(
-                    sight,
-                    actions: [
-                      IconButton(
-                        icon: SvgIcon(MyIcons.Heart),
-                        onPressed: () => print('Heart'),
-                      ),
-                    ],
-                    afterTitle: Text(
-                      sight.shortDescription,
-                      style: theme.text.small.withColor(theme.color.secondary2),
-                    ),
-                  ),
-                )
-            ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: ListView.builder(
+          itemCount: sightsFinder.filtered.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: SightCard(
+              sightsFinder.filtered[index],
+              actions: [
+                IconButton(
+                  icon: SvgIcon(MyIcons.Heart),
+                  onPressed: () => print('Heart'),
+                ),
+              ],
+              afterTitle: Text(
+                sightsFinder.filtered[index].shortDescription,
+                style: theme.text.small.withColor(theme.color.secondary2),
+              ),
+            ),
           ),
         ),
       ),

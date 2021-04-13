@@ -43,7 +43,7 @@ class SightsFinder extends ChangeNotifier {
   }
 
   List<Sight> _filtered = [];
-  Iterable<Sight> get filtered => _filtered;
+  List<Sight> get filtered => _filtered;
 
   void _filter() {
     final eq = const ListEquality<Sight>().equals;

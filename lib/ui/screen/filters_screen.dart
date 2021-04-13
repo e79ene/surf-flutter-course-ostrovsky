@@ -42,61 +42,58 @@ class _FiltersScreenState extends State<FiltersScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: Text(
-                  'Категории',
-                  style: theme.text.superSmallInactive,
-                ),
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Text(
+                'Категории',
+                style: theme.text.superSmallInactive,
               ),
-              Column(
-                children: [
-                  for (final categoryRow
-                      in _splitList(categories.entries.toList(), 3))
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          for (final e in categoryRow)
-                            InkWell(
-                              onTap: () => sightsFinder.toggleCategory(e.key),
-                              child: _Category(
-                                name: e.key,
-                                assetName: e.value,
-                                checked: sightsFinder.hasCategory(e.key),
-                              ),
+            ),
+            Column(
+              children: [
+                for (final categoryRow
+                    in _splitList(categories.entries.toList(), 3))
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        for (final e in categoryRow)
+                          InkWell(
+                            onTap: () => sightsFinder.toggleCategory(e.key),
+                            child: _Category(
+                              name: e.key,
+                              assetName: e.value,
+                              checked: sightsFinder.hasCategory(e.key),
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
+                  ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Расстояние'),
+                  Text(
+                    'от XXX до $km км',
+                    style: TextStyle(color: theme.color.secondary2),
+                  ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Расстояние'),
-                    Text(
-                      'от XXX до $km км',
-                      style: TextStyle(color: theme.color.secondary2),
-                    ),
-                  ],
-                ),
-              ),
-              Slider(
-                value: distanceToSlider(sightsFinder.distance),
-                min: distanceToSlider(SightsFinder.minDistance),
-                max: distanceToSlider(SightsFinder.maxDistance),
-                onChanged: (s) => sightsFinder.distance = sliderToDistance(s),
-              )
-            ],
-          ),
+            ),
+            Slider(
+              value: distanceToSlider(sightsFinder.distance),
+              min: distanceToSlider(SightsFinder.minDistance),
+              max: distanceToSlider(SightsFinder.maxDistance),
+              onChanged: (s) => sightsFinder.distance = sliderToDistance(s),
+            )
+          ],
         ),
       ),
       bottomNavigationBar: Padding(
