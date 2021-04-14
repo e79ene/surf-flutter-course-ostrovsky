@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
+import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
-import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsScreen extends StatelessWidget {
@@ -17,20 +17,18 @@ class SightDetailsScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: MyAppBar(title: '', transparent: true),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: _Gallery(_sight.photoUrls),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 360,
+            collapsedHeight: 64,
+            flexibleSpace: _Gallery(_sight.photoUrls),
+            leading: Center(child: MyBackButton()),
           ),
-          Padding(
+          SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
                 Text(
                   _sight.name,
                   style: theme.text.title,
@@ -80,7 +78,7 @@ class SightDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
+              ]),
             ),
           ),
         ],

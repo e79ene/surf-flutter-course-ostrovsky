@@ -16,8 +16,8 @@ String _randomWords([int from = 1, int to = 0]) {
 }
 
 List<String> _randomUrls(int count) => [
-    for (var i = 0; i < count; i++)  Cutesum.randomImageUrl(),
-  ];
+      for (var i = 0; i < count; i++) Cutesum.randomImageUrl(),
+    ];
 
 List<Sight> generateMocks(int count) {
   return [
@@ -27,7 +27,7 @@ List<Sight> generateMocks(int count) {
         geo: GeoPosition(
             (_rand.nextDouble() - .5) * 180, (_rand.nextDouble() - .5) * 360),
         photoUrls: _randomUrls(_randomInt(1, 4)),
-        details: _randomWords(10, 50),
+        details: _randomWords(150, 300),
         type: categories.keys.toList()[_rand.nextInt(categories.length)],
       )
   ];
