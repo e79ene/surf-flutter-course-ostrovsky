@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class MyIcons {
-  static const IconDir = 'res/figma/Icons/Icon';
+  static const baseDir = 'res/figma/Icons';
+  static const IconDir = '$baseDir/Icon';
   static const Arrow = '$IconDir/Arrow.svg';
   static const Calendar = '$IconDir/Calendar.svg';
   static const clear = '$IconDir/clear.svg';
@@ -17,6 +18,9 @@ class MyIcons {
   static const Settings = '$IconDir/Settings.svg';
   static const Share = '$IconDir/Share.svg';
   static const View = '$IconDir/View.svg';
+  static const Tutorial1 = '$baseDir/Tutorial 1 frame.svg';
+  static const Tutorial2 = '$baseDir/Tutorial 2 frame.svg';
+  static const Tutorial3 = '$baseDir/Tutorial 3 frame.svg';
 
   static String forCategory(Brightness brightness, String assetName) =>
       'res/figma/Icons/Catalog/' +
