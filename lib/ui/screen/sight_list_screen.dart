@@ -5,7 +5,6 @@ import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
-import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -26,43 +25,78 @@ class _SightListScreenState extends State<SightListScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: MyAppBar(
-        titleWidget: PreferredSize(
-          preferredSize: Size.fromHeight(136),
-          child: Container(
-            padding: EdgeInsets.only(bottom: 16),
-            alignment: Alignment.bottomLeft,
-            child:
-                Text('Список\nинтересных мест', style: theme.text.largeTitle),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 152,
+            collapsedHeight: 56,
+            flexibleSpace: _ScalingBar(),
           ),
-        ),
-        bottom: SearchBar(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: ListView.builder(
-          itemCount: sightsFinder.filtered.length,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: SightCard(
-              sightsFinder.filtered[index],
-              actions: [
-                IconButton(
-                  icon: SvgIcon(MyIcons.Heart),
-                  onPressed: () => print('Heart'),
+          SliverPadding(
+            padding: EdgeInsets.all(16),
+            sliver: SliverToBoxAdapter(child: SearchBar()),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: SightCard(
+                    sightsFinder.filtered[index],
+                    actions: [
+                      IconButton(
+                        icon: SvgIcon(MyIcons.Heart),
+                        onPressed: () => throw UnimplementedError(),
+                      ),
+                    ],
+                    afterTitle: Text(
+                      sightsFinder.filtered[index].shortDescription,
+                      style: theme.text.small.withColor(theme.color.secondary2),
+                    ),
+                  ),
                 ),
-              ],
-              afterTitle: Text(
-                sightsFinder.filtered[index].shortDescription,
-                style: theme.text.small.withColor(theme.color.secondary2),
+                childCount: sightsFinder.filtered.length,
               ),
             ),
           ),
-        ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _AddSightButton(),
       bottomNavigationBar: BottomNavigationView(),
+    );
+  }
+}
+
+class _ScalingBar extends StatelessWidget {
+  const _ScalingBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final FlexibleSpaceBarSettings settings =
+        context.dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
+    final double deltaExtent = settings.maxExtent - settings.minExtent;
+
+    // 0.0 -> Expanded
+    // 1.0 -> Collapsed
+    final double t =
+        (1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent)
+            .clamp(0.0, 1.0);
+
+    return Container(
+      padding: EdgeInsets.all(16),
+      alignment:
+          Alignment.lerp(Alignment.bottomLeft, Alignment.bottomCenter, t),
+      child: Text(
+        'Список интересных мест',
+        style: TextStyle.lerp(theme.text.largeTitle, theme.text.subTitle, t),
+      ),
     );
   }
 }
