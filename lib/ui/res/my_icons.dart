@@ -13,6 +13,7 @@ class MyIcons {
   static const Heart = '$IconDir/Heart.svg';
   static const info = '$IconDir/info.svg';
   static const List = '$IconDir/List.svg';
+  static const Map_Full = '$IconDir/Map Full.svg';
   static const Plus = '$IconDir/Plus.svg';
   static const Search = '$IconDir/Search.svg';
   static const Settings = '$IconDir/Settings.svg';

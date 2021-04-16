@@ -8,6 +8,7 @@ import 'package:places/ui/screen/sight_search_screen.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
+import 'package:places/ui/screen/splash_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class App extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AppState extends State<App> {
       title: 'Интересные места',
       theme: themeSwitcher.theme,
       home: col([
-        row([list]),
+        row([splash]),
       ]),
     );
   }
@@ -46,6 +47,7 @@ class _AppState extends State<App> {
       onboarding = OnboardingScreen(),
       search = SightSearchScreen(),
       settings = SettingsScreen(),
+      splash = SplashScreen(),
       visiting = VisitingScreen();
 
   // Эти переменные используются для отладки тем и верстки.
