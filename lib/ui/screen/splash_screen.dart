@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,6 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
     await dataLoading;
     await uiWait;
 
-    print('Переход на следующий экран');
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => OnboardingScreen()),
+    );
   }
 }

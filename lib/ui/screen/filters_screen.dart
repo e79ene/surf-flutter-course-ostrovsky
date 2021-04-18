@@ -100,7 +100,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: ElevatedButton(
           child: Text('ПОКАЗАТЬ (${sightsFinder.filtered.length})'),
-          onPressed: () => UnimplementedError(),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
     );

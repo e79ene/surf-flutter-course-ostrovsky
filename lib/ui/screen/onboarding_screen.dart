@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -80,7 +81,7 @@ class _Page extends StatelessWidget {
                 style: TextButton.styleFrom(
                   primary: theme.color.green,
                 ),
-                onPressed: _finish,
+                onPressed: () => _finish(context),
               ),
       ),
       body: Center(
@@ -121,7 +122,7 @@ class _Page extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: isLast
                 ? ElevatedButton(
-                    onPressed: _finish,
+                    onPressed: () => _finish(context),
                     child: Text('НА СТАРТ'),
                   )
                 : null,
@@ -131,7 +132,9 @@ class _Page extends StatelessWidget {
     );
   }
 
-  void _finish() => throw UnimplementedError();
+  void _finish(BuildContext context) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => SightListScreen()),
+      );
 }
 
 class _Indicator extends StatefulWidget {
@@ -151,8 +154,10 @@ class _IndicatorState extends State<_Indicator> {
     widget.controller.addListener(() => setState(() {}));
   }
 
-  int get page =>
-      widget.controller.hasClients ? widget.controller.page?.round() ?? 0 : 0;
+  int get page => (widget.controller.hasClients &&
+          widget.controller.position.hasContentDimensions)
+      ? widget.controller.page?.round() ?? 0
+      : 0;
 
   @override
   Widget build(BuildContext context) {

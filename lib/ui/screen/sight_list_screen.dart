@@ -4,6 +4,7 @@ import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
@@ -126,7 +127,9 @@ class _AddSightButton extends StatelessWidget {
           'НОВОЕ МЕСТО',
           style: theme.elevatedButtonTheme.style!.textStyle!.resolve({}),
         ),
-        onPressed: () => UnimplementedError(),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => AddSightScreen()),
+        ),
       ),
     );
   }

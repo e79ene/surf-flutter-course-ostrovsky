@@ -4,6 +4,7 @@ import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -55,7 +56,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 TextButton(
                   child: SvgIcon(MyIcons.info),
                   style: theme.textButtonGreen,
-                  onPressed: () => throw UnimplementedError(),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                  ),
                 ),
               ],
             ),
