@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/image_loader.dart';
-import 'package:places/ui/screen/sight_details_screen.dart';
+import 'package:places/ui/screen/sight_details_bottom_sheet.dart';
 import 'package:places/ui/res/themes.dart';
 
 class SightCard extends StatefulWidget {
@@ -35,9 +35,10 @@ class _SightCardState extends State<SightCard> {
 
     return Material(
       child: InkWell(
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (context) => SightDetailsScreen(widget.sight)),
+        onTap: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => SightDetailsBottomSheet(widget.sight),
         ),
         child: Container(
           child: Column(
@@ -48,14 +49,15 @@ class _SightCardState extends State<SightCard> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                   image: DecorationImage(
-                  image: loader.provider,
+                    image: loader.provider,
                     fit: BoxFit.cover,
                   ),
                 ),
                 child: Stack(children: [
-                if (!loader.loaded)
-                  Center(
-                      child: CircularProgressIndicator(value: loader.progress)),
+                  if (!loader.loaded)
+                    Center(
+                        child:
+                            CircularProgressIndicator(value: loader.progress)),
                   Positioned(
                     top: 16,
                     left: 16,
