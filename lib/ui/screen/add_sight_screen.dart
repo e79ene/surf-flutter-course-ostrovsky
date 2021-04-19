@@ -159,7 +159,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
   Widget buildAddPhotoButton(ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.only(top: 24),
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => addPhoto(),
         child: Container(
           width: 72,
@@ -191,7 +191,90 @@ class _AddSightScreenState extends State<AddSightScreen> {
     ));
   }
 
-  addPhoto() => setState(() => photoUrls.insert(0, Cutesum.randomImageUrl()));
+  addPhoto() async {
+    final String? url = await showDialog<String>(
+      context: context,
+      builder: (context) => AddPhotoDialog(),
+    );
+
+    if (url != null) setState(() => photoUrls.insert(0, url));
+  }
+}
+
+class AddPhotoDialog extends StatelessWidget {
+  const AddPhotoDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      alignment: Alignment.bottomCenter,
+      child: Material(
+        color: Colors.transparent,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Ink(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: theme.color.background,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  buildItem(context, 'Камера', MyIcons.Camera),
+                  buildSeparator(theme),
+                  buildItem(context, 'Фотография', MyIcons.Photo),
+                  buildSeparator(theme),
+                  buildItem(context, 'Файл', MyIcons.Fail),
+                ],
+              ),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(),
+              style: ElevatedButton.styleFrom(
+                primary: theme.color.background,
+                onPrimary: theme.color.green,
+                minimumSize: Size.fromHeight(56),
+              ),
+              child: Text('ОТМЕНА'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildSeparator(ThemeData theme) {
+    return Container(
+      height: 1,
+      margin: EdgeInsets.symmetric(horizontal: 12),
+      color: theme.color.inactiveBlack,
+    );
+  }
+
+  Widget buildItem(BuildContext context, String label, String assetName) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: () => Navigator.of(context).pop<String>(Cutesum.randomImageUrl()),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        child: Row(
+          children: [
+            SvgIcon(assetName, color: theme.color.foreground),
+            SizedBox(width: 14),
+            Text(label, style: theme.text.text),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _Photo extends StatefulWidget {
