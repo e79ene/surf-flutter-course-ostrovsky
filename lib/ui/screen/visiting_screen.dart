@@ -102,18 +102,23 @@ class _VisitingScreenState extends State<VisitingScreen> {
 }
 
 class _TabBar extends StatefulWidget implements PreferredSizeWidget {
+  static const double tabBarHeight = 52;
   final List<String> labels;
 
   const _TabBar({Key? key, required this.labels}) : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(52);
+  Size get preferredSize => Size.fromHeight(tabBarHeight);
 
   @override
   _TabBarState createState() => _TabBarState();
 }
 
 class _TabBarState extends State<_TabBar> {
+  // By default theme buttons have at least kMinInteractiveDimension height
+  static const double vPadding =
+      (_TabBar.tabBarHeight - kMinInteractiveDimension) / 2;
+
   TabController? _controller;
 
   TabController get controller {
@@ -134,7 +139,7 @@ class _TabBarState extends State<_TabBar> {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: vPadding, horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -148,7 +153,7 @@ class _TabBarState extends State<_TabBar> {
                   onPrimary: isSelected(i)
                       ? theme.color.background
                       : theme.color.secondary2,
-                  minimumSize: Size.fromHeight(40),
+                  minimumSize: Size.fromHeight(40), // - visible height
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
