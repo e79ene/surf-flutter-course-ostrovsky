@@ -48,7 +48,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                 ? _NotFound()
                 : _Found(found),
       ),
-      bottomNavigationBar: BottomNavigationView(),
+      bottomNavigationBar: BottomNavigationView.list(),
     );
   }
 

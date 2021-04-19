@@ -95,7 +95,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
             ),
           ),
         ]),
-        bottomNavigationBar: BottomNavigationView(),
+        bottomNavigationBar: BottomNavigationView.visiting(),
       ),
     );
   }

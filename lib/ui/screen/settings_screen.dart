@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationView(),
+      bottomNavigationBar: BottomNavigationView.settings(),
     );
   }
 }

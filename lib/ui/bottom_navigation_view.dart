@@ -6,23 +6,44 @@ import 'package:places/ui/screen/visiting_screen.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class BottomNavigationView extends StatelessWidget {
-  final items = [
-    _Item(
-      'Список интересных мест',
-      MyIcons.List,
-      (context) => SightListScreen(),
-    ),
-    _Item(
-      'Хочу посетить / Посещенные места',
-      MyIcons.Heart,
-      (context) => VisitingScreen(),
-    ),
-    _Item(
-      'Настройки',
-      MyIcons.Settings,
-      (context) => SettingsScreen(),
-    ),
+  static final itemList = _Item(
+    'Список интересных мест',
+    MyIcons.List,
+    MyIcons.List_Full,
+    (context) => SightListScreen(),
+  );
+
+  static final itemVisiting = _Item(
+    'Хочу посетить / Посещенные места',
+    MyIcons.Heart,
+    MyIcons.Heart_Full,
+    (context) => VisitingScreen(),
+  );
+
+  static final itemSettings = _Item(
+    'Настройки',
+    MyIcons.Settings,
+    MyIcons.Settings_fill,
+    (context) => SettingsScreen(),
+  );
+
+  static final items = [
+    itemList,
+    itemVisiting,
+    itemSettings,
   ];
+
+  final _Item current;
+
+  const BottomNavigationView._(this.current, {Key? key}) : super(key: key);
+
+  factory BottomNavigationView.list() => BottomNavigationView._(itemList);
+
+  factory BottomNavigationView.visiting() =>
+      BottomNavigationView._(itemVisiting);
+
+  factory BottomNavigationView.settings() =>
+      BottomNavigationView._(itemSettings);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +52,9 @@ class BottomNavigationView extends StatelessWidget {
       items: [
         for (final item in items)
           BottomNavigationBarItem(
-            icon: SvgIcon(item.assetName),
+            icon: SvgIcon(
+              item == current ? item.selectedAssetName : item.assetName,
+            ),
             label: item.label,
           ),
       ],
@@ -44,9 +67,10 @@ class BottomNavigationView extends StatelessWidget {
 }
 
 class _Item {
-  _Item(this.label, this.assetName, this.builder);
+  const _Item(this.label, this.assetName, this.selectedAssetName, this.builder);
 
   final String label;
   final String assetName;
+  final String selectedAssetName;
   final WidgetBuilder builder;
 }

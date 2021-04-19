@@ -66,7 +66,7 @@ class _SightListScreenState extends State<SightListScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _AddSightButton(),
-      bottomNavigationBar: BottomNavigationView(),
+      bottomNavigationBar: BottomNavigationView.list(),
     );
   }
 }
