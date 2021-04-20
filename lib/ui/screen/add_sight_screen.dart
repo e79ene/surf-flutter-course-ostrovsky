@@ -250,7 +250,7 @@ class AddPhotoDialog extends StatelessWidget {
     );
   }
 
-  Container buildSeparator(ThemeData theme) {
+  Widget buildSeparator(ThemeData theme) {
     return Container(
       height: 1,
       margin: EdgeInsets.symmetric(horizontal: 12),

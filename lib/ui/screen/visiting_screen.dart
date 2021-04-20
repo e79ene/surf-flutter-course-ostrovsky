@@ -219,7 +219,7 @@ class _VisitingListState extends State<_VisitingList> {
     );
   }
 
-  Container buildDismissBackground(ThemeData theme) {
+  Widget buildDismissBackground(ThemeData theme) {
     return Container(
       padding: EdgeInsets.all(16),
       alignment: Alignment.centerRight,

@@ -88,7 +88,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  IconButton buildFiltersButton(BuildContext context, ThemeData theme) {
+  Widget buildFiltersButton(BuildContext context, ThemeData theme) {
     return IconButton(
       icon: SvgIcon(
         MyIcons.Filter,
@@ -100,7 +100,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  IconButton buildClearButton(ThemeData theme) => IconButton(
+  Widget buildClearButton(ThemeData theme) => IconButton(
         icon: SvgIcon(
           MyIcons.clear,
           color: theme.textButtonTheme.style!.foregroundColor!.resolve({}),
