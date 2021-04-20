@@ -51,25 +51,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 style: theme.text.superSmallInactive,
               ),
             ),
-            Column(
+            Wrap(
+              alignment: WrapAlignment.spaceEvenly,
               children: [
-                for (final categoryRow
-                    in _splitList(categories.entries.toList(), 3))
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        for (final e in categoryRow)
-                          InkWell(
-                            onTap: () => sightsFinder.toggleCategory(e.key),
-                            child: _Category(
-                              name: e.key,
-                              assetName: e.value,
-                              checked: sightsFinder.hasCategory(e.key),
-                            ),
-                          ),
-                      ],
+                for (final e in categories.entries.toList())
+                  InkWell(
+                    onTap: () => sightsFinder.toggleCategory(e.key),
+                    child: _Category(
+                      name: e.key,
+                      assetName: e.value,
+                      checked: sightsFinder.hasCategory(e.key),
                     ),
                   ),
               ],
@@ -106,9 +97,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 }
-
-List<List<E>> _splitList<E>(List<E> list, int count) =>
-    [for (int i = 0; i < list.length; i += count) list.sublist(i, i + count)];
 
 class _Category extends StatelessWidget {
   final String name;
