@@ -29,7 +29,7 @@ class _AppState extends State<App> {
       title: 'Интересные места',
       theme: themeSwitcher.theme,
       home: col([
-        row([filters]),
+        row([list]),
       ]),
     );
   }
