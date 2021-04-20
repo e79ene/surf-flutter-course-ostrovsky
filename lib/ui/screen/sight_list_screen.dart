@@ -40,7 +40,12 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverList(
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 400,
+                crossAxisSpacing: 36,
+                mainAxisExtent: 188,
+              ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
