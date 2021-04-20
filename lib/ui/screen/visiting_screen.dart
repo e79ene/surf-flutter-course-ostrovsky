@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/domain/sight_repo.dart';
@@ -101,13 +104,37 @@ class _VisitingScreenState extends State<VisitingScreen> {
   }
 
   void _setTime() async {
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
+    final time = await showAdaptiveTimePicker(context);
 
     if (time != null) throw UnimplementedError('Selected time: $time');
   }
+}
+
+Future<TimeOfDay?> showAdaptiveTimePicker(BuildContext context) async {
+  return await (Platform.isIOS
+      ? showIosTimePicker(context)
+      : showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        ));
+}
+
+Future<TimeOfDay?> showIosTimePicker(BuildContext context) async {
+  final theme = Theme.of(context);
+
+  return await showCupertinoModalPopup<TimeOfDay>(
+    context: context,
+    builder: (context) => Container(
+      height: 240,
+      color: theme.color.background,
+      child: CupertinoDatePicker(
+        onDateTimeChanged: (dateTime) => print('dateTime: $dateTime'),
+        // Navigator.maybePop(context, TimeOfDay.fromDateTime(dateTime)),
+        mode: CupertinoDatePickerMode.time,
+        initialDateTime: DateTime.now(),
+      ),
+    ),
+  );
 }
 
 class _TabBar extends StatefulWidget implements PreferredSizeWidget {
