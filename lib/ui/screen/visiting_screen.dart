@@ -34,7 +34,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
               actions: [
                 IconButton(
                   icon: SvgIcon(MyIcons.Calendar),
-                  onPressed: () {},
+                  onPressed: _setTime,
                 ),
                 IconButton(
                   icon: SvgIcon(MyIcons.Close),
@@ -98,6 +98,15 @@ class _VisitingScreenState extends State<VisitingScreen> {
         bottomNavigationBar: BottomNavigationView.visiting(),
       ),
     );
+  }
+
+  void _setTime() async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (time != null) throw UnimplementedError('Selected time: $time');
   }
 }
 
