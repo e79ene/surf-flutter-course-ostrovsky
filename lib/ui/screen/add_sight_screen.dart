@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';
+import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -17,7 +18,7 @@ class AddSightScreen extends StatefulWidget {
 }
 
 class _AddSightScreenState extends State<AddSightScreen> {
-  late final _Field name, lat, lon, details;
+  late final _Field name, lat, lng, details;
   late final List<_Field> _fields;
   final formKey = GlobalKey<FormState>();
   final photoUrls = <String>[];
@@ -30,7 +31,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       next: null,
     );
 
-    lon = _Field(
+    lng = _Field(
       title: 'долгота',
       onValidChange: () => setState(() {}),
       validator: _rangeValidator(-180, 360),
@@ -41,7 +42,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       title: 'широта',
       onValidChange: () => setState(() {}),
       validator: _rangeValidator(-90, 90),
-      next: lon,
+      next: lng,
     );
 
     name = _Field(
@@ -51,7 +52,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       next: lat,
     );
 
-    _fields = [name, lat, lon, details];
+    _fields = [name, lat, lng, details];
   }
 
   @override
@@ -118,7 +119,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   children: [
                     Expanded(child: lat.build()),
                     SizedBox(width: 16),
-                    Expanded(child: lon.build()),
+                    Expanded(child: lng.build()),
                   ],
                 ),
                 Padding(
@@ -179,15 +180,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   void saveSight() {
-    sightRepo.saveSight(Sight(
-      name.controller.text,
+    sightRepo.saveSight(Place.draft(
+      name: name.controller.text,
       geo: GeoPosition(
         double.parse(lat.controller.text),
-        double.parse(lon.controller.text),
+        double.parse(lng.controller.text),
       ),
-      photoUrls: [sightRepo.absentUrl],
-      details: details.controller.text,
-      type: '<N/A>',
+      urls: [sightRepo.absentUrl],
+      description: details.controller.text,
+      category: Category.byId.values.first, //ToDo: Set category
     ));
   }
 

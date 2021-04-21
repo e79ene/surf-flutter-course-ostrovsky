@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_details_view.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsBottomSheet extends StatelessWidget {
-  final Sight _sight;
+  final Place _sight;
 
   SightDetailsBottomSheet(this._sight);
 

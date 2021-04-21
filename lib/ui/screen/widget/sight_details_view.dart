@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/image_loading_progress.dart';
 import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -13,7 +13,7 @@ class SightDetailsView extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final Sight _sight;
+  final Place _sight;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SightDetailsView extends StatelessWidget {
         SliverAppBar(
           expandedHeight: 360,
           collapsedHeight: 64,
-          flexibleSpace: _Gallery(_sight.photoUrls),
+          flexibleSpace: _Gallery(_sight.urls),
           leading: Center(
               // Don't show in bottomSheets
               child: (ModalRoute.of(context) is PageRoute)
@@ -44,7 +44,7 @@ class SightDetailsView extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      _sight.type,
+                      _sight.category.name,
                       style:
                           theme.text.smallBold.withColor(theme.color.secondary),
                     ),
@@ -56,7 +56,7 @@ class SightDetailsView extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(_sight.details,
+              Text(_sight.description,
                   style: TextStyle(color: theme.color.foreground)),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),

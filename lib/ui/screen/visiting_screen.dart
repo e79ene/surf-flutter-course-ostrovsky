@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -205,8 +205,8 @@ class _TabBarState extends State<_TabBar> {
 }
 
 class _VisitingList extends StatefulWidget {
-  final List<Sight> sights;
-  final Widget Function(Sight) makeSightView;
+  final List<Place> sights;
+  final Widget Function(Place) makeSightView;
 
   _VisitingList({
     required this.sights,
@@ -230,11 +230,11 @@ class _VisitingListState extends State<_VisitingList> {
           final sight = widget.sights[index];
           final card = widget.makeSightView(sight);
 
-          return DragTarget<Sight>(
+          return DragTarget<Place>(
             onAccept: _acceptDrag(sight),
             builder: (context, candidateData, rejectedData) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: LongPressDraggable<Sight>(
+              child: LongPressDraggable<Place>(
                 axis: Axis.vertical,
                 data: sight,
                 child: Dismissible(
@@ -287,7 +287,7 @@ class _VisitingListState extends State<_VisitingList> {
     );
   }
 
-  _acceptDrag(Sight sight) => (draggedSight) => setState(() {
+  _acceptDrag(Place sight) => (draggedSight) => setState(() {
         if (sight == draggedSight) return;
 
         widget.sights

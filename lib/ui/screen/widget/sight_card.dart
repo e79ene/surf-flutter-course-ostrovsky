@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/screen/sight_details_bottom_sheet.dart';
 import 'package:places/ui/res/themes.dart';
 
 class SightCard extends StatefulWidget {
-  final Sight sight;
+  final Place sight;
   final List<Widget> actions;
   final Widget afterTitle;
 
@@ -62,7 +62,7 @@ class _SightCardState extends State<SightCard> {
                     top: 16,
                     left: 16,
                     child: Text(
-                      widget.sight.type,
+                      widget.sight.category.name,
                       style: theme.text.smallBold,
                     ),
                   ),
@@ -90,6 +90,8 @@ class _SightCardState extends State<SightCard> {
                   children: [
                     Text(
                       widget.sight.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: theme.text.text,
                     ),
                     widget.afterTitle,

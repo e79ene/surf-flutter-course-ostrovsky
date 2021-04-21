@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/domain/sight_repo.dart';
 
 class SightsFinder extends ChangeNotifier {
@@ -31,22 +32,22 @@ class SightsFinder extends ChangeNotifier {
     _notifyParametersListeners();
   }
 
-  final Set<String> _categories = {};
+  final Set<Category> _categories = {};
 
-  bool hasCategory(String category) => _categories.contains(category);
+  bool hasCategory(Category category) => _categories.contains(category);
 
-  void toggleCategory(String category) {
+  void toggleCategory(Category category) {
     _categories.contains(category)
         ? _categories.remove(category)
         : _categories.add(category);
     _notifyParametersListeners();
   }
 
-  List<Sight> _filtered = [];
-  List<Sight> get filtered => _filtered;
+  List<Place> _filtered = [];
+  List<Place> get filtered => _filtered;
 
   void _filter() {
-    final eq = const ListEquality<Sight>().equals;
+    final eq = const ListEquality<Place>().equals;
     final r = sightRepo.all.where(_criteria).toList();
 
     if (eq(r, _filtered)) return;
@@ -55,15 +56,15 @@ class SightsFinder extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _criteria(Sight sight) {
+  bool _criteria(Place sight) {
     final inRange = myLocation.distanceTo(sight.geo) <= _distance;
     final inCategory =
-        _categories.isEmpty ? true : _categories.contains(sight.type);
+        _categories.isEmpty ? true : _categories.contains(sight.category);
 
     return inRange && inCategory;
   }
 
-  Future<Iterable<Sight>> search(String searchString) async {
+  Future<Iterable<Place>> search(String searchString) async {
     searchHistory._save(searchString);
 
     return await Future.delayed(
@@ -72,9 +73,9 @@ class SightsFinder extends ChangeNotifier {
     );
   }
 
-  Iterable<Sight> _matched(String text) {
+  Iterable<Place> _matched(String text) {
     return _filtered.where((sight) =>
-        '${sight.type} ${sight.name} ${sight.details}'.contains(text));
+        '${sight.category} ${sight.name} ${sight.description}'.contains(text));
   }
 
   final searchHistory = SearchHistory();

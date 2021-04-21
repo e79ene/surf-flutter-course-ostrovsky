@@ -44,11 +44,11 @@ class _SightListScreenState extends State<SightListScreen> {
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 400,
                 crossAxisSpacing: 36,
-                mainAxisExtent: 188,
+          mainAxisExtent: 212,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: 12),
                   child: SightCard(
                     sightsFinder.filtered[index],
                     actions: [
@@ -58,7 +58,9 @@ class _SightListScreenState extends State<SightListScreen> {
                       ),
                     ],
                     afterTitle: Text(
-                      sightsFinder.filtered[index].shortDescription,
+                      sightsFinder.filtered[index].description,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                       style: theme.text.small.withColor(theme.color.secondary2),
                     ),
                   ),

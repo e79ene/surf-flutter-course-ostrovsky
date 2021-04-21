@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';
@@ -19,7 +19,7 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  Iterable<Sight>? found;
+  Iterable<Place>? found;
   bool searching = false;
 
   @override
@@ -72,7 +72,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 class _Found extends StatelessWidget {
   const _Found(this.found);
 
-  final Iterable<Sight> found;
+  final Iterable<Place> found;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class _Sight extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  final Sight sight;
+  final Place sight;
 
   @override
   _SightState createState() => _SightState();
@@ -149,7 +149,7 @@ class _SightState extends State<_Sight> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    widget.sight.type,
+                    widget.sight.category.name,
                     style: theme.text.small.withColor(theme.color.secondary2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

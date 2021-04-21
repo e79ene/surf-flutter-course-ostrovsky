@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/mocks.dart';
 
 final sightRepo = SightRepo();
 
 class SightRepo extends ChangeNotifier {
   final _mocks = generateMocks(10);
-  late final List<Sight> planned;
-  late final List<Sight> visited;
+  late final List<Place> planned;
+  late final List<Place> visited;
   final absentUrl =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png';
 
@@ -27,9 +27,9 @@ class SightRepo extends ChangeNotifier {
         .toList();
   }
 
-  Iterable<Sight> get all => _mocks;
+  Iterable<Place> get all => _mocks;
 
-  void saveSight(Sight sight) {
+  void saveSight(Place sight) {
     _mocks.add(sight);
     notifyListeners();
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/sight.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/image_loading_progress.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_details_view.dart';
 
 class SightDetailsScreen extends StatelessWidget {
-  final Sight _sight;
+  final Place _sight;
 
   SightDetailsScreen(this._sight);
 

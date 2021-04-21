@@ -54,13 +54,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
             Wrap(
               alignment: WrapAlignment.spaceEvenly,
               children: [
-                for (final e in categories.entries.toList())
+                for (final c in Category.filterList)
                   InkWell(
-                    onTap: () => sightsFinder.toggleCategory(e.key),
+                    onTap: () => sightsFinder.toggleCategory(c),
                     child: _Category(
-                      name: e.key,
-                      assetName: e.value,
-                      checked: sightsFinder.hasCategory(e.key),
+                      name: c.name,
+                      assetName: c.assetName!,
+                      checked: sightsFinder.hasCategory(c),
                     ),
                   ),
               ],
