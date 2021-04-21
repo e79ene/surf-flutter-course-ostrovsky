@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -60,7 +60,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     if (text.isEmpty) return;
 
     searching = true;
-    final result = await sightsFinder.search(text);
+    final result = await placeInteractor.search(text);
 
     setState(() {
       searching = false;
@@ -228,7 +228,7 @@ class _History extends StatefulWidget {
 class _HistoryState extends State<_History> {
   @override
   Widget build(BuildContext context) {
-    final history = sightsFinder.searchHistory;
+    final history = placeInteractor.searchHistory;
 
     if (history.strings.isEmpty) return const SizedBox.shrink();
 

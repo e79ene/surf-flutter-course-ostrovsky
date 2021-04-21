@@ -41,11 +41,7 @@ class _SightCardState extends State<SightCard> {
 
     return Material(
       child: InkWell(
-        onTap: () => showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => SightDetailsBottomSheet(widget.sight),
-        ),
+        onTap: () => SightDetailsBottomSheet.show(context, widget.sight),
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

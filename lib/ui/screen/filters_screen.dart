@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/category.dart';
-import 'package:places/domain/sights_finder.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
@@ -14,16 +15,9 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  static String get km => (sightsFinder.distance / 1000).toStringAsFixed(2);
+  static String get km => (placeInteractor.radius / 1000).toStringAsFixed(2);
   static double sliderToDistance(double sliderValue) => exp(sliderValue);
   static double distanceToSlider(double distance) => log(distance);
-
-  @override
-  void initState() {
-    sightsFinder.paramatersNotifier.addListener(() => setState(() {}));
-    sightsFinder.addListener(() => setState(() {}));
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +31,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
           style: TextButton.styleFrom(
             primary: theme.color.green,
           ),
-          onPressed: () => throw UnimplementedError(),
+          onPressed: () => setState(() => placeInteractor.clearFilter()),
         ),
       ),
       body: Padding(
@@ -56,11 +50,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
               children: [
                 for (final c in Category.filterList)
                   InkWell(
-                    onTap: () => sightsFinder.toggleCategory(c),
+                    onTap: () =>
+                        setState(() => placeInteractor.toggleCategory(c)),
                     child: _Category(
                       name: c.name,
                       assetName: c.assetName!,
-                      checked: sightsFinder.hasCategory(c),
+                      checked: placeInteractor.hasCategory(c),
                     ),
                   ),
               ],
@@ -72,26 +67,34 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 children: [
                   Text('Расстояние'),
                   Text(
-                    'от XXX до $km км',
+                    'до $km км',
                     style: TextStyle(color: theme.color.secondary2),
                   ),
                 ],
               ),
             ),
             Slider(
-              value: distanceToSlider(sightsFinder.distance),
-              min: distanceToSlider(SightsFinder.minDistance),
-              max: distanceToSlider(SightsFinder.maxDistance),
-              onChanged: (s) => sightsFinder.distance = sliderToDistance(s),
+              value: distanceToSlider(placeInteractor.radius),
+              min: distanceToSlider(PlaceInteractor.minRadius),
+              max: distanceToSlider(PlaceInteractor.maxRadius),
+              onChanged: (s) =>
+                  setState(() => placeInteractor.radius = sliderToDistance(s)),
             )
           ],
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: ElevatedButton(
-          child: Text('ПОКАЗАТЬ (${sightsFinder.filtered.length})'),
-          onPressed: () => Navigator.of(context).pop(),
+        child: StreamBuilder(
+          stream: placeInteractor.filteredPlaces,
+          builder: (context, AsyncSnapshot<List<Place>> snapshot) {
+            final amount =
+                snapshot.hasData ? '${snapshot.data!.length}' : '???';
+            return ElevatedButton(
+              child: Text('ПОКАЗАТЬ ($amount)'),
+              onPressed: () => Navigator.of(context).pop(),
+            );
+          },
         ),
       ),
     );

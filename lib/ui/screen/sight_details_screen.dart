@@ -12,7 +12,7 @@ class SightDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SightDetailsView(_sight),
+      body: SightDetailsView(_sight, deleteOption: false),
     );
   }
 }

@@ -1,30 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/image_loading_progress.dart';
 import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/svg_icon.dart';
 
-class SightDetailsView extends StatelessWidget {
-  const SightDetailsView(
-    this._sight, {
+class SightDetailsView extends StatefulWidget {
+  SightDetailsView(
+    Place originalPlace, {
     Key? key,
-  }) : super(key: key);
+    required this.deleteOption,
+  })  : placeId = originalPlace.id,
+        super(key: key);
 
-  final Place _sight;
+  final int placeId;
+  final bool deleteOption;
 
   @override
+  _SightDetailsViewState createState() => _SightDetailsViewState();
+}
+
+class _SightDetailsViewState extends State<SightDetailsView> {
+  @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: placeInteractor.getPlaceDetails(widget.placeId),
+      builder: (context, AsyncSnapshot<Place> snapshot) => snapshot.hasData
+          ? buildView(context, snapshot.data!)
+          : Center(
+              child:
+                  snapshot.hasError ? ErrorView() : CircularProgressIndicator(),
+            ),
+    );
+  }
+
+  Widget buildView(BuildContext context, Place place) {
     final theme = Theme.of(context);
+    final isFavorite = placeInteractor.isFavorite(place);
 
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           expandedHeight: 360,
           collapsedHeight: 64,
-          flexibleSpace: _Gallery(_sight.urls),
+          flexibleSpace: _Gallery(place.urls),
           leading: Center(
               // Don't show in bottomSheets
               child: (ModalRoute.of(context) is PageRoute)
@@ -35,8 +58,17 @@ class SightDetailsView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
+              if (widget.deleteOption)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: ElevatedButton(
+                    child: Text('УДАЛИТЬ'),
+                    style: ElevatedButton.styleFrom(primary: theme.color.red),
+                    onPressed: () => placeInteractor.deleteById(place.id),
+                  ),
+                ),
               Text(
-                _sight.name,
+                place.name,
                 style: theme.text.title,
               ),
               Padding(
@@ -44,7 +76,7 @@ class SightDetailsView extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      _sight.category.name,
+                      place.category.name,
                       style:
                           theme.text.smallBold.withColor(theme.color.secondary),
                     ),
@@ -56,14 +88,15 @@ class SightDetailsView extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(_sight.description,
+              Text(place.description,
                   style: TextStyle(color: theme.color.foreground)),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: ElevatedButton.icon(
                   icon: SvgIcon(MyIcons.GO),
                   label: Text('ПОСТРОИТЬ МАРШРУТ'),
-                  onPressed: () => print('ПОСТРОИТЬ МАРШРУТ'),
+                  onPressed: () =>
+                      throw UnimplementedError('ПОСТРОИТЬ МАРШРУТ'),
                 ),
               ),
               Padding(
@@ -77,9 +110,12 @@ class SightDetailsView extends StatelessWidget {
                       onPressed: null,
                     ),
                     TextButton.icon(
-                      icon: SvgIcon(MyIcons.Heart),
+                      icon: SvgIcon(
+                          isFavorite ? MyIcons.Heart_Full : MyIcons.Heart),
                       label: Text('В избранное'),
-                      onPressed: () => throw UnimplementedError(),
+                      onPressed: () => setState(() => isFavorite
+                          ? placeInteractor.removeFromFavorite(place)
+                          : placeInteractor.addToFavorite(place)),
                     ),
                   ],
                 ),

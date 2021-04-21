@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/category_screen.dart';
+import 'package:places/ui/screen/sight_details_bottom_sheet.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 
@@ -22,6 +24,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
   late final List<_Field> _fields;
   final formKey = GlobalKey<FormState>();
   final photoUrls = <String>[];
+  Category? category;
+  Future<Place>? addingPlace;
 
   _AddSightScreenState() {
     details = _Field(
@@ -62,7 +66,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
     super.dispose();
   }
 
-  bool get isValid => _fields.every((field) => field.isValid);
+  bool get isValid =>
+      _fields.every((field) => field.isValid) &&
+      photoUrls.length > 0 &&
+      category != null;
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +111,22 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Не выбрано',
+                        category == null ? 'Не выбрано' : category!.name,
                         style:
                             theme.text.text.withColor(theme.color.secondary2),
                       ),
                       SvgIcon(MyIcons.View),
                     ],
                   ),
-                  onPressed: () => throw UnimplementedError(),
+                  onPressed: () async {
+                    final newCategory = await Navigator.push<Category?>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryScreen(category),
+                      ),
+                    );
+                    setState(() => category = newCategory);
+                  },
                 ),
                 name.build(),
                 Row(
@@ -129,7 +144,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     child: TextButton(
                       child: Text('Указать на карте'),
                       style: theme.textButtonGreen,
-                      onPressed: () => throw UnimplementedError(),
+                      onPressed: () {
+                        lat.controller.value = TextEditingValue(
+                            text: GeoPositions.moscow.lat.toString());
+                        lng.controller.value = TextEditingValue(
+                            text: GeoPositions.moscow.lng.toString());
+                      },
                     ),
                   ),
                 ),
@@ -150,7 +170,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   onPrimary: theme.color.inactiveBlack,
                 ),
           onPressed: () {
-            if (formKey.currentState!.validate()) saveSight();
+            if (formKey.currentState!.validate() && isValid) savePlace();
           },
         ),
       ),
@@ -179,17 +199,27 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
-  void saveSight() {
-    sightRepo.saveSight(Place.draft(
+  void savePlace() async {
+    final draft = Place.draft(
       name: name.controller.text,
       geo: GeoPosition(
         double.parse(lat.controller.text),
         double.parse(lng.controller.text),
       ),
-      urls: [sightRepo.absentUrl],
+      urls: photoUrls,
       description: details.controller.text,
-      category: Category.byId.values.first, //ToDo: Set category
-    ));
+      category: category!,
+    );
+
+    setState(() => {addingPlace = placeInteractor.addNewPlace(draft)});
+
+    final newPlace = await addingPlace!;
+    if (!mounted) return;
+
+    await SightDetailsBottomSheet.show(context, newPlace, deleteOption: true);
+    if (!mounted) return;
+
+    Navigator.pop(context);
   }
 
   addPhoto() async {
@@ -237,7 +267,7 @@ class AddPhotoDialog extends StatelessWidget {
             ),
             SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.maybePop(context),
               style: ElevatedButton.styleFrom(
                 primary: theme.color.background,
                 onPrimary: theme.color.green,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sights_finder.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
+import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
@@ -15,12 +17,6 @@ class SightListScreen extends StatefulWidget {
 }
 
 class _SightListScreenState extends State<SightListScreen> {
-  @override
-  void initState() {
-    sightsFinder.addListener(() => setState(() {}));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -38,42 +34,68 @@ class _SightListScreenState extends State<SightListScreen> {
             padding: EdgeInsets.all(16),
             sliver: SliverToBoxAdapter(child: SearchBar()),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 400,
-                crossAxisSpacing: 36,
-          mainAxisExtent: 212,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: SightCard(
-                    sightsFinder.filtered[index],
-                    actions: [
-                      IconButton(
-                        icon: SvgIcon(MyIcons.Heart),
-                        onPressed: () => throw UnimplementedError(),
+          StreamBuilder(
+            stream: placeInteractor.filteredPlaces,
+            builder: (context, AsyncSnapshot<List<Place>> snapshot) =>
+                snapshot.hasData
+                    ? buildList(theme, snapshot.data!)
+                    : SliverFillRemaining(
+                        child: Container(
+                          padding: EdgeInsets.only(bottom: 70),
+                          alignment: Alignment.center,
+                          child: snapshot.hasError
+                              ? ErrorView()
+                              : CircularProgressIndicator(),
+                        ),
                       ),
-                    ],
-                    afterTitle: Text(
-                      sightsFinder.filtered[index].description,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                      style: theme.text.small.withColor(theme.color.secondary2),
-                    ),
-                  ),
-                ),
-                childCount: sightsFinder.filtered.length,
-              ),
-            ),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _AddSightButton(),
       bottomNavigationBar: BottomNavigationView.list(),
+    );
+  }
+
+  Widget buildList(ThemeData theme, List<Place> places) {
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 400,
+          crossAxisSpacing: 36,
+          mainAxisExtent: 212,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final place = places[index];
+            final isFavorite = placeInteractor.isFavorite(place);
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: SightCard(
+                place,
+                actions: [
+                  IconButton(
+                    icon: SvgIcon(
+                        isFavorite ? MyIcons.Heart_Full : MyIcons.Heart),
+                    onPressed: () => setState(() => isFavorite
+                        ? placeInteractor.removeFromFavorite(place)
+                        : placeInteractor.addToFavorite(place)),
+                  ),
+                ],
+                afterTitle: Text(
+                  place.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.text.small.withColor(theme.color.secondary2),
+                ),
+              ),
+            );
+          },
+          childCount: places.length,
+        ),
+      ),
     );
   }
 }

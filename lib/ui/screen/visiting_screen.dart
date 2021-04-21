@@ -2,8 +2,8 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
@@ -30,10 +30,10 @@ class _VisitingScreenState extends State<VisitingScreen> {
         ),
         body: TabBarView(children: [
           _VisitingList(
-            sights: sightRepo.planned,
-            makeSightView: (sight) => SightCard(
-              sight,
-              key: ObjectKey(sight),
+            sights: placeInteractor.getFavorite(),
+            makeSightView: (place) => SightCard(
+              place,
+              key: ObjectKey(place),
               actions: [
                 IconButton(
                   icon: SvgIcon(MyIcons.Calendar),
@@ -42,7 +42,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
                 IconButton(
                   icon: SvgIcon(MyIcons.Close),
                   onPressed: () =>
-                      setState(() => sightRepo.planned.remove(sight)),
+                      setState(() => placeInteractor.removeFromFavorite(place)),
                 ),
               ],
               afterTitle: Column(
@@ -64,19 +64,14 @@ class _VisitingScreenState extends State<VisitingScreen> {
             ),
           ),
           _VisitingList(
-            sights: sightRepo.visited,
-            makeSightView: (sight) => SightCard(
-              sight,
-              key: ObjectKey(sight),
+            sights: placeInteractor.getVisited(),
+            makeSightView: (place) => SightCard(
+              place,
+              key: ObjectKey(place),
               actions: [
                 IconButton(
                   icon: SvgIcon(MyIcons.Share),
                   onPressed: () {},
-                ),
-                IconButton(
-                  icon: SvgIcon(MyIcons.Close),
-                  onPressed: () =>
-                      setState(() => sightRepo.visited.remove(sight)),
                 ),
               ],
               afterTitle: Column(

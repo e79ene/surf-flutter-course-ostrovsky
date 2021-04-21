@@ -6,9 +6,22 @@ import 'package:places/ui/screen/widget/sight_details_view.dart';
 import 'package:places/ui/svg_icon.dart';
 
 class SightDetailsBottomSheet extends StatelessWidget {
+  final bool deleteOption;
+
+  static Future<void> show(
+    BuildContext context,
+    Place place, {
+    bool deleteOption: false,
+  }) =>
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) =>
+              SightDetailsBottomSheet(place, deleteOption: deleteOption));
+
   final Place _sight;
 
-  SightDetailsBottomSheet(this._sight);
+  SightDetailsBottomSheet(this._sight, {required this.deleteOption});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +31,7 @@ class SightDetailsBottomSheet extends StatelessWidget {
       height: MediaQuery.of(context).size.height - 64,
       child: Stack(
         children: [
-          SightDetailsView(_sight),
+          SightDetailsView(_sight, deleteOption: deleteOption),
           Container(
             color: Colors.transparent,
             child: Column(
