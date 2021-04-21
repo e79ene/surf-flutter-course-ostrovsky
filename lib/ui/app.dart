@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/repository/dio.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
@@ -20,14 +19,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    testNetwork();
     themeSwitcher.addListener(() => setState(() {}));
     super.initState();
-  }
-
-  void testNetwork() async {
-    final response = await dio.get('/place');
-    print('RESPONSE: ${response.data}');
   }
 
   @override
