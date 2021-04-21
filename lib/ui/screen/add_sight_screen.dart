@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';
-import 'package:places/domain/geo_position.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/geo_position.dart';
+import 'package:places/data/model/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';

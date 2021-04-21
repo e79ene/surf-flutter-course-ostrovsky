@@ -1,5 +1,5 @@
-import 'package:places/domain/geo_position.dart';
-import 'package:places/domain/string_utils.dart';
+import 'package:places/data/model/geo_position.dart';
+import 'package:places/util/string_utils.dart';
 
 class Sight {
   const Sight(

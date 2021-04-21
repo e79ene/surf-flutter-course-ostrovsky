@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/sight.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';

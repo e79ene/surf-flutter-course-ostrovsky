@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:places/domain/geo_position.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/geo_position.dart';
+import 'package:places/data/model/sight.dart';
 import 'package:places/domain/sight_repo.dart';
 
 class SightsFinder extends ChangeNotifier {

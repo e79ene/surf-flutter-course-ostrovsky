@@ -1,6 +1,6 @@
-import 'package:places/domain/category.dart';
-import 'package:places/domain/geo_position.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/category.dart';
+import 'package:places/data/model/geo_position.dart';
+import 'package:places/data/model/sight.dart';
 import 'dart:math';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:lorem_cutesum/lorem_cutesum.dart';

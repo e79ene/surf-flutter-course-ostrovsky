@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/domain/category.dart';
+import 'package:places/data/model/category.dart';
 import 'package:places/domain/sights_finder.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';

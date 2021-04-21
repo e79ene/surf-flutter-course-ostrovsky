@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/model/sight.dart';
 import 'package:places/ui/image_loading_progress.dart';
 import 'package:places/ui/my_back_button.dart';
 import 'package:places/ui/res/my_icons.dart';
