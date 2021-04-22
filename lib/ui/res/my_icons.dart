@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MyIcons {
   static const baseDir = 'res/figma/Icons';

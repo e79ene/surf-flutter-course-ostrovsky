@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/res/my_images.dart';
 
 class ImageLoader {
   ImageLoader(String url, {required VoidCallback onProgress})
-      : provider = NetworkImage(url) {
+      : provider = Uri.base.resolve(url).host.isNotEmpty
+            ? NetworkImage(url) as ImageProvider
+            : AssetImage(MyImages.error) {
     provider.resolve(ImageConfiguration()).addListener(
           ImageStreamListener(
             (_, __) {
@@ -19,7 +22,7 @@ class ImageLoader {
         );
   }
 
-  final NetworkImage provider;
+  final ImageProvider provider;
 
   double? _progress = 0;
   double? get progress => _progress;

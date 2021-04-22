@@ -23,6 +23,7 @@ dev_dependencies:
 
 flutter:
   assets:
+    - res/image/
     - res/figma/Icons/
     - res/figma/Icons/Catalog/
     - res/figma/Icons/Catalog/Black/
