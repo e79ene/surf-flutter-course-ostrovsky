@@ -293,8 +293,14 @@ class _PhotoState extends State<_Photo> {
 
   @override
   void initState() {
-    loader = ImageLoader(widget.url, onProgress: () => setState(() {}));
     super.initState();
+    loader = ImageLoader(widget.url, onProgress: () => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    loader.dispose();
+    super.dispose();
   }
 
   @override

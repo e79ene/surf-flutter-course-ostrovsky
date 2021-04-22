@@ -101,8 +101,14 @@ class _SightState extends State<_Sight> {
 
   @override
   void initState() {
-    loader = ImageLoader(widget.sight.url, onProgress: () => setState(() {}));
     super.initState();
+    loader = ImageLoader(widget.sight.url, onProgress: () => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    loader.dispose();
+    super.dispose();
   }
 
   @override
