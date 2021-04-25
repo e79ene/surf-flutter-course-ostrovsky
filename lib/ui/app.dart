@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/theme_interactor.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
@@ -17,7 +18,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    themeSwitcher.addListener(() => setState(() {}));
+    themeInteractor.addListener(() => setState(() {}));
     super.initState();
   }
 
@@ -25,7 +26,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Интересные места',
-      theme: themeSwitcher.theme,
+      theme: themeInteractor.theme,
       home: col([
         row([list]),
       ]),

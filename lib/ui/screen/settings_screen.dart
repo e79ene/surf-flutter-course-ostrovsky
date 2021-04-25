@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/theme_interactor.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
@@ -16,7 +17,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
-    themeSwitcher.addListener(() => setState(() {}));
+    themeInteractor.addListener(() => setState(() {}));
     super.initState();
   }
 
@@ -38,10 +39,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: theme.text.text.withColor(theme.color.title),
                 ),
                 CupertinoSwitch(
-                  value: themeSwitcher.isDark,
+                  value: themeInteractor.isDark,
                   trackColor: theme.color.inactiveBlack,
                   activeColor: theme.color.green,
-                  onChanged: (v) => themeSwitcher.isDark = v,
+                  onChanged: (v) => themeInteractor.isDark = v,
                 ),
               ],
             ),
