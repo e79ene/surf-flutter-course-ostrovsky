@@ -7,9 +7,10 @@ import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/error_view.dart';
+import 'package:places/ui/screen/widget/favorite_icon.dart';
 import 'package:places/ui/svg_icon.dart';
 
-class SightDetailsView extends StatefulWidget {
+class SightDetailsView extends StatelessWidget {
   SightDetailsView(
     Place originalPlace, {
     Key? key,
@@ -21,14 +22,9 @@ class SightDetailsView extends StatefulWidget {
   final bool deleteOption;
 
   @override
-  _SightDetailsViewState createState() => _SightDetailsViewState();
-}
-
-class _SightDetailsViewState extends State<SightDetailsView> {
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: placeInteractor.getPlaceDetails(widget.placeId),
+      future: placeInteractor.getPlaceDetails(placeId),
       builder: (context, AsyncSnapshot<Place> snapshot) => snapshot.hasData
           ? buildView(context, snapshot.data!)
           : Center(
@@ -40,7 +36,6 @@ class _SightDetailsViewState extends State<SightDetailsView> {
 
   Widget buildView(BuildContext context, Place place) {
     final theme = Theme.of(context);
-    final isFavorite = placeInteractor.isFavorite(place);
 
     return CustomScrollView(
       slivers: [
@@ -58,7 +53,7 @@ class _SightDetailsViewState extends State<SightDetailsView> {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              if (widget.deleteOption)
+              if (deleteOption)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24),
                   child: ElevatedButton(
@@ -110,12 +105,9 @@ class _SightDetailsViewState extends State<SightDetailsView> {
                       onPressed: null,
                     ),
                     TextButton.icon(
-                      icon: SvgIcon(
-                          isFavorite ? MyIcons.Heart_Full : MyIcons.Heart),
+                      icon: FavoriteIcon(place),
                       label: Text('В избранное'),
-                      onPressed: () => setState(() => isFavorite
-                          ? placeInteractor.removeFromFavorite(place)
-                          : placeInteractor.addToFavorite(place)),
+                      onPressed: () => placeInteractor.toggleFavorite(place),
                     ),
                   ],
                 ),

@@ -7,16 +7,13 @@ import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/widget/error_view.dart';
+import 'package:places/ui/screen/widget/favorite_icon.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:relation/relation.dart';
 
-class SightListScreen extends StatefulWidget {
-  @override
-  _SightListScreenState createState() => _SightListScreenState();
-}
-
-class _SightListScreenState extends State<SightListScreen> {
+class SightListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -34,26 +31,27 @@ class _SightListScreenState extends State<SightListScreen> {
             padding: EdgeInsets.all(16),
             sliver: SliverToBoxAdapter(child: SearchBar()),
           ),
-          StreamBuilder(
-            stream: placeInteractor.filteredPlaces,
-            builder: (context, AsyncSnapshot<List<Place>> snapshot) =>
-                snapshot.hasData
-                    ? buildList(theme, snapshot.data!)
-                    : SliverFillRemaining(
-                        child: Container(
-                          padding: EdgeInsets.only(bottom: 70),
-                          alignment: Alignment.center,
-                          child: snapshot.hasError
-                              ? ErrorView()
-                              : CircularProgressIndicator(),
-                        ),
-                      ),
+          EntityStateBuilder(
+            streamedState: placeInteractor.filteredPlaces,
+            child: (_, List<Place>? places) => buildList(theme, places!),
+            loadingChild: buildStateIndicator(CircularProgressIndicator()),
+            errorChild: buildStateIndicator(ErrorView()),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _AddSightButton(),
       bottomNavigationBar: BottomNavigationView.list(),
+    );
+  }
+
+  Widget buildStateIndicator(Widget child) {
+    return SliverFillRemaining(
+      child: Container(
+        padding: EdgeInsets.only(bottom: 70),
+        alignment: Alignment.center,
+        child: child,
+      ),
     );
   }
 
@@ -69,19 +67,18 @@ class _SightListScreenState extends State<SightListScreen> {
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             final place = places[index];
-            final isFavorite = placeInteractor.isFavorite(place);
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: SightCard(
                 place,
                 actions: [
-                  IconButton(
-                    icon: SvgIcon(
-                        isFavorite ? MyIcons.Heart_Full : MyIcons.Heart),
-                    onPressed: () => setState(() => isFavorite
-                        ? placeInteractor.removeFromFavorite(place)
-                        : placeInteractor.addToFavorite(place)),
+                  StreamedStateBuilder(
+                    streamedState: placeInteractor.favorite,
+                    builder: (_, List<Place>? places) => IconButton(
+                      icon: FavoriteIcon(place),
+                      onPressed: () => placeInteractor.toggleFavorite(place),
+                    ),
                   ),
                 ],
                 afterTitle: Text(

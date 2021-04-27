@@ -39,6 +39,12 @@ class Place {
   String toString() {
     return 'Place($name $geo $category)';
   }
+
+  @override
+  bool operator ==(p) => p is Place && p.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class PlaceDto extends Place implements Comparable {

@@ -10,6 +10,7 @@ import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:relation/relation.dart';
 
 class VisitingScreen extends StatefulWidget {
   @override
@@ -29,37 +30,39 @@ class _VisitingScreenState extends State<VisitingScreen> {
           bottom: _TabBar(labels: ['Хочу посетить', 'Посетил']),
         ),
         body: TabBarView(children: [
-          _VisitingList(
-            sights: placeInteractor.getFavorite(),
-            makeSightView: (place) => SightCard(
-              place,
-              key: ObjectKey(place),
-              actions: [
-                IconButton(
-                  icon: SvgIcon(MyIcons.Calendar),
-                  onPressed: _setTime,
-                ),
-                IconButton(
-                  icon: SvgIcon(MyIcons.Close),
-                  onPressed: () =>
-                      setState(() => placeInteractor.removeFromFavorite(place)),
-                ),
-              ],
-              afterTitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      'Запланировано на 12 окт. 2020',
-                      style: TextStyle(color: theme.color.green),
-                    ),
+          StreamedStateBuilder(
+            streamedState: placeInteractor.favorite,
+            builder: (_, List<Place>? places) => _VisitingList(
+              sights: places!,
+              makeSightView: (place) => SightCard(
+                place,
+                key: ObjectKey(place),
+                actions: [
+                  IconButton(
+                    icon: SvgIcon(MyIcons.Calendar),
+                    onPressed: _setTime,
                   ),
-                  Text(
-                    'закрыто до 09:00',
-                    style: TextStyle(color: theme.color.secondary2),
+                  IconButton(
+                    icon: SvgIcon(MyIcons.Close),
+                    onPressed: () => placeInteractor.removeFromFavorite(place),
                   ),
                 ],
+                afterTitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Запланировано на 12 окт. 2020',
+                        style: TextStyle(color: theme.color.green),
+                      ),
+                    ),
+                    Text(
+                      'закрыто до 09:00',
+                      style: TextStyle(color: theme.color.secondary2),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

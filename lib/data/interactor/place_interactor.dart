@@ -4,6 +4,7 @@ import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
+import 'package:relation/relation.dart';
 
 class PlaceInteractor {
   static const myLocation = GeoPositions.moscow;
@@ -13,9 +14,8 @@ class PlaceInteractor {
   final PlaceRepository repo;
   double _radius = maxRadius;
   final Set<Category> _categories = {};
-  final _filteredController = StreamController<List<Place>>.broadcast();
-  Stream<List<Place>> get filteredPlaces => _filteredController.stream;
-  final Map<int, Place> _favorite = {};
+  final filteredPlaces = EntityStreamedState<List<Place>>();
+  final favorite = StreamedState<List<Place>>([]);
   final Map<int, Place> _visited = {};
 
   PlaceInteractor(this.repo) {
@@ -46,12 +46,12 @@ class PlaceInteractor {
   }
 
   void dispose() {
-    _filteredController.close();
+    filteredPlaces.dispose();
   }
 
   void _updateFilter() async {
-    final places = await getPlaces(_radius, _categories);
-    _filteredController.add(places);
+    filteredPlaces.loading();
+    filteredPlaces.content(await getPlaces(_radius, _categories));
   }
 
   Future<List<Place>> getPlaces(
@@ -67,13 +67,15 @@ class PlaceInteractor {
 
   Future<Place> getPlaceDetails(int id) async => await repo.getById(id);
 
-  List<Place> getFavorite() => _favorite.values.toList();
+  void _addToFavorite(Place place) =>
+      favorite.accept(List<Place>.from(favorite.value!)..insert(0, place));
 
-  void addToFavorite(Place place) => _favorite[place.id] = place;
+  void removeFromFavorite(Place place) =>
+      favorite.accept(List<Place>.from(favorite.value!)..remove(place));
 
-  void removeFromFavorite(Place place) => _favorite.remove(place.id);
-
-  bool isFavorite(Place place) => _favorite.values.any((p) => p.id == place.id);
+  void toggleFavorite(Place place) => favorite.value!.contains(place)
+      ? removeFromFavorite(place)
+      : _addToFavorite(place);
 
   List<Place> getVisited() => _visited.values.toList();
 

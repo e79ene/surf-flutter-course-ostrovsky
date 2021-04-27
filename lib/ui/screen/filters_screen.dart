@@ -8,6 +8,7 @@ import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
+import 'package:relation/relation.dart';
 
 class FiltersScreen extends StatefulWidget {
   @override
@@ -85,18 +86,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: StreamBuilder(
-          stream: placeInteractor.filteredPlaces,
-          builder: (context, AsyncSnapshot<List<Place>> snapshot) {
-            final amount =
-                snapshot.hasData ? '${snapshot.data!.length}' : '???';
-            return ElevatedButton(
-              child: Text('ПОКАЗАТЬ ($amount)'),
-              onPressed: () => Navigator.of(context).pop(),
-            );
-          },
+        child: EntityStateBuilder(
+          streamedState: placeInteractor.filteredPlaces,
+          child: (_, List<Place>? places) =>
+              buildShowButton('${places!.length}'),
+          loadingBuilder: (_, List<Place>? places) =>
+              buildShowButton(places != null ? '${places.length}' : '???'),
+          errorChild: buildShowButton('???'),
         ),
       ),
+    );
+  }
+
+  ElevatedButton buildShowButton(String amount) {
+    return ElevatedButton(
+      child: Text('ПОКАЗАТЬ ($amount)'),
+      onPressed: () => Navigator.of(context).pop(),
     );
   }
 }
