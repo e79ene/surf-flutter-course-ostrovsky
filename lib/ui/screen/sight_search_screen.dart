@@ -7,9 +7,11 @@ import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/screen/sight_details_screen.dart';
 import 'package:places/ui/res/text_kit.dart';
 import 'package:places/ui/res/themes.dart';
+import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:relation/relation.dart';
 
 class SightSearchScreen extends StatefulWidget {
   @override
@@ -19,13 +21,10 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  Iterable<Place>? found;
   bool searching = false;
 
   @override
   Widget build(BuildContext context) {
-    final found = this.found;
-
     return Scaffold(
       appBar: MyAppBar(
         title: 'Список интересных мест',
@@ -37,36 +36,31 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: (found == null)
-            ? !searching
-                ? _History((string) {
-                    controller.text = string;
-                    focusNode.requestFocus();
-                  })
-                : _Searching()
-            : (found.isEmpty)
-                ? _NotFound()
-                : _Found(found),
+        child: !searching
+            ? _History((string) {
+                controller.text = string;
+                focusNode.requestFocus();
+              })
+            : EntityStateBuilder(
+                streamedState: placeInteractor.foundPlaces,
+                child: (_, List<Place>? places) =>
+                    places!.isEmpty ? _NotFound() : _Found(places),
+                loadingChild: _Searching(),
+                errorChild: Center(child: ErrorView()),
+              ),
       ),
       bottomNavigationBar: BottomNavigationView.list(),
     );
   }
 
-  void _search(String text) async {
-    setState(() {
-      found = null;
-    });
-
-    if (text.isEmpty) return;
-
-    searching = true;
-    final result = await placeInteractor.search(text);
-
-    setState(() {
-      searching = false;
-      found = result;
-    });
-  }
+  void _search(String text) => setState(() {
+        if (text.isEmpty)
+          searching = false;
+        else {
+          searching = true;
+          placeInteractor.search(text);
+        }
+      });
 }
 
 class _Found extends StatelessWidget {

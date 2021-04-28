@@ -5,6 +5,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/repository/network_exception.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
@@ -213,13 +214,29 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
     setState(() => {addingPlace = placeInteractor.addNewPlace(draft)});
 
-    final newPlace = await addingPlace!;
-    if (!mounted) return;
+    try {
+      final newPlace = await addingPlace!;
+      if (!mounted) return;
 
-    await SightDetailsBottomSheet.show(context, newPlace, deleteOption: true);
-    if (!mounted) return;
+      await SightDetailsBottomSheet.show(context, newPlace, deleteOption: true);
+      if (!mounted) return;
 
-    Navigator.pop(context);
+      Navigator.pop(context);
+    } on NetworkException {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Ошибка'),
+          content: Text('Что то пошло не так. Попробуйте позже.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.maybePop(context),
+              child: Text('Закрыть'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   addPhoto() async {

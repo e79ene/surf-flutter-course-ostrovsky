@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/repository/network_exception.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:relation/relation.dart';
 
@@ -15,6 +16,7 @@ class PlaceInteractor {
   double _radius = maxRadius;
   final Set<Category> _categories = {};
   final filteredPlaces = EntityStreamedState<List<Place>>();
+  final foundPlaces = EntityStreamedState<List<Place>>();
   final favorite = StreamedState<List<Place>>([]);
   final Map<int, Place> _visited = {};
 
@@ -47,25 +49,29 @@ class PlaceInteractor {
 
   void dispose() {
     filteredPlaces.dispose();
+    foundPlaces.dispose();
   }
 
   void _updateFilter() async {
-    filteredPlaces.loading();
-    filteredPlaces.content(await getPlaces(_radius, _categories));
+    try {
+      filteredPlaces.loading();
+      filteredPlaces.content(await _getPlaces(_radius, _categories));
+    } on NetworkException catch (e) {
+      filteredPlaces.error(e);
+    }
   }
 
-  Future<List<Place>> getPlaces(
+  Future<List<Place>> _getPlaces(
     double radius,
-    Set<Category> categories, [
-    String? nameFilter,
-  ]) =>
+    Set<Category> categories,
+  ) =>
       repo.getFiltered(
         center: myLocation,
         radius: radius,
         categories: categories,
       );
 
-  Future<Place> getPlaceDetails(int id) async => await repo.getById(id);
+  Future<Place> getPlaceDetails(int id) => repo.getById(id);
 
   void _addToFavorite(Place place) =>
       favorite.accept(List<Place>.from(favorite.value!)..insert(0, place));
@@ -85,15 +91,23 @@ class PlaceInteractor {
 
   Future<void> deleteById(int id) => repo.deleteById(id);
 
-  Future<Iterable<Place>> search(String searchString) {
+  void search(String searchString) async {
     searchHistory._save(searchString);
 
-    return repo.getFiltered(
-      center: myLocation,
-      radius: _radius,
-      categories: _categories,
-      nameFilter: searchString,
-    );
+    try {
+      foundPlaces.loading();
+
+      final filtered = await repo.getFiltered(
+        center: myLocation,
+        radius: _radius,
+        categories: _categories,
+        nameFilter: searchString,
+      );
+
+      foundPlaces.content(filtered);
+    } on NetworkException catch (e) {
+      foundPlaces.error(e);
+    }
   }
 
   final searchHistory = SearchHistory();

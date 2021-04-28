@@ -1,10 +1,15 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
 
-final dio = Dio(BaseOptions(
+import 'package:dio/dio.dart';
+import 'package:places/data/repository/endpoint.dart';
+import 'package:places/data/repository/network_exception.dart';
+
+final _dio = Dio(BaseOptions(
   baseUrl: 'https://test-backend-flutter.surfstudio.ru/',
   connectTimeout: 5000,
   receiveTimeout: 5000,
   sendTimeout: 5000,
+  validateStatus: (status) => true, // Make Dio don't throw on non 2xx statuses
 ))
   ..interceptors.add(InterceptorsWrapper(
     onRequest: (options, handler) {
@@ -28,3 +33,22 @@ final dio = Dio(BaseOptions(
       return handler.next(e);
     },
   ));
+
+Future<Response> requestBackend(EndPoint endpoint, [Object? data]) async {
+  final response = await _dio.request(
+    endpoint.path,
+    options: Options(method: endpoint.method),
+    data: jsonEncode(data),
+  );
+
+  final statusCode = response.statusCode;
+  if (statusCode == null || statusCode < 200 || statusCode >= 300)
+    throw NetworkException(
+      method: response.requestOptions.method,
+      uri: response.requestOptions.path,
+      code: statusCode,
+      message: response.statusMessage,
+    );
+
+  return response;
+}
