@@ -10,6 +10,7 @@ import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
 class VisitingScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return DefaultTabController(
       length: 2,

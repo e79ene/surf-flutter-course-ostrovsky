@@ -9,6 +9,7 @@ import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/favorite_icon.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 
 class SightDetailsView extends StatelessWidget {
   SightDetailsView(
@@ -23,6 +24,8 @@ class SightDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final placeInteractor = Provider.of<PlaceInteractor>(context);
+
     return FutureBuilder(
       future: placeInteractor.getPlaceDetails(placeId),
       builder: (context, AsyncSnapshot<Place> snapshot) => snapshot.hasData
@@ -36,6 +39,7 @@ class SightDetailsView extends StatelessWidget {
 
   Widget buildView(BuildContext context, Place place) {
     final theme = Theme.of(context);
+    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return CustomScrollView(
       slivers: [

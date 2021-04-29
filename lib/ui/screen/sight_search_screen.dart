@@ -11,6 +11,7 @@ import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
 class SightSearchScreen extends StatefulWidget {
@@ -19,9 +20,16 @@ class SightSearchScreen extends StatefulWidget {
 }
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
+  late final PlaceInteractor placeInteractor;
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
   bool searching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    placeInteractor = Provider.of<PlaceInteractor>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +230,7 @@ class _History extends StatefulWidget {
 class _HistoryState extends State<_History> {
   @override
   Widget build(BuildContext context) {
-    final history = placeInteractor.searchHistory;
+    final history = Provider.of<PlaceInteractor>(context).searchHistory;
 
     if (history.strings.isEmpty) return const SizedBox.shrink();
 

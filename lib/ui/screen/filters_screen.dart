@@ -8,6 +8,7 @@ import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
 class FiltersScreen extends StatefulWidget {
@@ -16,9 +17,16 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  static String get km => (placeInteractor.radius / 1000).toStringAsFixed(2);
   static double sliderToDistance(double sliderValue) => exp(sliderValue);
   static double distanceToSlider(double distance) => log(distance);
+  late final PlaceInteractor placeInteractor;
+  String get km => (placeInteractor.radius / 1000).toStringAsFixed(2);
+
+  @override
+  void initState() {
+    super.initState();
+    placeInteractor = Provider.of<PlaceInteractor>(context);
+  }
 
   @override
   Widget build(BuildContext context) {

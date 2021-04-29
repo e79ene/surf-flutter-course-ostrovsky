@@ -14,6 +14,7 @@ import 'package:places/ui/screen/category_screen.dart';
 import 'package:places/ui/screen/sight_details_bottom_sheet.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 
 class AddSightScreen extends StatefulWidget {
   @override
@@ -212,7 +213,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
       category: category!,
     );
 
-    setState(() => {addingPlace = placeInteractor.addNewPlace(draft)});
+    setState(() => {
+          addingPlace = Provider.of<PlaceInteractor>(context).addNewPlace(draft)
+        });
 
     try {
       final newPlace = await addingPlace!;

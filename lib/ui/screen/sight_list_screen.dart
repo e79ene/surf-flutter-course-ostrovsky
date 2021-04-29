@@ -11,12 +11,13 @@ import 'package:places/ui/screen/widget/favorite_icon.dart';
 import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
 class SightListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return Scaffold(
       body: CustomScrollView(
@@ -33,7 +34,7 @@ class SightListScreen extends StatelessWidget {
           ),
           EntityStateBuilder(
             streamedState: placeInteractor.filteredPlaces,
-            child: (_, List<Place>? places) => buildList(theme, places!),
+            child: (_, List<Place>? places) => buildList(context, places!),
             loadingChild: buildStateIndicator(CircularProgressIndicator()),
             errorChild: buildStateIndicator(ErrorView()),
           ),
@@ -55,7 +56,10 @@ class SightListScreen extends StatelessWidget {
     );
   }
 
-  Widget buildList(ThemeData theme, List<Place> places) {
+  Widget buildList(BuildContext context, List<Place> places) {
+    final theme = Theme.of(context);
+    final placeInteractor = Provider.of<PlaceInteractor>(context);
+
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverGrid(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/interactor/theme_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
@@ -9,6 +11,7 @@ import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
+import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
   @override
@@ -24,12 +27,20 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Интересные места',
-      theme: themeInteractor.theme,
-      home: col([
-        row([list]),
-      ]),
+    return MultiProvider(
+      providers: [
+        Provider<PlaceInteractor>(
+          create: (_) => PlaceInteractor(PlaceRepository()),
+          dispose: (_, placeInteractor) => placeInteractor.dispose,
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Интересные места',
+        theme: themeInteractor.theme,
+        home: col([
+          row([list]),
+        ]),
+      ),
     );
   }
 

@@ -125,5 +125,3 @@ class SearchHistory {
 
   void remove(String searchString) => strings.remove(searchString);
 }
-
-final placeInteractor = PlaceInteractor(PlaceRepository());
