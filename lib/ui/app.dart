@@ -13,18 +13,7 @@ import 'package:places/ui/screen/splash_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 import 'package:provider/provider.dart';
 
-class App extends StatefulWidget {
-  @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  void initState() {
-    themeInteractor.addListener(() => setState(() {}));
-    super.initState();
-  }
-
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,13 +22,18 @@ class _AppState extends State<App> {
           create: (_) => PlaceInteractor(PlaceRepository()),
           dispose: (_, placeInteractor) => placeInteractor.dispose,
         ),
+        ChangeNotifierProvider<ThemeInteractor>(
+          create: (_) => ThemeInteractor(),
+        ),
       ],
-      child: MaterialApp(
-        title: 'Интересные места',
-        theme: themeInteractor.theme,
-        home: col([
-          row([list]),
-        ]),
+      child: Builder(
+        builder: (context) => MaterialApp(
+          title: 'Интересные места',
+          theme: Provider.of<ThemeInteractor>(context).theme,
+          home: col([
+            row([list]),
+          ]),
+        ),
       ),
     );
   }

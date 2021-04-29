@@ -8,22 +8,13 @@ import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
+import 'package:provider/provider.dart';
 
-class SettingsScreen extends StatefulWidget {
-  @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  void initState() {
-    themeInteractor.addListener(() => setState(() {}));
-    super.initState();
-  }
-
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final themeInteractor = Provider.of<ThemeInteractor>(context);
 
     return Scaffold(
       appBar: MyAppBar(title: 'Настройки'),
