@@ -26,14 +26,15 @@ class App extends StatelessWidget {
           create: (_) => ThemeInteractor(),
         ),
       ],
-      child: Builder(
-        builder: (context) => MaterialApp(
+      child: Consumer<ThemeInteractor>(
+        builder: (_, themeInteractor, child) => MaterialApp(
           title: 'Интересные места',
-          theme: Provider.of<ThemeInteractor>(context).theme,
-          home: col([
-            row([list]),
-          ]),
+          theme: themeInteractor.theme,
+          home: child,
         ),
+        child: col([
+          row([list]),
+        ]),
       ),
     );
   }
