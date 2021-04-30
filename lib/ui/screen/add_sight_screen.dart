@@ -213,9 +213,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
       category: category!,
     );
 
-    setState(() => {
-          addingPlace = Provider.of<PlaceInteractor>(context).addNewPlace(draft)
-        });
+    setState(
+      () => {addingPlace = context.read<PlaceInteractor>().addNewPlace(draft)},
+    );
 
     try {
       final newPlace = await addingPlace!;

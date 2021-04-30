@@ -14,7 +14,6 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final themeInteractor = Provider.of<ThemeInteractor>(context);
 
     return Scaffold(
       appBar: MyAppBar(title: 'Настройки'),
@@ -29,11 +28,13 @@ class SettingsScreen extends StatelessWidget {
                   'Тёмная тема',
                   style: theme.text.text.withColor(theme.color.title),
                 ),
-                CupertinoSwitch(
-                  value: themeInteractor.isDark,
-                  trackColor: theme.color.inactiveBlack,
-                  activeColor: theme.color.green,
-                  onChanged: (v) => themeInteractor.isDark = v,
+                Consumer<ThemeInteractor>(
+                  builder: (_, themeInteractor, __) => CupertinoSwitch(
+                    value: themeInteractor.isDark,
+                    trackColor: theme.color.inactiveBlack,
+                    activeColor: theme.color.green,
+                    onChanged: (v) => themeInteractor.isDark = v,
+                  ),
                 ),
               ],
             ),

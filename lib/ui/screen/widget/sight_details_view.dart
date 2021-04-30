@@ -24,10 +24,8 @@ class SightDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final placeInteractor = Provider.of<PlaceInteractor>(context);
-
     return FutureBuilder(
-      future: placeInteractor.getPlaceDetails(placeId),
+      future: context.watch<PlaceInteractor>().getPlaceDetails(placeId),
       builder: (context, AsyncSnapshot<Place> snapshot) => snapshot.hasData
           ? buildView(context, snapshot.data!)
           : Center(
@@ -39,7 +37,6 @@ class SightDetailsView extends StatelessWidget {
 
   Widget buildView(BuildContext context, Place place) {
     final theme = Theme.of(context);
-    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return CustomScrollView(
       slivers: [
@@ -63,7 +60,8 @@ class SightDetailsView extends StatelessWidget {
                   child: ElevatedButton(
                     child: Text('УДАЛИТЬ'),
                     style: ElevatedButton.styleFrom(primary: theme.color.red),
-                    onPressed: () => placeInteractor.deleteById(place.id),
+                    onPressed: () =>
+                        context.read<PlaceInteractor>().deleteById(place.id),
                   ),
                 ),
               Text(
@@ -111,7 +109,8 @@ class SightDetailsView extends StatelessWidget {
                     TextButton.icon(
                       icon: FavoriteIcon(place),
                       label: Text('В избранное'),
-                      onPressed: () => placeInteractor.toggleFavorite(place),
+                      onPressed: () =>
+                          context.read<PlaceInteractor>().toggleFavorite(place),
                     ),
                   ],
                 ),

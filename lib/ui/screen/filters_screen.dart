@@ -11,26 +11,15 @@ import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
-class FiltersScreen extends StatefulWidget {
-  @override
-  _FiltersScreenState createState() => _FiltersScreenState();
-}
-
-class _FiltersScreenState extends State<FiltersScreen> {
+class FiltersScreen extends StatelessWidget {
   static double sliderToDistance(double sliderValue) => exp(sliderValue);
   static double distanceToSlider(double distance) => log(distance);
-  late final PlaceInteractor placeInteractor;
-  String get km => (placeInteractor.radius / 1000).toStringAsFixed(2);
-
-  @override
-  void initState() {
-    super.initState();
-    placeInteractor = Provider.of<PlaceInteractor>(context);
-  }
+  String km(double radius) => (radius / 1000).toStringAsFixed(2);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final placeInteractor = context.watch<PlaceInteractor>();
 
     return Scaffold(
       appBar: MyAppBar(
@@ -40,7 +29,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
           style: TextButton.styleFrom(
             primary: theme.color.green,
           ),
-          onPressed: () => setState(() => placeInteractor.clearFilter()),
+          onPressed: () => placeInteractor.clearFilter(),
         ),
       ),
       body: Padding(
@@ -59,8 +48,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               children: [
                 for (final c in Category.filterList)
                   InkWell(
-                    onTap: () =>
-                        setState(() => placeInteractor.toggleCategory(c)),
+                    onTap: () => placeInteractor.toggleCategory(c),
                     child: _Category(
                       name: c.name,
                       assetName: c.assetName!,
@@ -76,7 +64,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 children: [
                   Text('Расстояние'),
                   Text(
-                    'до $km км',
+                    'до ${km(placeInteractor.radius)} км',
                     style: TextStyle(color: theme.color.secondary2),
                   ),
                 ],
@@ -86,8 +74,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               value: distanceToSlider(placeInteractor.radius),
               min: distanceToSlider(PlaceInteractor.minRadius),
               max: distanceToSlider(PlaceInteractor.maxRadius),
-              onChanged: (s) =>
-                  setState(() => placeInteractor.radius = sliderToDistance(s)),
+              onChanged: (s) => placeInteractor.radius = sliderToDistance(s),
             )
           ],
         ),
@@ -97,16 +84,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: EntityStateBuilder(
           streamedState: placeInteractor.filteredPlaces,
           child: (_, List<Place>? places) =>
-              buildShowButton('${places!.length}'),
-          loadingBuilder: (_, List<Place>? places) =>
-              buildShowButton(places != null ? '${places.length}' : '???'),
-          errorChild: buildShowButton('???'),
+              buildShowButton(context, '${places!.length}'),
+          loadingBuilder: (_, List<Place>? places) => buildShowButton(
+              context, places != null ? '${places.length}' : '???'),
+          errorChild: buildShowButton(context, '???'),
         ),
       ),
     );
   }
 
-  ElevatedButton buildShowButton(String amount) {
+  Widget buildShowButton(BuildContext context, String amount) {
     return ElevatedButton(
       child: Text('ПОКАЗАТЬ ($amount)'),
       onPressed: () => Navigator.of(context).pop(),

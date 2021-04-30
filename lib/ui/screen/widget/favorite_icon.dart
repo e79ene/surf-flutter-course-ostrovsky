@@ -17,7 +17,10 @@ class FavoriteIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamedStateBuilder(
-      streamedState: Provider.of<PlaceInteractor>(context).favorite,
+      streamedState:
+          context.select<PlaceInteractor, StreamedState<List<Place>>>(
+        (placeInteractor) => placeInteractor.favorite,
+      ),
       builder: (_, List<Place>? places) => SvgIcon(
         places!.contains(place) ? MyIcons.Heart_Full : MyIcons.Heart,
       ),

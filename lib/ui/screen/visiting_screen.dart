@@ -13,12 +13,7 @@ import 'package:places/ui/svg_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:relation/relation.dart';
 
-class VisitingScreen extends StatefulWidget {
-  @override
-  _VisitingScreenState createState() => _VisitingScreenState();
-}
-
-class _VisitingScreenState extends State<VisitingScreen> {
+class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,7 +37,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
                 actions: [
                   IconButton(
                     icon: SvgIcon(MyIcons.Calendar),
-                    onPressed: _setTime,
+                    onPressed: () => _setTime(context),
                   ),
                   IconButton(
                     icon: SvgIcon(MyIcons.Close),
@@ -103,7 +98,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
     );
   }
 
-  void _setTime() async {
+  void _setTime(BuildContext context) async {
     final time = await showAdaptiveTimePicker(context);
 
     if (time != null) throw UnimplementedError('Selected time: $time');

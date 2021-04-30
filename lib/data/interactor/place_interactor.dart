@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:places/data/model/category.dart';
 import 'package:places/data/model/geo_position.dart';
 import 'package:places/data/model/place.dart';
@@ -7,7 +8,7 @@ import 'package:places/data/repository/network_exception.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:relation/relation.dart';
 
-class PlaceInteractor {
+class PlaceInteractor extends ChangeNotifier {
   static const myLocation = GeoPositions.moscow;
   static const minRadius = 100.0;
   static const maxRadius = 20000.0;
@@ -47,12 +48,15 @@ class PlaceInteractor {
     _updateFilter();
   }
 
+  @override
   void dispose() {
     filteredPlaces.dispose();
     foundPlaces.dispose();
+    super.dispose();
   }
 
   void _updateFilter() async {
+    notifyListeners();
     try {
       filteredPlaces.loading();
       filteredPlaces.content(await _getPlaces(_radius, _categories));

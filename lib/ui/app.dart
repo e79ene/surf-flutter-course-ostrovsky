@@ -18,9 +18,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<PlaceInteractor>(
+        ChangeNotifierProvider<PlaceInteractor>(
           create: (_) => PlaceInteractor(PlaceRepository()),
-          dispose: (_, placeInteractor) => placeInteractor.dispose,
         ),
         ChangeNotifierProvider<ThemeInteractor>(
           create: (_) => ThemeInteractor(),
