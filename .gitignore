@@ -99,3 +99,4 @@ app.*.map.json
 # Support file for ci
 ~changed_list_file
 packages/template/ios/Flutter/flutter_export_environment.sh
+*.g.dart

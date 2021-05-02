@@ -1,15 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/category.dart';
-import 'package:places/data/model/place.dart';
+import 'package:places/data/store/place_store.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/themes.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class FiltersScreen extends StatelessWidget {
   static double sliderToDistance(double sliderValue) => exp(sliderValue);
@@ -19,7 +18,7 @@ class FiltersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final placeInteractor = context.watch<PlaceInteractor>();
+    final placeStore = context.watch<PlaceStore>();
 
     return Scaffold(
       appBar: MyAppBar(
@@ -29,7 +28,7 @@ class FiltersScreen extends StatelessWidget {
           style: TextButton.styleFrom(
             primary: theme.color.green,
           ),
-          onPressed: () => placeInteractor.clearFilter(),
+          onPressed: () => placeStore.clearFilter(),
         ),
       ),
       body: Padding(
@@ -43,19 +42,21 @@ class FiltersScreen extends StatelessWidget {
                 style: theme.text.superSmallInactive,
               ),
             ),
-            Wrap(
-              alignment: WrapAlignment.spaceEvenly,
-              children: [
-                for (final c in Category.filterList)
-                  InkWell(
-                    onTap: () => placeInteractor.toggleCategory(c),
-                    child: _Category(
-                      name: c.name,
-                      assetName: c.assetName!,
-                      checked: placeInteractor.hasCategory(c),
+            Observer(
+              builder: (context) => Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                children: [
+                  for (final c in Category.filterList)
+                    InkWell(
+                      onTap: () => placeStore.toggleCategory(c),
+                      child: _Category(
+                        name: c.name,
+                        assetName: c.assetName!,
+                        checked: placeStore.categories.contains(c),
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -63,31 +64,31 @@ class FiltersScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Расстояние'),
-                  Text(
-                    'до ${km(placeInteractor.radius)} км',
-                    style: TextStyle(color: theme.color.secondary2),
+                  Observer(
+                    builder: (context) => Text(
+                      'до ${km(placeStore.radius)} км',
+                      style: TextStyle(color: theme.color.secondary2),
+                    ),
                   ),
                 ],
               ),
             ),
-            Slider(
-              value: distanceToSlider(placeInteractor.radius),
-              min: distanceToSlider(PlaceInteractor.minRadius),
-              max: distanceToSlider(PlaceInteractor.maxRadius),
-              onChanged: (s) => placeInteractor.radius = sliderToDistance(s),
+            Observer(
+              builder: (context) => Slider(
+                value: distanceToSlider(placeStore.radius),
+                min: distanceToSlider(placeStore.minRadius),
+                max: distanceToSlider(placeStore.maxRadius),
+                onChanged: (s) => placeStore.radius = sliderToDistance(s),
+              ),
             )
           ],
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: EntityStateBuilder(
-          streamedState: placeInteractor.filteredPlaces,
-          child: (_, List<Place>? places) =>
-              buildShowButton(context, '${places!.length}'),
-          loadingBuilder: (_, List<Place>? places) => buildShowButton(
-              context, places != null ? '${places.length}' : '???'),
-          errorChild: buildShowButton(context, '???'),
+        child: Observer(
+          builder: (context) => buildShowButton(
+              context, placeStore.filtered.value?.length.toString() ?? '???'),
         ),
       ),
     );

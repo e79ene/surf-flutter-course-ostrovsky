@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/store/place_store.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/res/text_kit.dart';
@@ -17,7 +19,7 @@ import 'package:relation/relation.dart';
 class SightListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final placeInteractor = Provider.of<PlaceInteractor>(context);
+    final placeStore = context.watch<PlaceStore>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -32,11 +34,12 @@ class SightListScreen extends StatelessWidget {
             padding: EdgeInsets.all(16),
             sliver: SliverToBoxAdapter(child: SearchBar()),
           ),
-          EntityStateBuilder(
-            streamedState: placeInteractor.filteredPlaces,
-            child: (_, List<Place>? places) => buildList(context, places!),
-            loadingChild: buildStateIndicator(CircularProgressIndicator()),
-            errorChild: buildStateIndicator(ErrorView()),
+          Observer(
+            builder: (context) => placeStore.filtered.match(
+              fulfilled: (List<Place> places) => buildList(context, places),
+              pending: () => buildStateIndicator(CircularProgressIndicator()),
+              rejected: (_) => buildStateIndicator(ErrorView()),
+            )!,
           ),
         ],
       ),

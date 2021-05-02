@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/interactor/theme_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
+import 'package:places/data/store/place_store.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/onboarding_screen.dart';
@@ -18,6 +19,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<PlaceStore>(
+          create: (_) => PlaceStore(PlaceRepository()),
+        ),
         ChangeNotifierProvider<PlaceInteractor>(
           create: (_) => PlaceInteractor(PlaceRepository()),
         ),
@@ -32,7 +36,7 @@ class App extends StatelessWidget {
           home: child,
         ),
         child: col([
-          row([list]),
+          row([filters, list]),
         ]),
       ),
     );
