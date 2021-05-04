@@ -18,8 +18,6 @@ class PlaceInteractor extends ChangeNotifier {
   final Set<Category> _categories = {};
   final filteredPlaces = EntityStreamedState<List<Place>>();
   final foundPlaces = EntityStreamedState<List<Place>>();
-  final favorite = StreamedState<List<Place>>([]);
-  final Map<int, Place> _visited = {};
 
   PlaceInteractor(this.repo) {
     _updateFilter();
@@ -76,20 +74,6 @@ class PlaceInteractor extends ChangeNotifier {
       );
 
   Future<Place> getPlaceDetails(int id) => repo.getById(id);
-
-  void _addToFavorite(Place place) =>
-      favorite.accept(List<Place>.from(favorite.value!)..insert(0, place));
-
-  void removeFromFavorite(Place place) =>
-      favorite.accept(List<Place>.from(favorite.value!)..remove(place));
-
-  void toggleFavorite(Place place) => favorite.value!.contains(place)
-      ? removeFromFavorite(place)
-      : _addToFavorite(place);
-
-  List<Place> getVisited() => _visited.values.toList();
-
-  void addToVisited(place) => _visited[place.id] = place;
 
   Future<Place> addNewPlace(draft) => repo.create(draft);
 

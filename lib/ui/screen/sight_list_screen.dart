@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/bloc/favorite_list_bloc.dart';
+import 'package:places/data/bloc/place_list_event.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/store/place_store.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
@@ -14,7 +15,6 @@ import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class SightListScreen extends StatelessWidget {
   @override
@@ -61,7 +61,6 @@ class SightListScreen extends StatelessWidget {
 
   Widget buildList(BuildContext context, List<Place> places) {
     final theme = Theme.of(context);
-    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -80,12 +79,11 @@ class SightListScreen extends StatelessWidget {
               child: SightCard(
                 place,
                 actions: [
-                  StreamedStateBuilder(
-                    streamedState: placeInteractor.favorite,
-                    builder: (_, List<Place>? places) => IconButton(
-                      icon: FavoriteIcon(place),
-                      onPressed: () => placeInteractor.toggleFavorite(place),
-                    ),
+                  IconButton(
+                    icon: FavoriteIcon(place),
+                    onPressed: () => context
+                        .read<FavoriteListBloc>()
+                        .add(TogglePlaceListEvent(place)),
                   ),
                 ],
                 afterTitle: Text(

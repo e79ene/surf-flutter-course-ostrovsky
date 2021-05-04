@@ -2,7 +2,11 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:places/data/bloc/favorite_list_bloc.dart';
+import 'package:places/data/bloc/place_list_event.dart';
+import 'package:places/data/bloc/place_list_state.dart';
+import 'package:places/data/bloc/visited_list_bloc.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -11,13 +15,11 @@ import 'package:places/ui/screen/widget/sight_card.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class VisitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final placeInteractor = Provider.of<PlaceInteractor>(context);
 
     return DefaultTabController(
       length: 2,
@@ -27,10 +29,9 @@ class VisitingScreen extends StatelessWidget {
           bottom: _TabBar(labels: ['Хочу посетить', 'Посетил']),
         ),
         body: TabBarView(children: [
-          StreamedStateBuilder(
-            streamedState: placeInteractor.favorite,
-            builder: (_, List<Place>? places) => _VisitingList(
-              sights: places!,
+          BlocBuilder<FavoriteListBloc, PlaceListState>(
+            builder: (context, state) => _VisitingList(
+              sights: state.list,
               makeSightView: (place) => SightCard(
                 place,
                 key: ObjectKey(place),
@@ -41,7 +42,9 @@ class VisitingScreen extends StatelessWidget {
                   ),
                   IconButton(
                     icon: SvgIcon(MyIcons.Close),
-                    onPressed: () => placeInteractor.removeFromFavorite(place),
+                    onPressed: () => context
+                        .read<FavoriteListBloc>()
+                        .add(TogglePlaceListEvent(place)),
                   ),
                 ],
                 afterTitle: Column(
@@ -63,32 +66,34 @@ class VisitingScreen extends StatelessWidget {
               ),
             ),
           ),
-          _VisitingList(
-            sights: placeInteractor.getVisited(),
-            makeSightView: (place) => SightCard(
-              place,
-              key: ObjectKey(place),
-              actions: [
-                IconButton(
-                  icon: SvgIcon(MyIcons.Share),
-                  onPressed: () {},
-                ),
-              ],
-              afterTitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      'Цель достигнута 12 окт. 2020',
-                      style: TextStyle(color: theme.color.secondary2),
-                    ),
-                  ),
-                  Text(
-                    'закрыто до 09:00',
-                    style: TextStyle(color: theme.color.secondary2),
+          BlocBuilder<VisitedListBloc, PlaceListState>(
+            builder: (context, state) => _VisitingList(
+              sights: state.list,
+              makeSightView: (place) => SightCard(
+                place,
+                key: ObjectKey(place),
+                actions: [
+                  IconButton(
+                    icon: SvgIcon(MyIcons.Share),
+                    onPressed: () {},
                   ),
                 ],
+                afterTitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        'Цель достигнута 12 окт. 2020',
+                        style: TextStyle(color: theme.color.secondary2),
+                      ),
+                    ),
+                    Text(
+                      'закрыто до 09:00',
+                      style: TextStyle(color: theme.color.secondary2),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

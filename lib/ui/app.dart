@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:places/data/bloc/favorite_list_bloc.dart';
+import 'package:places/data/bloc/visited_list_bloc.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/interactor/theme_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
@@ -19,6 +22,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider(
+          create: (_) => FavoriteListBloc(),
+        ),
+        BlocProvider(
+          create: (_) => VisitedListBloc(),
+        ),
         Provider<PlaceStore>(
           create: (_) => PlaceStore(PlaceRepository()),
         ),
@@ -36,7 +45,7 @@ class App extends StatelessWidget {
           home: child,
         ),
         child: col([
-          row([filters, list]),
+          row([visiting, list]),
         ]),
       ),
     );
