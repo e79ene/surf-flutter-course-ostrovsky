@@ -22,6 +22,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<PlaceRepository>(
+          create: (_) => PlaceRepository(),
+        ),
         BlocProvider(
           create: (_) => FavoriteListBloc(),
         ),
@@ -29,10 +32,10 @@ class App extends StatelessWidget {
           create: (_) => VisitedListBloc(),
         ),
         Provider<PlaceStore>(
-          create: (_) => PlaceStore(PlaceRepository()),
+          create: (context) => PlaceStore(context.read<PlaceRepository>()),
         ),
         ChangeNotifierProvider<PlaceInteractor>(
-          create: (_) => PlaceInteractor(PlaceRepository()),
+          create: (context) => PlaceInteractor(context.read<PlaceRepository>()),
         ),
         ChangeNotifierProvider<ThemeInteractor>(
           create: (_) => ThemeInteractor(),

@@ -5,7 +5,6 @@ import 'package:places/data/bloc/place_list_state.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/svg_icon.dart';
-import 'package:provider/provider.dart';
 
 class FavoriteIcon extends StatelessWidget {
   final Place place;
