@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/redux/history/history_action.dart';
+import 'package:places/data/redux/history/history_state.dart';
 import 'package:places/data/redux/my_state.dart';
 import 'package:places/data/redux/search/search_action.dart';
 import 'package:places/data/redux/search/search_state.dart';
@@ -15,7 +16,6 @@ import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
-import 'package:provider/provider.dart';
 
 class SightSearchScreen extends StatefulWidget {
   @override
@@ -210,24 +210,35 @@ class _Searching extends StatelessWidget {
   }
 }
 
-class _History extends StatefulWidget {
+class _History extends StatelessWidget {
   final void Function(String) onSelected;
 
   _History(this.onSelected);
 
   @override
-  _HistoryState createState() => _HistoryState();
+  Widget build(BuildContext context) {
+    return StoreConnector<MyState, HistoryState>(
+      converter: (store) => store.state.history,
+      builder: (context, history) => history.isEmpty
+          ? const SizedBox.shrink()
+          : _HistoryList(history, onSelected),
+    );
+  }
 }
 
-class _HistoryState extends State<_History> {
+class _HistoryList extends StatelessWidget {
+  const _HistoryList(
+    this.history,
+    this.onSelected,
+  );
+
+  final HistoryState history;
+  final void Function(String) onSelected;
+
   @override
   Widget build(BuildContext context) {
-    final history = Provider.of<PlaceInteractor>(context).searchHistory;
-
-    if (history.strings.isEmpty) return const SizedBox.shrink();
-
     final theme = Theme.of(context);
-
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -237,9 +248,9 @@ class _HistoryState extends State<_History> {
         ),
         SingleChildScrollView(
             child: Column(children: [
-          for (final s in history.strings)
+          for (final s in history)
             InkWell(
-              onTap: () => widget.onSelected(s),
+              onTap: () => onSelected(s),
               child: Row(children: [
                 Expanded(
                   child: Text(
@@ -252,7 +263,8 @@ class _HistoryState extends State<_History> {
                     MyIcons.Delete,
                     color: theme.color.secondary2,
                   ),
-                  onPressed: () => setState(() => history.remove(s)),
+                  onPressed: () => StoreProvider.of<MyState>(context)
+                      .dispatch(HistoryRemoveAction(s)),
                 ),
               ]),
             ),
@@ -260,7 +272,8 @@ class _HistoryState extends State<_History> {
         TextButton(
           child: Text('Очистить историю'),
           style: theme.textButtonGreen,
-          onPressed: () => setState(() => history.clear()),
+          onPressed: () =>
+              StoreProvider.of<MyState>(context).dispatch(HistoryClearAction()),
         ),
       ],
     );

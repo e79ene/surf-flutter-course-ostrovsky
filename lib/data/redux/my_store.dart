@@ -1,3 +1,4 @@
+import 'package:places/data/redux/history/history_middleware.dart';
 import 'package:places/data/redux/my_reducer.dart';
 import 'package:places/data/redux/my_state.dart';
 import 'package:places/data/redux/search/search_middleware.dart';
@@ -12,6 +13,7 @@ class MyReduxStore extends Store<MyState> {
           initialState: MyState.initial(),
           middleware: [
             SearchMiddleware(repo, mobxStore),
+            HistoryMiddleware(),
           ],
         );
 }
