@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/data/redux/my_store.dart';
+import 'package:places/data/redux/my_state.dart';
 import 'package:places/data/redux/search/search_action.dart';
 import 'package:places/data/redux/search/search_state.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
@@ -41,7 +41,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: StoreConnector<MyState, SearchState>(
-          converter: (store) => store.state,
+          converter: (store) => store.state.searchState,
           builder: (_, state) => state is SearchNoSearchState
               ? _History((string) {
                   controller.text = string;

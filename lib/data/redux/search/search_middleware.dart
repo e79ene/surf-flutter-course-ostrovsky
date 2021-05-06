@@ -1,4 +1,4 @@
-import 'package:places/data/redux/my_store.dart';
+import 'package:places/data/redux/my_state.dart';
 import 'package:places/data/redux/search/search_action.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/data/store/place_store.dart';
