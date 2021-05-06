@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/redux/my_store.dart';
+import 'package:places/data/redux/search/search_action.dart';
+import 'package:places/data/redux/search/search_state.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -12,7 +16,6 @@ import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
 import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class SightSearchScreen extends StatefulWidget {
   @override
@@ -22,48 +25,42 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  bool searching = false;
 
   @override
   Widget build(BuildContext context) {
-    final placeInteractor = context.watch<PlaceInteractor>();
-
     return Scaffold(
       appBar: MyAppBar(
         title: 'Список интересных мест',
         bottom: SearchBar(
           controller: controller,
           focusNode: focusNode,
-          onSearch: _search,
+          onSearch: (searchString) => StoreProvider.of<MyState>(context)
+              .dispatch(SearchStringAction(searchString)),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: !searching
-            ? _History((string) {
-                controller.text = string;
-                focusNode.requestFocus();
-              })
-            : EntityStateBuilder(
-                streamedState: placeInteractor.foundPlaces,
-                child: (_, List<Place>? places) =>
-                    places!.isEmpty ? _NotFound() : _Found(places),
-                loadingChild: _Searching(),
-                errorChild: Center(child: ErrorView()),
-              ),
+        child: StoreConnector<MyState, SearchState>(
+          converter: (store) => store.state,
+          builder: (_, state) => state is SearchNoSearchState
+              ? _History((string) {
+                  controller.text = string;
+                  focusNode.requestFocus();
+                })
+              : state is SearchLoadingState
+                  ? _Searching()
+                  : state is SearchErrorState
+                      ? Center(child: ErrorView())
+                      : state is SearchNotFoundState
+                          ? _NotFound()
+                          : state is SearchResultState
+                              ? _Found(state.places)
+                              : throw UnsupportedError('Wrong state: $state'),
+        ),
       ),
       bottomNavigationBar: BottomNavigationView.list(),
     );
   }
-
-  void _search(String text) => setState(() {
-        if (text.isEmpty)
-          searching = false;
-        else {
-          searching = true;
-          context.read<PlaceInteractor>().search(text);
-        }
-      });
 }
 
 class _Found extends StatelessWidget {

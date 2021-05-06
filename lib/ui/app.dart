@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/bloc/favorite_list_bloc.dart';
 import 'package:places/data/bloc/visited_list_bloc.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/interactor/theme_interactor.dart';
+import 'package:places/data/redux/my_store.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/data/store/place_store.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
@@ -37,18 +39,28 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<PlaceInteractor>(
           create: (context) => PlaceInteractor(context.read<PlaceRepository>()),
         ),
+        Provider<MyReduxStore>(
+          create: (context) => MyReduxStore(
+            context.read<PlaceRepository>(),
+            context.read<PlaceStore>(),
+          ),
+        ),
         ChangeNotifierProvider<ThemeInteractor>(
           create: (_) => ThemeInteractor(),
         ),
       ],
-      child: Consumer<ThemeInteractor>(
-        builder: (_, themeInteractor, child) => MaterialApp(
-          title: 'Интересные места',
-          theme: themeInteractor.theme,
-          home: child,
+      child: Consumer2<ThemeInteractor, MyReduxStore>(
+        builder: (_, themeInteractor, myReduxStore, child) =>
+            StoreProvider<MyState>(
+          store: myReduxStore,
+          child: MaterialApp(
+            title: 'Интересные места',
+            theme: themeInteractor.theme,
+            home: child,
+          ),
         ),
         child: col([
-          row([visiting, list]),
+          row([search]),
         ]),
       ),
     );
