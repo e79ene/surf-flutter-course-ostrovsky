@@ -5,18 +5,9 @@ class MyState {
   final SearchState searchState;
   final HistoryState history;
 
-  MyState._(this.searchState, this.history);
+  MyState(this.searchState, this.history);
 
   MyState.initial()
       : searchState = SearchNoSearchState(),
         history = [];
-
-  MyState copyWith({
-    SearchState? searchState,
-    HistoryState? history,
-  }) =>
-      MyState._(
-        searchState ?? this.searchState,
-        history ?? this.history,
-      );
 }
