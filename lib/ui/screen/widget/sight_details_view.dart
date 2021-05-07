@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/bloc/favorite_list_bloc.dart';
+import 'package:places/data/bloc/place_list_event.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/image_loading_progress.dart';
@@ -109,8 +111,9 @@ class SightDetailsView extends StatelessWidget {
                     TextButton.icon(
                       icon: FavoriteIcon(place),
                       label: Text('В избранное'),
-                      onPressed: () =>
-                          context.read<PlaceInteractor>().toggleFavorite(place),
+                      onPressed: () => context
+                          .read<FavoriteListBloc>()
+                          .add(TogglePlaceListEvent(place)),
                     ),
                   ],
                 ),

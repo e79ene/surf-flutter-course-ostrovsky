@@ -20,19 +20,14 @@ class SightSearchScreen extends StatefulWidget {
 }
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
-  late final PlaceInteractor placeInteractor;
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
   bool searching = false;
 
   @override
-  void initState() {
-    super.initState();
-    placeInteractor = Provider.of<PlaceInteractor>(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final placeInteractor = context.watch<PlaceInteractor>();
+
     return Scaffold(
       appBar: MyAppBar(
         title: 'Список интересных мест',
@@ -66,7 +61,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           searching = false;
         else {
           searching = true;
-          placeInteractor.search(text);
+          context.read<PlaceInteractor>().search(text);
         }
       });
 }

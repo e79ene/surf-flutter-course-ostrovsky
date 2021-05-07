@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:places/data/bloc/favorite_list_bloc.dart';
+import 'package:places/data/bloc/place_list_state.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/res/my_icons.dart';
 import 'package:places/ui/svg_icon.dart';
-import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class FavoriteIcon extends StatelessWidget {
   final Place place;
@@ -16,13 +16,9 @@ class FavoriteIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamedStateBuilder(
-      streamedState:
-          context.select<PlaceInteractor, StreamedState<List<Place>>>(
-        (placeInteractor) => placeInteractor.favorite,
-      ),
-      builder: (_, List<Place>? places) => SvgIcon(
-        places!.contains(place) ? MyIcons.Heart_Full : MyIcons.Heart,
+    return BlocBuilder<FavoriteListBloc, PlaceListState>(
+      builder: (context, state) => SvgIcon(
+        state.list.contains(place) ? MyIcons.Heart_Full : MyIcons.Heart,
       ),
     );
   }
