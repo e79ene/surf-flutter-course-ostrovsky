@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/redux/history/history_action.dart';
+import 'package:places/data/redux/history/history_state.dart';
+import 'package:places/data/redux/my_state.dart';
+import 'package:places/data/redux/search/search_action.dart';
+import 'package:places/data/redux/search/search_state.dart';
 import 'package:places/ui/bottom_navigation_view.dart';
 import 'package:places/ui/image_loader.dart';
 import 'package:places/ui/res/my_icons.dart';
@@ -11,8 +16,6 @@ import 'package:places/ui/screen/widget/error_view.dart';
 import 'package:places/ui/screen/widget/my_app_bar.dart';
 import 'package:places/ui/screen/widget/search_bar.dart';
 import 'package:places/ui/svg_icon.dart';
-import 'package:provider/provider.dart';
-import 'package:relation/relation.dart';
 
 class SightSearchScreen extends StatefulWidget {
   @override
@@ -22,48 +25,42 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final TextEditingController controller = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  bool searching = false;
 
   @override
   Widget build(BuildContext context) {
-    final placeInteractor = context.watch<PlaceInteractor>();
-
     return Scaffold(
       appBar: MyAppBar(
         title: 'Список интересных мест',
         bottom: SearchBar(
           controller: controller,
           focusNode: focusNode,
-          onSearch: _search,
+          onSearch: (searchString) => StoreProvider.of<MyState>(context)
+              .dispatch(SearchStringAction(searchString)),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: !searching
-            ? _History((string) {
-                controller.text = string;
-                focusNode.requestFocus();
-              })
-            : EntityStateBuilder(
-                streamedState: placeInteractor.foundPlaces,
-                child: (_, List<Place>? places) =>
-                    places!.isEmpty ? _NotFound() : _Found(places),
-                loadingChild: _Searching(),
-                errorChild: Center(child: ErrorView()),
-              ),
+        child: StoreConnector<MyState, SearchState>(
+          converter: (store) => store.state.searchState,
+          builder: (_, state) => state is SearchNoSearchState
+              ? _History((string) {
+                  controller.text = string;
+                  focusNode.requestFocus();
+                })
+              : state is SearchLoadingState
+                  ? _Searching()
+                  : state is SearchErrorState
+                      ? Center(child: ErrorView())
+                      : state is SearchNotFoundState
+                          ? _NotFound()
+                          : state is SearchResultState
+                              ? _Found(state.places)
+                              : throw UnsupportedError('Wrong state: $state'),
+        ),
       ),
       bottomNavigationBar: BottomNavigationView.list(),
     );
   }
-
-  void _search(String text) => setState(() {
-        if (text.isEmpty)
-          searching = false;
-        else {
-          searching = true;
-          context.read<PlaceInteractor>().search(text);
-        }
-      });
 }
 
 class _Found extends StatelessWidget {
@@ -213,24 +210,35 @@ class _Searching extends StatelessWidget {
   }
 }
 
-class _History extends StatefulWidget {
+class _History extends StatelessWidget {
   final void Function(String) onSelected;
 
   _History(this.onSelected);
 
   @override
-  _HistoryState createState() => _HistoryState();
+  Widget build(BuildContext context) {
+    return StoreConnector<MyState, HistoryState>(
+      converter: (store) => store.state.history,
+      builder: (context, history) => history.isEmpty
+          ? const SizedBox.shrink()
+          : _HistoryList(history, onSelected),
+    );
+  }
 }
 
-class _HistoryState extends State<_History> {
+class _HistoryList extends StatelessWidget {
+  const _HistoryList(
+    this.history,
+    this.onSelected,
+  );
+
+  final HistoryState history;
+  final void Function(String) onSelected;
+
   @override
   Widget build(BuildContext context) {
-    final history = Provider.of<PlaceInteractor>(context).searchHistory;
-
-    if (history.strings.isEmpty) return const SizedBox.shrink();
-
     final theme = Theme.of(context);
-
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,9 +248,9 @@ class _HistoryState extends State<_History> {
         ),
         SingleChildScrollView(
             child: Column(children: [
-          for (final s in history.strings)
+          for (final s in history)
             InkWell(
-              onTap: () => widget.onSelected(s),
+              onTap: () => onSelected(s),
               child: Row(children: [
                 Expanded(
                   child: Text(
@@ -255,7 +263,8 @@ class _HistoryState extends State<_History> {
                     MyIcons.Delete,
                     color: theme.color.secondary2,
                   ),
-                  onPressed: () => setState(() => history.remove(s)),
+                  onPressed: () => StoreProvider.of<MyState>(context)
+                      .dispatch(HistoryRemoveAction(s)),
                 ),
               ]),
             ),
@@ -263,7 +272,8 @@ class _HistoryState extends State<_History> {
         TextButton(
           child: Text('Очистить историю'),
           style: theme.textButtonGreen,
-          onPressed: () => setState(() => history.clear()),
+          onPressed: () =>
+              StoreProvider.of<MyState>(context).dispatch(HistoryClearAction()),
         ),
       ],
     );

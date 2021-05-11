@@ -9,7 +9,7 @@ part 'place_store.g.dart';
 class PlaceStore = _PlaceStore with _$PlaceStore;
 
 abstract class _PlaceStore with Store {
-  static const myLocation = GeoPositions.moscow;
+  GeoPosition get myLocation => GeoPositions.moscow;
   static const _minRadius = 100.0;
   static const _maxRadius = 20000.0;
   double get minRadius => _minRadius;

@@ -1,0 +1,1 @@
+typedef HistoryState = List<String>;
